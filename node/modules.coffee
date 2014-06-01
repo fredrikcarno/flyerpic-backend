@@ -24,8 +24,14 @@ modules = module.exports = (app, db, callback) ->
 		# Load modules
 		async.each data, (m, finish) ->
 
-			log.status 'modules', "Loading #{ m.name }"
-			require('./../modules/' + m.name + '/' + m.main) app, db.source
-			finish()
+			if m.main?
+
+				log.status 'modules', "Loading #{ m.name }"
+				require('./../modules/' + m.name + '/' + m.main) app, db.source
+				finish()
+
+			else
+
+				finish()
 
 		, callback
