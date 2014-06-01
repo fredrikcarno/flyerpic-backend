@@ -1,4 +1,4 @@
-this.modules =
+this.modules = this.m =
 
 	_files:
 		css: 'cache/modules.css'
@@ -38,6 +38,7 @@ this.modules =
 
 		# Init module
 		module.init()
+
 		# Trigger event
 		document.dispatchEvent(
 			new CustomEvent 'moduleLoaded', {
