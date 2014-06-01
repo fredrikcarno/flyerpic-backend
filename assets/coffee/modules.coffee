@@ -29,7 +29,19 @@ this.modules =
 
 	add: (module) ->
 
+		# Add references
 		module.name	= encodeURI(module.title).toLowerCase()
-		module.dom	= -> kanban.dom.module(module.name)
+		module.dom	= (elem) -> kanban.dom.module(module.name, elem)
+
+		# Build placeholder
 		kanban.dom.content.append modules._build(module)
+
+		# Init module
 		module.init()
+		# Trigger event
+		document.dispatchEvent(
+			new CustomEvent 'moduleLoaded', {
+				detail:
+					name: module.name
+			}
+		)

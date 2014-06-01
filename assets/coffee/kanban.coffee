@@ -117,7 +117,11 @@ this.kanban =
 	dom:
 
 		content: $('#content')
-		module: (name) -> kanban.dom.content.find("##{ name }")
+
+		module: (name, elem) ->
+
+			if not elem? then return kanban.dom.content.find("##{ name }")
+			else return kanban.dom.content.find("##{ name }").find(elem)
 
 	logout: ->
 
