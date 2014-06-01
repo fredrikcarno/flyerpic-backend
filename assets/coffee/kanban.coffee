@@ -51,12 +51,6 @@ this.kanban =
 				str.push encodeURIComponent(p) + "=" + encodeURIComponent(obj[p])
 		return str.join "&"
 
-	server: ->
-
-		url = window.location.protocol + "//" + window.location.host
-		if url.substr(-1) isnt '/' then url += '/'
-		return url
-
 	api: (url, callback) ->
 
 		# Show notification
