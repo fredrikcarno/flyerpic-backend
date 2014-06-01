@@ -34,7 +34,6 @@ this.kanban =
 
 					# Logged in
 					modules.init()
-					cache.init()
 					return true
 
 			if	data?.login? and
@@ -59,10 +58,6 @@ this.kanban =
 		return url
 
 	api: (url, callback) ->
-
-		if cache.data.hasOwnProperty(url)
-			callback cache.data[url]
-			return true
 
 		# Show notification
 		loading = setTimeout ->
