@@ -1,6 +1,8 @@
 # Dependencies
 colors = require 'colors'
 
+name = 'kanban    '.white
+
 norm = (text) ->
 
 	filler = '         ' #9
@@ -18,16 +20,16 @@ log = module.exports =
 	status: (source, text) ->
 
 		source = norm source
-		console.log 'kanban    '.white + "#{ source }".green + "#{ text }"
+		console.log name + "#{ source }".green + "#{ text }"
 
 	warning: (source, text, error) ->
 
 		source = norm source
-		console.warn 'kanban    '.white + "#{ source }".yellow + "#{ text }"
+		console.warn name + "#{ source }".yellow + "#{ text }"
 		console.warn error if error?
 
 	error: (source, text, error) ->
 
 		source = norm source
-		console.error 'kanban    '.white + "#{ source }".red + "#{ text }"
+		console.error name + "#{ source }".red + "#{ text }"
 		console.error error
