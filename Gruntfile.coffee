@@ -134,6 +134,7 @@ module.exports = (grunt) ->
 		clean: ['cache/.temp/']
 
 	require('load-grunt-tasks')(grunt)
+	grunt.loadNpmTasks('grunt-notify')
 
 	grunt.registerTask 'default', ->
 		grunt.task.run [
