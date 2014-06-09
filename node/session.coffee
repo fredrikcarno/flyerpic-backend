@@ -45,6 +45,7 @@ session = module.exports =
 
 								# Login vaild
 								req.session.login = true
+								req.session.user = user.id
 								res.json true
 								return true
 
@@ -65,5 +66,6 @@ session = module.exports =
 	logout: (req, res) ->
 
 		delete req.session.login
+		delete req.session.user
 		res.json true
 		return true
