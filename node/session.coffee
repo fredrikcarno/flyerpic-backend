@@ -1,3 +1,6 @@
+# Dependencies
+async = require 'async'
+
 # Kanban modules
 db = require './db'
 
@@ -5,60 +8,59 @@ session = module.exports =
 
 	init: (req, res) ->
 
-		db.settings (rows) ->
+		if	req.session?.login? and
+			req.session.login is true
 
-			if	rows?.username? and
-				rows.password? and
-				req.session?.login? and
-				req.session.login is true
+				# Logged in
+				res.json {
+					login: true
+					version: process.env.npm_package_version
+					configured: true
+				}
 
-					# Logged in
-					res.json {
-						login: true
-						username: rows.username
-						version: process.env.npm_package_version
-						configured: true
-					}
+		else
 
-			else
+			db.users.get (users) ->
 
 				# Not logged in
 				res.json {
 					login: false
 					version: process.env.npm_package_version
 					name: process.env.npm_package_name
-					configured: if rows?.username? and rows.password? then true else false
+					configured: users.length isnt 0
 				}
 
 	login: (req, res) ->
 
-		db.settings (rows) ->
+		if	req.query? and
+			req.query.username? and
+			req.query.password?
 
-			if	not rows?.username? or
-				not rows?.password?
+				db.users.get (users) ->
 
-					# Entries not found
-					res.json { error: 'Could not find username or password in database', details: error }
-					return false
+					async.each users, (user, finish) ->
 
-			else if	rows.username? and
-					rows.password? and
-					req.query? and
-					req.query.username is rows.username
+						if	req.query.username is user.username and
+							req.query.password is user.password
 
-						# Login ignores password
-						# req.query.password is rows.password
+								# Login vaild
+								req.session.login = true
+								res.json true
+								return true
 
-						# Login vaild
-						req.session.login = true
-						res.json true
-						return true
+						else finish()
 
-			else
+					, (err) ->
 
-				# Required data missing
-			 	res.json false
-				return false
+						# Login invaild
+						res.json false
+						return false
+
+		else
+
+			# Required data missing
+		 	res.json false
+			return false
 
 	logout: (req, res) ->
 

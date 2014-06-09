@@ -26,7 +26,6 @@ module.exports = (app, callback) ->
 
 	# Login
 	app.get '/api/login/set', login.set
-	app.get '/api/login/reset', middleware.auth, login.reset
 
 	# Error
 	app.all '/401', error.e401
