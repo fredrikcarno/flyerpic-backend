@@ -10,6 +10,7 @@ config		= require './../data/config.json'
 structure	=	"""
 				CREATE TABLE `lychee_users` (
 				  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+				  `type` varchar(10) NOT NULL DEFAULT 'photographer',
 				  `username` varchar(100) NOT NULL DEFAULT '',
 				  `password` varchar(100) NOT NULL DEFAULT '',
 				  `name` varchar(50) CHARACTER SET latin1 NOT NULL DEFAULT '',
@@ -150,4 +151,16 @@ db = module.exports =
 					return false
 
 				callback rows
+				return true
+
+		me: (id, callback) ->
+
+			db.source.query "SELECT * FROM lychee_users WHERE id = '#{ id }' LIMIT 1", (err, rows) ->
+
+				if err or rows.length is 0
+					log.error 'db', 'Could not get users from database', err
+					callback null
+					return false
+
+				callback rows[0]
 				return true
