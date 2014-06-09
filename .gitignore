@@ -4,5 +4,8 @@ etc/
 node_modules/
 bower_components/
 
-data/
 cache/
+
+data/cert.pem
+data/key.pem
+data/config.json

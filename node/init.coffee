@@ -35,12 +35,6 @@ init = ->
 
 		(callback) ->
 
-			# Create data
-			data.create ->
-				callback()
-
-		(callback) ->
-
 			async.parallel [
 
 				(pCallback) ->
