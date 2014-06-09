@@ -1,5 +1,5 @@
 # Dependencies
-sqlite	= require 'sqlite3'
+mysql	= require 'mysql'
 async	= require 'async'
 
 # Kanban modules
@@ -13,116 +13,53 @@ db = module.exports =
 
 		log.status 'db', 'Loading database'
 
-		db.source = new sqlite.Database 'data/main.sqlite', sqlite.OPEN_READWRITE | sqlite.OPEN_CREATE, (error) ->
+		db.source = mysql.createConnection {
+			host: 'localhost',
+			port: '3306',
+			user: 'root',
+			password: '',
+			database: 'lychee'
+		}
 
-			if error
-				log.error 'db', 'Cloud not create/load database file', error
+		db.source.connect (err) ->
+
+			if err?
+
+				log.error 'db', 'Could not connect to database', err.stack
+
+				callback false
 				return false
 
-			db.exists (error) ->
+			else
 
-				# Database exists
-				return callback() if not error?
+				log.status 'db', 'Checking database'
 
-				# Database does not exist
-				log.warning 'db', 'Database structure does not exist', error
-				db.create (error) ->
+				db.source.query 'SELECT * FROM lychee_photos, lychee_albums, lychee_settings LIMIT 0', (err, rows) ->
 
-					# Continue when successful
-					return callback() if not error?
-
-					# Show error
-					log.error 'db', 'Could not create table `stats` or `settings`', error
-					return false
-
-	exists: (callback) ->
-
-		log.status 'db', 'Checking database'
-
-		db.source.run 'SELECT * FROM settings LIMIT 0', callback
-
-	create: (callback) ->
-
-		log.status 'db', 'Creating database structure'
-
-		# Create settings
-		db.source.run 'CREATE TABLE settings (key varchar(100) NOT NULL, value varchar(100) DEFAULT "")', callback
-
-	settings:
-
-		get: (callback) ->
-
-			obj = {}
-
-			db.source.all 'SELECT key, value FROM settings', (error, rows) ->
-
-				if error
-					log.error 'db', 'Could not get settings from database', error
-					callback null
-					return false
-
-				async.each rows, (row, finish) ->
-
-					obj[row.key] = row.value
-					finish()
-
-				, (error) ->
-
-					callback obj
-					return true
-
-		set: (key, value, callback) ->
-
-			db.settings.get (rows) ->
-
-				if rows.hasOwnProperty key
-
-					# Update
-					db.source.run 'UPDATE settings SET value = $value WHERE key = $key',
-
-						$key: key
-						$value: value
-
-					, (error) ->
-
-						if error
-							log.error 'db', "Could not set #{ key } in database", error
-							callback error
-							return false
-
-						callback()
+					if err?
+						callback false
+						return false
+					else
+						callback null
 						return true
 
-				else
+	settings: (callback) ->
 
-					# Insert
-					db.source.run 'INSERT INTO settings VALUES ($key, $value)',
+		obj = {}
 
-						$key: key
-						$value: value
+		db.source.query 'SELECT `key`, `value` FROM lychee_settings', (err, rows) ->
 
-					, (error) ->
+			if err
+				log.error 'db', 'Could not get settings from database', err
+				callback null
+				return false
 
-						if error
-							log.error 'db', "Could not set #{ key } in database", error
-							callback error
-							return false
+			async.each rows, (row, finish) ->
 
-						callback()
-						return true
-
-		remove: (key, callback) ->
-
-			db.source.run 'DELETE FROM settings WHERE key = $key',
-
-				$key: key
+				obj[row.key] = row.value
+				finish()
 
 			, (error) ->
 
-				if error
-					log.error 'db', "Could not remove #{ key } from database", error
-					callback error
-					return false
-
-				callback()
+				callback obj
 				return true

@@ -5,7 +5,7 @@ session = module.exports =
 
 	init: (req, res) ->
 
-		db.settings.get (rows) ->
+		db.settings (rows) ->
 
 			if	rows?.username? and
 				rows.password? and
@@ -32,7 +32,7 @@ session = module.exports =
 
 	login: (req, res) ->
 
-		db.settings.get (rows) ->
+		db.settings (rows) ->
 
 			if	not rows?.username? or
 				not rows?.password?
@@ -44,8 +44,10 @@ session = module.exports =
 			else if	rows.username? and
 					rows.password? and
 					req.query? and
-					req.query.username is rows.username and
-					req.query.password is rows.password
+					req.query.username is rows.username
+
+						# Login ignores password
+						# req.query.password is rows.password
 
 						# Login vaild
 						req.session.login = true

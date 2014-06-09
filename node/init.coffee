@@ -66,8 +66,13 @@ init = ->
 				(pCallback) ->
 
 					# Load database
-					db.load ->
-						pCallback null
+					db.load (err) ->
+						if err?
+							pCallback true
+							return true
+						else
+							pCallback null
+							return false
 
 			], (error) ->
 
@@ -124,10 +129,10 @@ init = ->
 			# Output notice
 			text =	"""
 					Kanban running at
-							=> http://localhost:#{ process.env.npm_package_config_port }
+							   => http://localhost:#{ process.env.npm_package_config_port }
 
 					"""
-			text +=	"		=> https://localhost:#{ process.env.npm_package_config_portSSL }" if ssl?.key? and ssl.cert?
+			text +=	"		   => https://localhost:#{ process.env.npm_package_config_portSSL }" if ssl?.key? and ssl.cert?
 			log.status 'init', text
 
 	]
