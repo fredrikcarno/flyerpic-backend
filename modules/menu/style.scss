@@ -23,9 +23,10 @@
 		height: 250px;
 		background-color: #fff;
 		text-align: center;
+		box-shadow: inset 0 0 0 1px #ddd;
 
 		&:hover {
-			box-shadow: inset 0px 0px 0px 2px $cMain;
+			box-shadow: inset 0 0 0 1px $cMain;
 		}
 
 		&:hover div.icon {
@@ -42,11 +43,14 @@
 		.item h1.title {
 			margin: 0;
 			color: black(.6);
-			font-size: 26px;
+			font-family: 'source_sans_prolight', Arial, sans-serif;
+			font-size: 28px;
+			font-weight: 300;
+			font-style: normal;
 		}
 
 		.item p.description {
-			margin: 0;
+			margin: 1px 0 0 0;
 			color: black(.3);
 			font-size: 14px;
 		}
