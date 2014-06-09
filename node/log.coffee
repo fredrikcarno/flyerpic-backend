@@ -1,6 +1,7 @@
 # Dependencies
 colors = require 'colors'
 
+# Variables
 name = 'kanban    '.white
 
 norm = (text) ->
