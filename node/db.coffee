@@ -5,6 +5,9 @@ async	= require 'async'
 # Kanban modules
 log		= require './log'
 
+# Variables
+config	= require './../data/config.json'
+
 db = module.exports =
 
 	source: null
@@ -14,11 +17,11 @@ db = module.exports =
 		log.status 'db', 'Loading database'
 
 		db.source = mysql.createConnection {
-			host: 'localhost',
-			port: '3306',
-			user: 'root',
-			password: '',
-			database: 'lychee'
+			host: config.host,
+			port: config.port,
+			user: config.user,
+			password: config.password,
+			database: config.database
 		}
 
 		db.source.connect (err) ->
