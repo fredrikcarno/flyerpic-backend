@@ -4,13 +4,13 @@ m.add m.menu =
 
 	data: [
 		{
-			id: 'createflyers'
+			id: 'create'
 			icon: 'ion-ios7-albums-outline'
 			title: 'Create Flyers'
 			description: 'Generate and download flyers'
 		}
 		{
-			id: 'uploadsessions'
+			id: 'upload'
 			icon: 'ion-ios7-cloud-upload-outline'
 			title: 'Upload Sessions'
 			description: 'Create and upload a new sessions'
@@ -28,18 +28,25 @@ m.add m.menu =
 		# Render
 		m.menu.dom().append m.menu.render.all()
 
+		# Add route
+		router.on '/', ->
+			setTimeout ->
+				m.menu.dom().show()
+			, 100
+
 		# Bind menus
 		m.menu.bind()
+
+		# Init routes
+		router.init()
 
 	bind: ->
 
 		# Define shorthand
 		dom = m.menu.dom
 
-		dom('#createflyers').on 'click', ->
-
-			# More here
-			console.log 'clicked'
+		dom('#create, #upload, #settings').on 'click', ->
+			router.setRoute '/' + $(this).attr('id')
 
 	render:
 
