@@ -58,7 +58,7 @@ this.login =
 				modal.show
 					body:	"""
 							<h1>Welcome</h1>
-							<p>Hi there, lets create your login!</p>
+							<p>Hi there, lets create your first user!</p>
 							<input class="text" type="text" placeholder="username" data-name="username" autofocus>
 							<input class="text" type="password" placeholder="password" data-name="password">
 							<input class="text" type="password" placeholder="repeat password" data-name="repassword">
