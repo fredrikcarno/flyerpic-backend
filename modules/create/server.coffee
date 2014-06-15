@@ -101,7 +101,7 @@ code = (user, callback) ->
 qr = (code) ->
 
 	file	= "#{ code }.png"
-	path	= "./data/" + file
+	path	= "./cache/" + file
 
 	encoder.encode code, path
 
