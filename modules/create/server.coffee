@@ -109,10 +109,11 @@ qr = (code) ->
 
 get = (req, res) ->
 
+	user = req.session.user
 	data = {}
 
 	# Get code
-	code req.session.user, (_code) ->
+	code user, (_code) ->
 
 		# Save code
 		data.code = _code
@@ -120,8 +121,16 @@ get = (req, res) ->
 		# Get qr image
 		data.qr = qr data.code
 
-		# Return data
-		res.json data
+		# Get user info
+		db.users.me user, (_user) ->
+
+			data.photographer = {
+				name: _user.name
+				mail: _user.primarymail
+			}
+
+			# Return data
+			res.json data
 
 module.exports = (app, _db) ->
 
