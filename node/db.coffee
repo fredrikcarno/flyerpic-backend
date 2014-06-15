@@ -145,7 +145,7 @@ db = module.exports =
 
 			db.source.query 'SELECT * FROM lychee_users', (err, rows) ->
 
-				if err
+				if err?
 					log.error 'db', 'Could not get users from database', err
 					callback null
 					return false
@@ -157,7 +157,7 @@ db = module.exports =
 
 			db.source.query "SELECT * FROM lychee_users WHERE id = '#{ id }' LIMIT 1", (err, rows) ->
 
-				if err or rows.length is 0
+				if err? or rows.length is 0
 					log.error 'db', 'Could not get users from database', err
 					callback null
 					return false
