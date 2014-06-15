@@ -4,19 +4,19 @@ m.add m.menu =
 
 	data: [
 		{
-			id: 'create'
+			id: 'menu_create'
 			icon: 'ion-ios7-albums-outline'
 			title: 'Create Flyers'
 			description: 'Generate and download flyers'
 		}
 		{
-			id: 'upload'
+			id: 'menu_upload'
 			icon: 'ion-ios7-cloud-upload-outline'
 			title: 'Upload Sessions'
 			description: 'Create and upload a new sessions'
 		}
 		{
-			id: 'settings'
+			id: 'menu_settings'
 			icon: 'ion-ios7-cog-outline'
 			title: 'Settings'
 			description: 'Edit your personal settings and details'
