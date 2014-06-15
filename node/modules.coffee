@@ -27,7 +27,7 @@ modules = module.exports = (app, db, callback) ->
 			if m.main?
 
 				log.status 'modules', "Loading #{ m.name }"
-				require('./../modules/' + m.name + '/' + m.main) app, db.source
+				require('./../modules/' + m.name + '/' + m.main) app, db
 				finish()
 
 			else
