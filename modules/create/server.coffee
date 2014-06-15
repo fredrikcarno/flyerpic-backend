@@ -1,5 +1,6 @@
 # Dependencies
 crypto	= require 'crypto'
+joi		= require 'joi'
 Encoder = require('qr').Encoder
 encoder = new Encoder
 
@@ -12,12 +13,25 @@ hash = ->
 	random = Math.random().toString()
 	return crypto.createHash('sha1').update(currentDate + random).digest('hex')
 
-qr = (req, res) ->
+qr = (code) ->
 
-	encoder.encode 'test', "./data/#{ hash() }.png"
+	file	= "#{ hash() }.png"
+	path	= "./data/" + file
+
+	encoder.encode code, path
+
+	return file
+
+get = (req, res) ->
+
+	data = {
+		qr: qr(req.query.code)
+	}
+
+	res.json data
 
 module.exports = (app, _db) ->
 
 	db = _db
 
-	app.all '/api/m/create/qr/:code', qr
+	app.get '/api/m/create/get', get

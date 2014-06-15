@@ -4,6 +4,7 @@
   "authors": "Tobias Reich <tobias.reich.ich@gmail.com>",
   "main": "server.coffee",
   "dependencies": {
+    "joi": "^4.6.1",
     "qr": "^0.2.3"
   }
 }
