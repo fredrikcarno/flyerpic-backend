@@ -5,6 +5,7 @@
   "main": "server.coffee",
   "dependencies": {
     "joi": "^4.6.1",
-    "qr": "^0.2.3"
+    "qr": "^0.2.3",
+    "underscore": "^1.6.0"
   }
 }
