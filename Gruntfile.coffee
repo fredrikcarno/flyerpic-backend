@@ -102,6 +102,22 @@ module.exports = (grunt) ->
 				files:
 					'cache/modules.css': 'cache/.temp/modules.css'
 
+		bake:
+
+			js:
+				options:
+					content: 'languages/en.json'
+
+				files:
+					'cache/main.js': 'cache/main.js'
+
+			modules:
+				options:
+					content: 'languages/en.json'
+
+				files:
+					'cache/modules.js': 'cache/modules.js'
+
 		watch:
 
 			js:
@@ -134,7 +150,8 @@ module.exports = (grunt) ->
 		clean: ['cache/.temp/']
 
 	require('load-grunt-tasks')(grunt)
-	grunt.loadNpmTasks('grunt-notify')
+	grunt.loadNpmTasks 'grunt-notify'
+	grunt.loadNpmTasks 'grunt-bake'
 
 	grunt.registerTask 'default', ->
 		grunt.task.run [
@@ -148,6 +165,7 @@ module.exports = (grunt) ->
 		'coffee:assets'
 		'concat:js'
 		'uglify:assets'
+		'bake:js'
 	]
 	grunt.registerTask 'css', [
 		'sass:assets'
@@ -160,6 +178,7 @@ module.exports = (grunt) ->
 		'concat:json'
 		'sass:modules'
 		'uglify:modules'
+		'bake:modules'
 		'cssmin:modules'
 	]
 	grunt.registerTask 'temp', [

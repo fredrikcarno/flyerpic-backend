@@ -1,0 +1,16 @@
+{
+	"menu": {
+		"create": {
+			"title": "Create Flyers",
+			"description": "Generate and download flyers"
+		},
+		"upload": {
+			"title": "Upload Sessions",
+			"description": "Create and upload a new sessions"
+		},
+		"settings": {
+			"title": "Settings",
+			"description": "Edit your personal settings and details"
+		}
+	}
+}
