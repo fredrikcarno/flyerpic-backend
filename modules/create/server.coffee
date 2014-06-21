@@ -1,4 +1,5 @@
 # Dependencies
+async	= require 'async'
 crypto	= require 'crypto'
 joi		= require 'joi'
 _		= require 'underscore'
@@ -107,9 +108,13 @@ qr = (code) ->
 
 	return file
 
-get = (req, res) ->
+flyer = (user, callback) ->
 
-	user = req.session.user
+	###
+	Description:	Generates a json with qr and code
+	Return:			JSON
+	###
+
 	data = {}
 
 	# Get code
@@ -121,19 +126,51 @@ get = (req, res) ->
 		# Get qr image
 		data.qr = qr data.code
 
-		# Get user info
-		db.users.me user, (_user) ->
+		# Return data
+		callback data
+		return true
 
-			data.photographer = {
-				name: _user.name
-				mail: _user.primarymail
-			}
+url = (user, number, callback) ->
+
+	###
+	Description:	Generates a json and converts it to a url
+	Return:			String
+	###
+
+	# Get user info
+	db.users.me user, (_user) ->
+
+		flyers = []
+
+		async.whilst ->
+
+			return number isnt 0
+
+		, (callback) ->
+
+			flyer user, (_flyer) ->
+				flyers.push _flyer
+				number--
+				callback()
+
+		, (err) ->
+
+			# Build json
+			data =
+				photographer:
+					name: _user.name
+					mail: _user.primarymail
+				flyers: flyers
+
+			# Parse url
+			url = encodeURIComponent JSON.stringify(data)
 
 			# Return data
-			res.json data
+			callback url
 
 module.exports = (app, _db) ->
 
 	db = _db
 
-	app.get '/api/m/create/get', get
+	url 1, 30, (data) ->
+		console.log data
