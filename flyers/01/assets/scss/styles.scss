@@ -1,0 +1,185 @@
+/* SASS ------------------------------------------------- */
+@import 'helpers';
+
+/* Fonts ------------------------------------------------- */
+@include fontFace('source_sans_proregular','../assets/fonts/sourcesanspro-regular-webfont');
+@include fontFace('source_sans_prolight','../assets/fonts/sourcesanspro-light-webfont');
+
+/* Basics ------------------------------------------------- */
+html, body {
+	height: 100%;
+}
+
+body {
+	background-color: #fff;
+	font-family: 'source_sans_proregular', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	font-size: 14px;
+	-moz-osx-font-smoothing: grayscale;
+	font-smoothing: antialiased;
+}
+
+*,
+*:before,
+*:after {
+	box-sizing:border-box;
+}
+
+/* Cutline ------------------------------------------------- */
+.cutline {
+	position: absolute;
+
+	&.vertical {
+		margin: 0 50%;
+		height: 100%;
+		border-right: 1px dashed #000;
+	}
+
+	&.horizontalTop {
+		margin: 400px 0 0 0;
+		width: 100%;
+		border-bottom: 1px dashed #000;
+	}
+
+	&.horizontalBottom {
+		margin: 800px 0 0 0;
+		width: 100%;
+		border-bottom: 1px dashed #000;
+	}
+}
+
+/* Flyer ------------------------------------------------- */
+.flyer {
+
+	float: left;
+	width: 48.5%;
+	margin: 0 3% 20px 0;
+
+	&:nth-child(2n) {
+		margin: 0;
+	}
+
+	/* Head ------------------------------------------------- */
+	.head {
+
+		width: 100%;
+		height: 180px;
+		background-image: linear-gradient(top, #a176ab, #ffffff);
+		text-align: center;
+
+		img {
+			margin: 14px 0 0 0;
+			width: 48px;
+			height: 48px;
+			border-radius: 100px;
+		}
+
+		h1 {
+			margin: 3px 0 -5px 0;
+			color: white(1);
+			font-size: 16px;
+		}
+
+		a {
+			margin: 0;
+			color: white(.8);
+			font-size: 12px;
+			text-decoration: none;
+		}
+
+	}
+
+	/* Steps ------------------------------------------------- */
+	.steps {
+		display: inline-block;
+		margin: -60px 10px 0 10px;
+		padding: 18px 14px;
+		background-color: white(.7);
+		width: calc(100% - 28px);
+	}
+
+		/* Step ------------------------------------------------- */
+		.steps .step {
+
+			float: left;
+			width: 100%;
+			margin: 12px 0;
+
+			&:first-child {
+				margin: 0 0 12px 0;
+			}
+
+			.left {
+				float: left;
+				width: 12%;
+			}
+
+			.right {
+				float: left;
+				width: 85%;
+			}
+
+			a.number {
+				padding: 5px 7px 4px 7px;
+				color: black(.8);
+				font-family: 'source_sans_prolight';
+				font-size: 14px;
+				text-align: center;
+				text-decoration: none;
+				border: 1px solid black(.3);
+				border-radius: 100px;
+			}
+
+			p {
+				margin: 0;
+				padding: 0;
+				color: black(.7);
+				font-family: 'source_sans_prolight';
+				font-size: 12px;
+				line-height: 18px;
+			}
+
+		}
+
+		/* Codes ------------------------------------------------- */
+		.steps .codes {
+
+			display: inline-block;
+			margin: 15px 0 0 0;
+			width: 110%;
+
+			.qr {
+				float: left;
+				width: 60px;
+				height: 60px;
+			}
+
+			.separator {
+				float: left;
+				padding: 21px 20px;
+			}
+
+			.text {
+				float: left;
+				margin: 16px 0 0 0;
+				padding: 7px 10px 6px 10px;
+				background: black(.2);
+			}
+
+				.text img {
+					float: left;
+					margin: 0 10px 0 0;
+				}
+
+				.text a {
+					display: block;
+					float: left;
+					margin: 1px 0 0 0;
+					color: black(.7);
+					font-family: 'source_sans_prolight';
+					font-size: 13px;
+					text-decoration: none;
+				}
+
+		}
+
+}
