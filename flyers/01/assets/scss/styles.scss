@@ -47,6 +47,12 @@ body {
 	}
 }
 
+/* Page ------------------------------------------------- */
+.page {
+	display: inline-block;
+	height: 1000px;
+}
+
 /* Flyer ------------------------------------------------- */
 .flyer {
 
@@ -152,6 +158,10 @@ body {
 				width: 60px;
 				height: 60px;
 			}
+
+				.qr img {
+					margin: -10px;
+				}
 
 			.separator {
 				float: left;
