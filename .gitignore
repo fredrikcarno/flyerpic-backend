@@ -9,3 +9,5 @@ cache/
 data/cert.pem
 data/key.pem
 data/config.json
+
+flyers/*/dist/.temp
