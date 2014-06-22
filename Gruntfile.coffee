@@ -3,6 +3,7 @@ module.exports = (grunt) ->
 	grunt.initConfig
 
 		pkg: grunt.file.readJSON 'package.json'
+		exec: []
 
 		coffee:
 
@@ -118,6 +119,10 @@ module.exports = (grunt) ->
 				files:
 					'cache/modules.js': 'cache/modules.js'
 
+		shell:
+			npm:
+				command: '<%= exec %>'
+
 		watch:
 
 			js:
@@ -150,16 +155,13 @@ module.exports = (grunt) ->
 		clean: ['cache/.temp/']
 
 	require('load-grunt-tasks')(grunt)
-	grunt.loadNpmTasks 'grunt-notify'
-	grunt.loadNpmTasks 'grunt-bake'
 
-	grunt.registerTask 'default', ->
-		grunt.task.run [
-			'js'
-			'css'
-			'modules'
-			'temp'
-		]
+	grunt.registerTask 'default', [
+		'js'
+		'css'
+		'modules'
+		'temp'
+	]
 
 	grunt.registerTask 'js', [
 		'coffee:assets'
@@ -167,11 +169,13 @@ module.exports = (grunt) ->
 		'uglify:assets'
 		'bake:js'
 	]
+
 	grunt.registerTask 'css', [
 		'sass:assets'
 		'concat:css'
 		'cssmin:assets'
 	]
+
 	grunt.registerTask 'modules', [
 		'coffee:modules'
 		'concat:modules'
@@ -181,6 +185,24 @@ module.exports = (grunt) ->
 		'bake:modules'
 		'cssmin:modules'
 	]
+
 	grunt.registerTask 'temp', [
 		'clean'
 	]
+
+	grunt.registerTask 'npm', ->
+
+		exec = grunt.config.get 'exec'
+
+		# Read all directories
+		grunt.file.expand("./modules/*").forEach (dir) ->
+
+			exec.push "cd #{ dir }"
+			exec.push 'npm install'
+			exec.push 'cd ../../'
+
+		# Save
+		grunt.config.set 'exec', exec.join('&&')
+
+		# When finished run in shell
+		grunt.task.run 'shell:npm'
