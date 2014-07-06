@@ -44,7 +44,7 @@ code = (user, callback) ->
 		###
 
 		_hash = hash().substr 0, 8
-		_user = if user < 10 then "0" + user else user
+		_user = if user < 10 then '0' + user else user
 
 		return _user + _hash
 
@@ -102,7 +102,7 @@ code = (user, callback) ->
 qr = (code) ->
 
 	file	= "#{ code }.png"
-	path	= "./cache/" + file
+	path	= './cache/' + file
 
 	encoder.encode code, path
 
