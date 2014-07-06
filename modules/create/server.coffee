@@ -189,8 +189,6 @@ generate = (url, data, callback) ->
 			page.set 'paperSize', paperSize, ->
 				page.open url, (err, status) ->
 
-					console.log 5
-
 					if status isnt 'success'
 
 						console.log 'Unable to load the url!'
