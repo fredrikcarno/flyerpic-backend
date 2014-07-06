@@ -183,27 +183,27 @@ generate = (url, data, callback) ->
 
 		ph.createPage (err, page) ->
 
-			output				= 'cache/test.pdf'
-			page.viewportSize	= { width: 600, height: 600 }
-			page.paperSize		= { format: 'A4', orientation: 'portrait', margin: '0.3cm' }
+			output			= 'cache/test.pdf'
+			paperSize		= { format: 'A4', orientation: 'portrait', margin: '0.3cm' }
 
-			page.open url, (err, status) ->
+			page.set 'paperSize', paperSize, ->
+				page.open url, (err, status) ->
 
-				console.log 5
+					console.log 5
 
-				if status isnt 'success'
+					if status isnt 'success'
 
-					console.log 'Unable to load the url!'
-					callback false
-					return false
+						console.log 'Unable to load the url!'
+						callback false
+						return false
 
-				else
+					else
 
-					setTimeout ->
-						page.render output
-						callback true
-						return true
-					, 200
+						setTimeout ->
+							page.render output
+							callback true
+							return true
+						, 200
 
 module.exports = (app, _db) ->
 
