@@ -10,7 +10,7 @@ config		= require './../data/config.json'
 structure	=	"""
 				CREATE TABLE `lychee_users` (
 				  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-				  `type` varchar(10) NOT NULL DEFAULT 'photographer',
+				  `type` varchar(30) NOT NULL DEFAULT 'photographer',
 				  `username` varchar(100) NOT NULL DEFAULT '',
 				  `password` varchar(100) NOT NULL DEFAULT '',
 				  `name` varchar(50) CHARACTER SET latin1 NOT NULL DEFAULT '',
