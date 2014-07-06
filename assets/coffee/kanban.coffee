@@ -6,9 +6,6 @@ this.kanban =
 
 	init: ->
 
-		# Define router
-		window.router = new Router().init '/'
-
 		# Bind hotkeys
 		Mousetrap.bindGlobal 'enter', () ->
 			if $('.modalContainer').length isnt 0

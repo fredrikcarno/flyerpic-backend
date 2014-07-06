@@ -28,25 +28,23 @@ m.add m.menu =
 		# Render
 		m.menu.dom().append m.menu.render.all()
 
-		# Add route
-		router.on '/', ->
-			setTimeout ->
-				m.menu.dom().show()
-			, 100
-
 		# Bind menus
 		m.menu.bind()
 
-		# Init routes
-		router.init()
+		# Show menus
+		setTimeout ->
+			m.menu.dom().show()
+		, 100
+
 
 	bind: ->
 
 		# Define shorthand
 		dom = m.menu.dom
 
-		dom('#create, #upload, #settings').on 'click', ->
-			router.setRoute '/' + $(this).attr('id')
+		dom('#menu_create').on 'click', m.create.show
+		dom('#menu_upload').on 'click', m.create.show
+		dom('#menu_settings').on 'click', m.create.show
 
 	render:
 
