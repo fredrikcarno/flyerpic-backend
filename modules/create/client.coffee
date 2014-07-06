@@ -39,7 +39,6 @@ m.add m.create =
 
 				params = "api/m/create/output/pdf?url=#{ url }&data=#{ data }"
 
-				kanban.api params, (data) ->
+				kanban.api params, (file) ->
 
-					alert data
-					#window.open url + data
+					window.open file

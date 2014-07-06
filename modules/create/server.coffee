@@ -14,13 +14,14 @@ middleware	= require './../../node/middleware'
 # Variables
 db = null
 
+hash = ->
+
+	currentDate = (new Date()).valueOf().toString()
+	random = Math.random().toString()
+	return crypto.createHash('sha1').update(currentDate + random).digest('hex')
+
 code = (user, callback) ->
 
-	hash = ->
-
-		currentDate = (new Date()).valueOf().toString()
-		random = Math.random().toString()
-		return crypto.createHash('sha1').update(currentDate + random).digest('hex')
 
 	flatten = (array) ->
 
@@ -183,8 +184,8 @@ output = (_url, data, callback) ->
 
 		ph.createPage (err, page) ->
 
-			file			= 'cache/test.pdf'
-			paperSize		= { format: 'A4', orientation: 'portrait', margin: '0.3cm' }
+			file		= "cache/#{ hash() }.pdf"
+			paperSize	= { format: 'A4', orientation: 'portrait', margin: '0.3cm' }
 
 			page.set 'paperSize', paperSize, ->
 				page.open _url, (err, status) ->
@@ -199,7 +200,7 @@ output = (_url, data, callback) ->
 
 						setTimeout ->
 							page.render file
-							callback true
+							callback file
 							return true
 						, 200
 
@@ -209,21 +210,26 @@ module.exports = (app, _db) ->
 
 	app.get '/api/m/create/url/pdf', middleware.auth, (req, res) ->
 
+		#@todo Check user and number
+
 		url req.session.user, req.query.number, (data) ->
 			res.json data
 			return true
 
 	app.get '/api/m/create/output/pdf', middleware.auth, (req, res) ->
 
-		output req.query.url, req.query.data, (ready) ->
+		#@todo Check url and data
 
-			if ready is true
+		output req.query.url, req.query.data, (file) ->
 
-				res.json 'ready'
-				return true
+			if file is false
+
+				res.json 'not ready' #@todo Error return
+				return false
 
 			else
 
-				res.json 'not ready'
-				return false
+				res.json file
+				return true
+
 
