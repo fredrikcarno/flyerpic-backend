@@ -12,5 +12,16 @@
 			"title": "Settings",
 			"description": "Edit your personal settings and details"
 		}
+	},
+	"create": {
+		"dialog": {
+			"title": "Create Flyers",
+			"description": "Please choose the type of flyer and number of flyers you want to generate.",
+			"close": "Close",
+			"confirm": "Create Flyers",
+			"input": {
+				"number": "Number of flyers"
+			}
+		}
 	}
 }

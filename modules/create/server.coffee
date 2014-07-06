@@ -3,11 +3,13 @@ async	= require 'async'
 crypto	= require 'crypto'
 joi		= require 'joi'
 _		= require 'underscore'
+phantom	= require 'node-phantom'
 Encoder = require('qr').Encoder
 encoder = new Encoder
 
 # Kanban modules
-log		= require './../../node/log'
+log			= require './../../node/log'
+middleware	= require './../../node/middleware'
 
 # Variables
 db = null
@@ -168,9 +170,62 @@ url = (user, number, callback) ->
 			# Return data
 			callback url
 
+generate = (url, data, callback) ->
+
+	###
+	Description:	Generates a pdf from the flyers html and generated data
+	Return:			Boolean
+	###
+
+	url = url + '#' + data
+
+	phantom.create (err, ph) ->
+
+		ph.createPage (err, page) ->
+
+			output				= 'cache/test.pdf'
+			page.viewportSize	= { width: 600, height: 600 }
+			page.paperSize		= { format: 'A4', orientation: 'portrait', margin: '0.3cm' }
+
+			page.open url, (err, status) ->
+
+				console.log 5
+
+				if status isnt 'success'
+
+					console.log 'Unable to load the url!'
+					callback false
+					return false
+
+				else
+
+					setTimeout ->
+						page.render output
+						callback true
+						return true
+					, 200
+
 module.exports = (app, _db) ->
 
 	db = _db
 
-	url 1, 30, (data) ->
-		console.log data
+	app.get '/api/m/create/url/pdf', middleware.auth, (req, res) ->
+
+		url req.session.user, req.query.number, (data) ->
+			res.json data
+			return true
+
+	app.get '/api/m/create/generate/pdf', middleware.auth, (req, res) ->
+
+		generate req.query.url, req.query.data, (ready) ->
+
+			if ready is true
+
+				res.json 'ready'
+				return true
+
+			else
+
+				res.json 'not ready'
+				return false
+
