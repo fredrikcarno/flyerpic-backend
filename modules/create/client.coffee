@@ -37,7 +37,7 @@ m.add m.create =
 
 			kanban.api params, (data) ->
 
-				params = "api/m/create/generate/pdf?url=#{ url }&data=#{ data }"
+				params = "api/m/create/output/pdf?url=#{ url }&data=#{ data }"
 
 				kanban.api params, (data) ->
 

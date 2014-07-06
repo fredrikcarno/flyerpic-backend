@@ -165,29 +165,29 @@ url = (user, number, callback) ->
 				flyers: flyers
 
 			# Parse url
-			url = encodeURIComponent JSON.stringify(data)
+			_url = encodeURIComponent JSON.stringify(data)
 
 			# Return data
-			callback url
+			callback _url
 
-generate = (url, data, callback) ->
+output = (_url, data, callback) ->
 
 	###
 	Description:	Generates a pdf from the flyers html and generated data
 	Return:			Boolean
 	###
 
-	url = url + '#' + data
+	_url = _url + '#' + data
 
 	phantom.create (err, ph) ->
 
 		ph.createPage (err, page) ->
 
-			output			= 'cache/test.pdf'
+			file			= 'cache/test.pdf'
 			paperSize		= { format: 'A4', orientation: 'portrait', margin: '0.3cm' }
 
 			page.set 'paperSize', paperSize, ->
-				page.open url, (err, status) ->
+				page.open _url, (err, status) ->
 
 					if status isnt 'success'
 
@@ -198,7 +198,7 @@ generate = (url, data, callback) ->
 					else
 
 						setTimeout ->
-							page.render output
+							page.render file
 							callback true
 							return true
 						, 200
@@ -213,9 +213,9 @@ module.exports = (app, _db) ->
 			res.json data
 			return true
 
-	app.get '/api/m/create/generate/pdf', middleware.auth, (req, res) ->
+	app.get '/api/m/create/output/pdf', middleware.auth, (req, res) ->
 
-		generate req.query.url, req.query.data, (ready) ->
+		output req.query.url, req.query.data, (ready) ->
 
 			if ready is true
 
