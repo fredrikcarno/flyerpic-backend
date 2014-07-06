@@ -34,7 +34,9 @@
     "jsqrcode": "0.0.6",
     "morgan": "^1.0.1",
     "mysql": "git://github.com/felixge/node-mysql",
+    "node-phantom": "^0.2.5",
     "pdfkit": "^0.6.2",
+    "socket.io": "^0.9.16",
     "sqlite3": "^2.2.3",
     "validator": "^3.11.2"
   },
