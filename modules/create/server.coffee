@@ -126,8 +126,8 @@ flyer = (user, callback) ->
 		# Save code
 		data.code = _code
 
-		# Get qr image
-		data.qr = qr data.code
+		# Make qr image
+		qr data.code
 
 		# Return data
 		callback data

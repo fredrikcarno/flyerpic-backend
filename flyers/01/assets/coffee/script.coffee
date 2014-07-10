@@ -31,7 +31,7 @@ build =
 						<p>Visit example.com and enter your private code or scan the QR-Code with your phone</p>
 						<div class="codes">
 							<div class="qr">
-								<img src="../../cache/#{ data.qr }" alt="" width="100" height="100">
+								<img src="../../cache/#{ data.code }.png" alt="" width="100" height="100">
 							</div>
 							<p class="separator">- or -</p>
 							<div class="text">
@@ -87,10 +87,10 @@ init = ->
 
 		# Generate page without codes
 		data.flyers = [
-			{qr: '', code: ''}
-			{qr: '', code: ''}
-			{qr: '', code: ''}
-			{qr: '', code: ''}
+			{code: ''}
+			{code: ''}
+			{code: ''}
+			{code: ''}
 		]
 
 	# For each flyer
