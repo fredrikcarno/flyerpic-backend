@@ -122,4 +122,4 @@ this.kanban =
 		kanban.api 'api/session/logout', (data) ->
 			window.location.reload()
 
-$(document).ready -> kanban.init()
+$(document).ready kanban.init
