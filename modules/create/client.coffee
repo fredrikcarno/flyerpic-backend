@@ -12,6 +12,16 @@ m.add m.create =
 			body:	"""
 					<h1>{{ create.dialog.title }}</h1>
 					<p>{{ create.dialog.description }}</p>
+					<div id="type" class="dropdown" data-value="pdf">
+						<div class="front text"><span>PDF A4 with Codes</span></div>
+						<div class="back">
+							<ul>
+								<li data-value="pdf">PDF A4 with Codes</li>
+								<li data-value="template">PDF A4 without Codes</li>
+								<li data-value="codes">PDF A4 Codes only</li>
+							</ul>
+						</div>
+					</div>
 					<input class="text" type="text" placeholder="{{ create.dialog.input.number }}" data-name="number">
 					"""
 			closable: true
@@ -24,21 +34,28 @@ m.add m.create =
 					title: '{{ create.dialog.confirm }}'
 					color: 'normal'
 					icon: ''
-					fn: m.create.get.pdf
+					fn: m.create.get
 
-	get:
+	get: (data) ->
 
-		pdf: (data) ->
+		action = $('#type').data 'value'
 
-			modal.close()
+		modal.close()
 
-			params	= "api/m/create/url/pdf?number=#{ data.number }"
-			url		= 'http://localhost:8888/flyers/01/index.html'
+		switch action
+			when 'pdf'
+				params	= "api/m/create/url/pdf?number=#{ data.number }"
+			when 'template'
+				params	= "api/m/create/url/template"
+			when 'codes'
+				params	= "api/m/create/url/codes?number=#{ data.number }"
 
-			kanban.api params, (data) ->
+		url = 'http://localhost:8888/flyers/01/index.html'
 
-				params = "api/m/create/output/pdf?url=#{ url }&data=#{ data }"
+		kanban.api params, (data) ->
 
-				kanban.api params, (file) ->
+			params = "api/m/create/output/pdf?url=#{ url }&data=#{ data }"
 
-					window.open file
+			kanban.api params, (file) ->
+
+				window.open file

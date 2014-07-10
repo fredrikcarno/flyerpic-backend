@@ -133,7 +133,7 @@ flyer = (user, callback) ->
 		callback data
 		return true
 
-url = (user, number, callback) ->
+url = (type, user, number, callback) ->
 
 	###
 	Description:	Generates a json and converts it to a url
@@ -163,7 +163,16 @@ url = (user, number, callback) ->
 				photographer:
 					name: _user.name
 					mail: _user.primarymail
+					template: false
+					codes: false
 				flyers: flyers
+
+			# Set type
+			switch type
+				when 'template'
+					data.template = true
+				when 'codes'
+					data.codes = true
 
 			# Parse url
 			_url = encodeURIComponent JSON.stringify(data)
@@ -212,7 +221,23 @@ module.exports = (app, _db) ->
 
 		#@todo Check user and number
 
-		url req.session.user, req.query.number, (data) ->
+		url 'pdf', req.session.user, req.query.number, (data) ->
+			res.json data
+			return true
+
+	app.get '/api/m/create/url/template', middleware.auth, (req, res) ->
+
+		#@todo Check user
+
+		url 'template', req.session.user, 0, (data) ->
+			res.json data
+			return true
+
+	app.get '/api/m/create/url/codes', middleware.auth, (req, res) ->
+
+		#@todo Check user and number
+
+		url 'codes', req.session.user, req.query.number, (data) ->
 			res.json data
 			return true
 
