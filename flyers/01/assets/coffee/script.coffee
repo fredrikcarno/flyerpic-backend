@@ -83,6 +83,16 @@ init = ->
 		$('body').html 'Error: Could not parse data'
 		return false
 
+	if data.template is true
+
+		# Generate page without codes
+		data.flyers = [
+			{qr: '', code: ''}
+			{qr: '', code: ''}
+			{qr: '', code: ''}
+			{qr: '', code: ''}
+		]
+
 	# For each flyer
 	data.flyers.forEach (element, index, array) ->
 
@@ -98,6 +108,14 @@ init = ->
 		flyer = build.flyer data.photographer, element
 		$('body .page:last-child .flyers').append flyer
 
-$(document).ready ->
+	if data.template is true
 
-	init()
+		# Hide elements, because they are empty
+		$('.qr, .text').css 'opacity', 0
+
+	if data.codes is true
+
+		$('.head, .step, .left, p').css 'opacity', 0
+		$('.step:first-child, .codes').css 'opacity', 1
+
+$(document).ready init
