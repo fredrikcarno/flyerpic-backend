@@ -120,6 +120,7 @@ module.exports = (grunt) ->
 					'cache/modules.js': 'cache/modules.js'
 
 		shell:
+
 			npm:
 				command: '<%= exec %>'
 
@@ -152,6 +153,17 @@ module.exports = (grunt) ->
 					spawn: false
 					interrupt: true
 
+		autoprefixer:
+
+			options:
+				browsers: ['last 2 version', 'ie 8', 'ie 9']
+
+			assets:
+				src: 'cache/.temp/assets_css/*.css'
+
+			modules:
+				src: 'cache/.temp/modules.css'
+
 		clean: ['cache/.temp/']
 
 	require('load-grunt-tasks')(grunt)
@@ -172,6 +184,7 @@ module.exports = (grunt) ->
 
 	grunt.registerTask 'css', [
 		'sass:assets'
+		'autoprefixer:assets'
 		'concat:css'
 		'cssmin:assets'
 	]
@@ -181,6 +194,7 @@ module.exports = (grunt) ->
 		'concat:modules'
 		'concat:json'
 		'sass:modules'
+		'autoprefixer:modules'
 		'uglify:modules'
 		'bake:modules'
 		'cssmin:modules'
