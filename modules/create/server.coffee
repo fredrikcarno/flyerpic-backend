@@ -16,9 +16,18 @@ db = null
 
 hash = ->
 
+	###
+	Description:	Generates a good readable 20 chars long random hash
+	Return:			String
+	###
+
 	currentDate = (new Date()).valueOf().toString()
 	random = Math.random().toString()
-	return crypto.createHash('sha1').update(currentDate + random).digest('hex')
+	value = crypto.createHash('sha1').update(currentDate + random).digest('hex')
+	value = value.replace /[01liao]/g, ''
+
+	if value.length < 20 then return hash()
+	else return value.substr(0, 20)
 
 code = (user, callback) ->
 
