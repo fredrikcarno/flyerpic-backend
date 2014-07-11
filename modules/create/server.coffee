@@ -147,6 +147,10 @@ url = (type, user, number, callback) ->
 	Return:			String
 	###
 
+	# Turn number into pages
+	# 4 flyers per page
+	number = number * 4
+
 	# Get user info
 	db.users.me user, (_user) ->
 
