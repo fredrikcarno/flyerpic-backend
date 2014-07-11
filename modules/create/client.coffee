@@ -54,11 +54,19 @@ m.add m.create =
 
 	get: (data) ->
 
-		action = $('#type').data 'value'
+		data.action = $('#type').data 'value'
+
+		if	not data?.number? or
+			data.number is '' or not
+			(data.number > 0 and data.number <= 100)
+
+				# Invalid number
+				modal.error 'number'
+				return false
 
 		modal.close()
 
-		switch action
+		switch data.action
 			when 'pdf'
 				params	= "api/m/create/url/pdf?number=#{ data.number }"
 			when 'template'
