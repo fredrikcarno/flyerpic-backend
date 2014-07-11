@@ -219,9 +219,9 @@ output = (_url, data, callback) ->
 					else
 
 						setTimeout ->
-							page.render file
-							callback file
-							return true
+							page.render file, ->
+								callback file
+								return true
 						, 200
 
 module.exports = (app, _db) ->
