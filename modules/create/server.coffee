@@ -140,7 +140,7 @@ flyer = (user, callback) ->
 		callback data
 		return true
 
-url = (type, user, number, callback) ->
+url = (type, cutlines, user, number, callback) ->
 
 	###
 	Description:	Generates a json and converts it to a url
@@ -176,6 +176,7 @@ url = (type, user, number, callback) ->
 					mail: _user.primarymail
 					template: false
 					codes: false
+					cutlines: true
 				flyers: flyers
 
 			# Set type
@@ -184,6 +185,10 @@ url = (type, user, number, callback) ->
 					data.template = true
 				when 'codes'
 					data.codes = true
+
+			# Set cutlines
+			if cutlines is 'false'
+				data.cutlines = false
 
 			# Parse url
 			_url = encodeURIComponent JSON.stringify(data)
@@ -202,7 +207,17 @@ output = (_url, data, callback) ->
 
 	phantom.create (err, ph) ->
 
+		if err?
+			log.error 'create', 'Unable to init phantom', err
+			callback { error: 'Unable to init phantom', details: err }
+			return false
+
 		ph.createPage (err, page) ->
+
+			if err?
+				log.error 'create', 'Unable to create page for pdf', err
+				callback { error: 'Unable to create page for pdf', details: err }
+				return false
 
 			file		= "cache/#{ hash() }.pdf"
 			paperSize	= { format: 'A4', orientation: 'portrait', margin: '0.3cm' }
@@ -210,10 +225,10 @@ output = (_url, data, callback) ->
 			page.set 'paperSize', paperSize, ->
 				page.open _url, (err, status) ->
 
-					if status isnt 'success'
+					if status isnt 'success' or err?
 
-						console.log 'Unable to load the url!'
-						callback false
+						log.error 'create', 'Unable to load the flyer url', err
+						callback { error: 'Unable to load the flyer url', details: null }
 						return false
 
 					else
@@ -232,7 +247,7 @@ module.exports = (app, _db) ->
 
 		#@todo Check user and number
 
-		url 'pdf', req.session.user, req.query.number, (data) ->
+		url 'pdf', true, req.session.user, req.query.number, (data) ->
 			res.json data
 			return true
 
@@ -240,7 +255,7 @@ module.exports = (app, _db) ->
 
 		#@todo Check user
 
-		url 'template', req.session.user, 0, (data) ->
+		url 'template', true, req.session.user, 0, (data) ->
 			res.json data
 			return true
 
@@ -248,7 +263,7 @@ module.exports = (app, _db) ->
 
 		#@todo Check user and number
 
-		url 'codes', req.session.user, req.query.number, (data) ->
+		url 'codes', true, req.session.user, req.query.number, (data) ->
 			res.json data
 			return true
 
