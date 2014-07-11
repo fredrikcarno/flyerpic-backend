@@ -118,4 +118,8 @@ init = ->
 		$('.head, .step, .left, p').css 'opacity', 0
 		$('.step:first-child, .codes').css 'opacity', 1
 
+	if data.cutlines is false
+
+		$('.cutline').css 'opacity', 0
+
 $(document).ready init
