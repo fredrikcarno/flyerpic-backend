@@ -21,9 +21,7 @@ hash = ->
 	Return:			String
 	###
 
-	currentDate = (new Date()).valueOf().toString()
-	random = Math.random().toString()
-	value = crypto.createHash('sha1').update(currentDate + random).digest('hex')
+	value = crypto.randomBytes(20).toString('hex')
 	value = value.replace /[01liao]/g, ''
 
 	if value.length < 20 then return hash()
