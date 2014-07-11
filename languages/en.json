@@ -17,12 +17,22 @@
 		"dialog": {
 			"title": "Create Flyers",
 			"description": "Please choose the type of flyer and number of pages you want to print.",
+			"help": "Get help &rsaquo;",
 			"close": "Close",
 			"confirm": "Create Flyers",
 			"dropdown": {
-				"pdf": "Flyer with Codes",
-				"template": "Flyer without Codes",
-				"codes": "Flyer with Codes only"
+				"pdf": {
+					"title": "Flyer with Codes",
+					"info": "PDF to print at home"
+				},
+				"template": {
+					"title": "Flyer without Codes",
+					"info": "PDF to send to a print service"
+				},
+				"codes": {
+					"title": "Flyer with Codes only",
+					"info": "PDF to print over flyers without codes"
+				}
 			},
 			"input": {
 				"number": "Number of pages"

@@ -8,17 +8,33 @@ m.add m.create =
 
 	show: ->
 
+		$(document).on 'click', '.dropdown .back ul li', ->
+			if $(this).data('value') is 'template'
+				$('.modal input.text[data-name="number"]').hide()
+			else
+				$('.modal input.text[data-name="number"]').show()
+
 		modal.show
 			body:	"""
 					<h1>{{ create.dialog.title }}</h1>
-					<p>{{ create.dialog.description }}</p>
+					<p>{{ create.dialog.description }} <a href="#">{{ create.dialog.help }}</a></p>
 					<div id="type" class="dropdown" data-value="pdf">
-						<div class="front text"><span>{{ create.dialog.dropdown.pdf }}</span></div>
+						<div class="front text"><span>{{ create.dialog.dropdown.pdf.title }}</span></div>
 						<div class="back">
 							<ul>
-								<li data-value="pdf">{{ create.dialog.dropdown.pdf }}</li>
-								<li data-value="template">{{ create.dialog.dropdown.template }}</li>
-								<li data-value="codes">{{ create.dialog.dropdown.codes }}</li>
+								<li data-value="pdf">
+									{{ create.dialog.dropdown.pdf.title }}
+									<span>{{ create.dialog.dropdown.pdf.info }}</span>
+								</li>
+								<li class="separator"></li>
+								<li data-value="template">
+									{{ create.dialog.dropdown.template.title }}
+									<span>{{ create.dialog.dropdown.template.info }}</span>
+								</li>
+								<li data-value="codes">
+									{{ create.dialog.dropdown.codes.title }}
+									<span>{{ create.dialog.dropdown.codes.info }}</span>
+								</li>
 							</ul>
 						</div>
 					</div>
