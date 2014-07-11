@@ -13,12 +13,12 @@ m.add m.create =
 					<h1>{{ create.dialog.title }}</h1>
 					<p>{{ create.dialog.description }}</p>
 					<div id="type" class="dropdown" data-value="pdf">
-						<div class="front text"><span>PDF A4 with Codes</span></div>
+						<div class="front text"><span>{{ create.dialog.dropdown.pdf }}</span></div>
 						<div class="back">
 							<ul>
-								<li data-value="pdf">PDF A4 with Codes</li>
-								<li data-value="template">PDF A4 without Codes</li>
-								<li data-value="codes">PDF A4 Codes only</li>
+								<li data-value="pdf">{{ create.dialog.dropdown.pdf }}</li>
+								<li data-value="template">{{ create.dialog.dropdown.template }}</li>
+								<li data-value="codes">{{ create.dialog.dropdown.codes }}</li>
 							</ul>
 						</div>
 					</div>

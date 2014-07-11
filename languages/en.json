@@ -16,11 +16,16 @@
 	"create": {
 		"dialog": {
 			"title": "Create Flyers",
-			"description": "Please choose the type of flyer and number of flyers you want to generate.",
+			"description": "Please choose the type of flyer and number of pages you want to print.",
 			"close": "Close",
 			"confirm": "Create Flyers",
+			"dropdown": {
+				"pdf": "Flyer with Codes",
+				"template": "Flyer without Codes",
+				"codes": "Flyer with Codes only"
+			},
 			"input": {
-				"number": "Number of flyers"
+				"number": "Number of pages"
 			}
 		}
 	}
