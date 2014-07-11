@@ -56,16 +56,21 @@ m.add m.create =
 
 		data.action = $('#type').data 'value'
 
-		if	not data?.number? or
-			data.number is '' or not
-			(data.number > 0 and data.number <= 100)
+		# Check input when value required
+		# Value is irrelevant when type is template
+		if data.action isnt 'template'
 
-				# Invalid number
-				modal.error 'number'
-				return false
+			# Is value available and between 0 and 101?
+			if	not data?.number? or
+				not (data.number > 0 and data.number <= 100)
+
+					# Invalid number
+					modal.error 'number'
+					return false
 
 		modal.close()
 
+		# Set type
 		switch data.action
 			when 'pdf'
 				params	= "api/m/create/url/pdf?number=#{ data.number }"
