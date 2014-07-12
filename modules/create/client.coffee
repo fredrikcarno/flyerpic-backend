@@ -60,7 +60,7 @@ m.add m.create =
 					<p>Please wait till your flyers are generated. This process can take a while.</p>
 					<div class="spinner"><span class="dot"></span></div>
 					"""
-			closable: false
+			closable: true
 			class: 'login'
 			buttons:
 				cancel:
