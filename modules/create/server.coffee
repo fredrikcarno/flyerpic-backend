@@ -111,9 +111,19 @@ code = (user, callback) ->
 
 qr = (code) ->
 
+	###
+	Description:	Generates the QR-File based on the code
+	Return:			String
+	###
+
+	# Validate code
+	if not code? or not validator.isAlphanumeric code
+		return false
+
 	file	= "#{ code }.png"
 	path	= './cache/' + file
 
+	# Generate QR-File
 	encoder.encode code, path
 
 	return file
@@ -122,22 +132,34 @@ flyer = (user, callback) ->
 
 	###
 	Description:	Generates a json with qr and code
-	Return:			JSON
+	Return:			Err, JSON
 	###
 
 	data = {}
 
+	# Validate user
+	if not user?
+		callback { error: 'Invalid value for user', details: null }
+		return false
+
 	# Get code
 	code user, (_code) ->
+
+		# Validate code
+		if not _code? or not validator.isAlphanumeric _code
+			callback { error: 'Invalid returned code', details: null }
+			return false
 
 		# Save code
 		data.code = _code
 
 		# Make qr image
-		qr data.code
+		if qr(data.code) is false
+			callback { error: 'Could not generate QR-File', details: null }
+			return false
 
 		# Return data
-		callback data
+		callback null, data
 		return true
 
 url = (type, cutlines, user, number, callback) ->
@@ -177,12 +199,22 @@ url = (type, cutlines, user, number, callback) ->
 
 		, (callback) ->
 
-			flyer user, (_flyer) ->
-				flyers.push _flyer
-				number--
-				callback()
+			flyer user, (err, _flyer) ->
+
+				if err?
+					callback err
+					return false
+				else
+					flyers.push _flyer
+					number--
+					callback()
 
 		, (err) ->
+
+			# Handle err
+			if err?
+				callback err
+				return false
 
 			# Build json
 			data =
