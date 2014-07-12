@@ -9,7 +9,7 @@ m.add m.create =
 	show: ->
 
 		$(document).on 'click', '.dropdown .back ul li', ->
-			if $(this).data('value') is 'template'
+			if $(this).attr('data-value') is 'template'
 				$('.modal input.text[data-name="number"]').hide()
 			else
 				$('.modal input.text[data-name="number"]').show()
@@ -18,7 +18,7 @@ m.add m.create =
 			body:	"""
 					<h1>{{ create.dialog.title }}</h1>
 					<p>{{ create.dialog.description }} <a href="#">{{ create.dialog.help }}</a></p>
-					<div id="type" class="dropdown" data-value="pdf">
+					<div class="dropdown" data-name="action" data-value="pdf">
 						<div class="front text"><span>{{ create.dialog.dropdown.pdf.title }}</span></div>
 						<div class="back">
 							<ul>
@@ -58,8 +58,6 @@ m.add m.create =
 			class: 'login'
 
 	get: (data) ->
-
-		data.action = $('#type').data 'value'
 
 		# Check input when value required
 		# Value is irrelevant when type is template
