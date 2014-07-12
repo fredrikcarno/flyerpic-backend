@@ -52,6 +52,32 @@ m.add m.create =
 					icon: ''
 					fn: m.create.get
 
+	loading: ->
+
+		modal.show
+			body:	"""
+					<h1>Creating Flyers</h1>
+					<p>Please wait till your flyers are generated. This process can take a while.</p>
+					<div class="spinner">
+						<div class="rect1"></div>
+						<div class="rect2"></div>
+						<div class="rect3"></div>
+						<div class="rect4"></div>
+						<div class="rect5"></div>
+					</div>
+					"""
+			closable: false
+			class: 'login'
+			buttons:
+				cancel:
+					title: ''
+					fn: -> modal.close()
+				action:
+					title: ''
+					color: 'normal'
+					icon: ''
+					fn: m.create.get
+
 	get: (data) ->
 
 		data.action = $('#type').data 'value'
@@ -68,8 +94,6 @@ m.add m.create =
 					modal.error 'number'
 					return false
 
-		modal.close()
-
 		# Set type
 		switch data.action
 			when 'pdf'
@@ -81,10 +105,24 @@ m.add m.create =
 
 		url = 'http://localhost:8888/flyers/01/index.html'
 
+		# Show loading dialog
+		m.create.loading()
+
 		kanban.api params, (data) ->
+
+			# Stop when data is invalid
+			if data is false
+				modal.close()
+				return false
 
 			params = "api/m/create/output/pdf?url=#{ url }&data=#{ data }"
 
 			kanban.api params, (file) ->
 
+				# Stop when data is invalid
+				if file is false
+					modal.close()
+					return false
+
+				modal.close()
 				window.open file

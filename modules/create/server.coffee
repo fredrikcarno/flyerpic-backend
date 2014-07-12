@@ -1,11 +1,12 @@
 # Dependencies
-async	= require 'async'
-crypto	= require 'crypto'
-joi		= require 'joi'
-_		= require 'underscore'
-phantom	= require 'node-phantom'
-Encoder = require('qr').Encoder
-encoder = new Encoder
+async		= require 'async'
+crypto		= require 'crypto'
+joi			= require 'joi'
+_			= require 'underscore'
+phantom		= require 'node-phantom'
+validator	= require 'validator'
+Encoder 	= require('qr').Encoder
+encoder 	= new Encoder
 
 # Kanban modules
 log			= require './../../node/log'
@@ -28,7 +29,6 @@ hash = ->
 	else return value.substr(0, 20)
 
 code = (user, callback) ->
-
 
 	flatten = (array) ->
 
@@ -144,8 +144,23 @@ url = (type, cutlines, user, number, callback) ->
 
 	###
 	Description:	Generates a json and converts it to a url
-	Return:			String
+	Return:			Err, String
 	###
+
+	# Validate type
+	if not type?
+		callback { error: 'Invalid data for variable type', details: null }
+		return false
+
+	# Validate user
+	if not validator.isInt user
+		callback { error: 'Invalid data for variable user', details: null }
+		return false
+
+	# Validate number
+	if not validator.isInt number
+		callback { error: 'Invalid data for variable number', details: null }
+		return false
 
 	# Turn number into pages
 	# 4 flyers per page
@@ -194,28 +209,37 @@ url = (type, cutlines, user, number, callback) ->
 			_url = encodeURIComponent JSON.stringify(data)
 
 			# Return data
-			callback _url
+			callback null, _url
 
 output = (_url, data, callback) ->
 
 	###
 	Description:	Generates a pdf from the flyers html and generated data
-	Return:			Boolean
+	Return:			Err, Boolean
 	###
 
+	# Validate _url
+	if not validator.isURL _url
+		callback { error: 'Invalid data for variable url', details: null }
+		return false
+
+	# Validate data
+	if not data?
+		callback { error: 'Invalid data for variable data', details: null }
+		return false
+
+	# Concat url and data
 	_url = _url + '#' + data
 
 	phantom.create (err, ph) ->
 
 		if err?
-			log.error 'create', 'Unable to init phantom', err
 			callback { error: 'Unable to init phantom', details: err }
 			return false
 
 		ph.createPage (err, page) ->
 
 			if err?
-				log.error 'create', 'Unable to create page for pdf', err
 				callback { error: 'Unable to create page for pdf', details: err }
 				return false
 
@@ -227,7 +251,6 @@ output = (_url, data, callback) ->
 
 					if status isnt 'success' or err?
 
-						log.error 'create', 'Unable to load the flyer url', err
 						callback { error: 'Unable to load the flyer url', details: null }
 						return false
 
@@ -235,7 +258,7 @@ output = (_url, data, callback) ->
 
 						setTimeout ->
 							page.render file, ->
-								callback file
+								callback null, file
 								return true
 						, 200
 
@@ -245,42 +268,48 @@ module.exports = (app, _db) ->
 
 	app.get '/api/m/create/url/pdf', middleware.auth, (req, res) ->
 
-		#@todo Check user and number
+		url 'pdf', true, req.session.user, req.query.number, (err, data) ->
 
-		url 'pdf', true, req.session.user, req.query.number, (data) ->
-			res.json data
-			return true
+			if err?
+				log.error 'create', err.error, err.details
+				res.json err
+				return false
+			else
+				res.json data
+				return true
 
 	app.get '/api/m/create/url/template', middleware.auth, (req, res) ->
 
-		#@todo Check user
+		url 'template', true, req.session.user, 0, (err, data) ->
 
-		url 'template', true, req.session.user, 0, (data) ->
-			res.json data
-			return true
+			if err?
+				log.error 'create', err.error, err.details
+				res.json err
+				return false
+			else
+				res.json data
+				return true
 
 	app.get '/api/m/create/url/codes', middleware.auth, (req, res) ->
 
-		#@todo Check user and number
+		url 'codes', true, req.session.user, req.query.number, (err, data) ->
 
-		url 'codes', true, req.session.user, req.query.number, (data) ->
-			res.json data
-			return true
+			if err?
+				log.error 'create', err.error, err.details
+				res.json err
+				return false
+			else
+				res.json data
+				return true
 
 	app.get '/api/m/create/output/pdf', middleware.auth, (req, res) ->
 
-		#@todo Check url and data
+		output req.query.url, req.query.data, (err, file) ->
 
-		output req.query.url, req.query.data, (file) ->
-
-			if file is false
-
-				res.json 'not ready' #@todo Error return
+			if err? or not file?
+				log.error 'create', err.error, err.details
+				res.json err
 				return false
-
 			else
-
 				res.json file
 				return true
-
-
