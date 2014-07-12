@@ -6,8 +6,7 @@ build =
 		<div class="page" data-number="#{ number }">
 
 			<div class="cutline vertical"></div>
-			<div class="cutline horizontalTop"></div>
-			<div class="cutline horizontalBottom"></div>
+			<div class="cutline horizontal"></div>
 
 			<div class="flyers"></div>
 		</div>
@@ -58,6 +57,9 @@ build =
 					</div>
 				</div>
 			</div>
+			<p class="note">
+				Photos are available from the next business day till 15 days from now. Payment using PayPal. Questions? #{ photographer.mail }
+			</p>
 		</div>
 		"""
 

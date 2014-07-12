@@ -31,20 +31,13 @@ body {
 	&.vertical {
 		margin: 0 50%;
 		height: 100%;
-		border-right: 1px dashed #000;
+		border-right: 1px dashed #666;
 	}
 
-	&.horizontalTop {
-		margin: 460px 0 0 0;
+	&.horizontal {
+		margin: 510px 0 0 0;
 		width: 100%;
-		border-bottom: 1px dashed #000;
-	}
-
-	&.horizontalBottom {
-		margin: 800px 0 0 0;
-		width: 100%;
-		border-bottom: 1px dashed #000;
-		display: none;
+		border-bottom: 1px dashed #666;
 	}
 }
 
@@ -193,5 +186,15 @@ body {
 				}
 
 		}
+
+	/* Note ------------------------------------------------- */
+	p.note {
+		display: inline-block;
+		margin: -20px 10px 10px 10px;
+		padding: 18px 14px;
+		text-align: center;
+		color: rgba(0, 0, 0, .4);
+		font-size: 10px;
+	}
 
 }
