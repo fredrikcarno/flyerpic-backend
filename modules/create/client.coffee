@@ -56,8 +56,8 @@ m.add m.create =
 
 		modal.show
 			body:	"""
-					<h1>Creating Flyers</h1>
-					<p>Please wait till your flyers are generated. This process can take a while.</p>
+					<h1>{{ create.loading.title }}</h1>
+					<p>{{ create.loading.description }}</p>
 					<div class="spinner"><span class="dot"></span></div>
 					"""
 			closable: true
