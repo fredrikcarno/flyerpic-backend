@@ -58,13 +58,7 @@ m.add m.create =
 			body:	"""
 					<h1>Creating Flyers</h1>
 					<p>Please wait till your flyers are generated. This process can take a while.</p>
-					<div class="spinner">
-						<div class="rect1"></div>
-						<div class="rect2"></div>
-						<div class="rect3"></div>
-						<div class="rect4"></div>
-						<div class="rect5"></div>
-					</div>
+					<div class="spinner"><span class="dot"></span></div>
 					"""
 			closable: false
 			class: 'login'
