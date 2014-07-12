@@ -128,6 +128,7 @@ module.exports = (grunt) ->
 
 			js:
 				files: [
+					'languages/*.json'
 					'assets/coffee/*.coffee'
 					'assets/js/*.js'
 				]
@@ -147,7 +148,10 @@ module.exports = (grunt) ->
 					interrupt: true
 
 			modules:
-				files: 'modules/*/*'
+				files: [
+					'languages/*.json'
+					'modules/*/*'
+				]
 				tasks: ['modules']
 				options:
 					spawn: false
