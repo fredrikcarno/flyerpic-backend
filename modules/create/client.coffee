@@ -40,16 +40,11 @@ m.add m.create =
 					</div>
 					<input class="text" type="text" placeholder="{{ create.dialog.input.number }}" data-name="number">
 					"""
-			closable: true
 			class: 'login'
 			buttons:
-				cancel:
-					title: '{{ create.dialog.close }}'
-					fn: -> modal.close()
 				action:
 					title: '{{ create.dialog.confirm }}'
 					color: 'normal'
-					icon: ''
 					fn: m.create.get
 
 	loading: ->
@@ -60,17 +55,7 @@ m.add m.create =
 					<p>{{ create.loading.description }}</p>
 					<div class="spinner"><span class="dot"></span></div>
 					"""
-			closable: true
 			class: 'login'
-			buttons:
-				cancel:
-					title: ''
-					fn: -> modal.close()
-				action:
-					title: ''
-					color: 'normal'
-					icon: ''
-					fn: m.create.get
 
 	get: (data) ->
 

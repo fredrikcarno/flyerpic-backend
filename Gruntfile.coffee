@@ -37,8 +37,6 @@ module.exports = (grunt) ->
 					separator: "\n"
 				src: [
 					'bower_components/normalize.css/normalize.css'
-					'bower_components/basicModal/dist/basicModal.min.css'
-					'bower_components/basicContext/dist/basicContext.min.css'
 					'bower_components/basicNotification/dist/basicNotification.min.css'
 					'assets/css/*.css'
 					'cache/.temp/assets_css/*.css'
@@ -54,7 +52,6 @@ module.exports = (grunt) ->
 					'bower_components/mousetrap/mousetrap.min.js'
 					'bower_components/mousetrap/plugins/global-bind/mousetrap-global-bind.min.js'
 					'bower_components/basicModal/dist/basicModal.min.js'
-					'bower_components/basicContext/dist/basicContext.min.js'
 					'bower_components/basicNotification/dist/basicNotification.min.js'
 					'assets/js/*.js'
 					'cache/.temp/main.js'

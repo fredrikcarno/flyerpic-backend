@@ -13,7 +13,7 @@ this.kanban =
 
 		Mousetrap.bindGlobal 'esc', () ->
 			if $('.modalContainer[data-closable=true]').length isnt 0
-				$('.modalContainer #cancel').addClass('active').click()
+				modal.close()
 			else if $('.context').length isnt 0
 				context.close()
 

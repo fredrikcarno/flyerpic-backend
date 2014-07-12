@@ -1,6 +1,9 @@
 /* Sass ------------------------------------------------*/
 @import 'helpers';
 
+/* Files -------------------------------------------------*/
+@import '../../bower_components/basicModal/src/scss/main.scss';
+
 /* Basics -------------------------------------------------*/
 html, body {
 	height: 100%;
