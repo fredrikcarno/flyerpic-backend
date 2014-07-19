@@ -226,6 +226,7 @@ url = (type, cutlines, user, number, callback) ->
 				photographer:
 					name: _user.name
 					mail: _user.primarymail
+					help: _user.helpmail
 				flyers: flyers
 
 			# Set type

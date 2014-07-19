@@ -58,7 +58,7 @@ build =
 				</div>
 			</div>
 			<p class="note">
-				Photos are available from the next business day till 15 days from now. Payment using PayPal. Questions? #{ photographer.mail }
+				Photos are available from the next business day till 15 days from now. Payment using PayPal. Questions? #{ photographer.help }
 			</p>
 		</div>
 		"""

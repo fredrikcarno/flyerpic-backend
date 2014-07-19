@@ -17,6 +17,7 @@ structure	=	"""
 				  `description` varchar(1000) CHARACTER SET latin1 DEFAULT NULL,
 				  `primarymail` varchar(100) CHARACTER SET latin1 NOT NULL,
 				  `secondarymail` varchar(100) CHARACTER SET latin1 NOT NULL DEFAULT '',
+				  `helpmail` varchar(100) CHARACTER SET latin1 NOT NULL DEFAULT '',
 				  `service` varchar(30) CHARACTER SET latin1 NOT NULL DEFAULT 'paypal',
 				  `currencycode` varchar(3) CHARACTER SET latin1 NOT NULL DEFAULT 'USD',
 				  `currencysymbol` varchar(1) CHARACTER SET latin1 NOT NULL DEFAULT '$',
@@ -32,8 +33,8 @@ structure	=	"""
 user =	(username, password) ->
 
 	"""
-	INSERT INTO `lychee_users` (`username`, `password`, `name`, `description`, `primarymail`, `secondarymail`, `service`, `currencycode`, `currencysymbol`, `currencyposition`, `priceperalbum`, `priceperphoto`, `percentperprice`, `watermark`)
-	VALUES ('#{ username }','#{ password }','',NULL,'','','paypal','USD','$',0,9.99,5.99,20,1)
+	INSERT INTO `lychee_users` (`username`, `password`, `name`, `description`, `primarymail`, `secondarymail`, `helpmail`, `service`, `currencycode`, `currencysymbol`, `currencyposition`, `priceperalbum`, `priceperphoto`, `percentperprice`, `watermark`)
+	VALUES ('#{ username }','#{ password }','',NULL,'','','','paypal','USD','$',0,9.99,5.99,20,1)
 	"""
 
 create = (callback) ->
