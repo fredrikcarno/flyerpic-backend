@@ -3,7 +3,8 @@ module.exports = (grunt) ->
 	grunt.initConfig
 
 		pkg: grunt.file.readJSON 'package.json'
-		exec: []
+		exec_npm: []
+		exec_gulp: []
 
 		coffee:
 
@@ -118,8 +119,11 @@ module.exports = (grunt) ->
 
 		shell:
 
-			main:
-				command: '<%= exec %>'
+			npm:
+				command: '<%= exec_npm %>'
+
+			gulp:
+				command: '<%= exec_gulp %>'
 
 		watch:
 
@@ -213,7 +217,7 @@ module.exports = (grunt) ->
 
 	grunt.registerTask 'npm', ->
 
-		exec = grunt.config.get 'exec'
+		exec = grunt.config.get 'exec_npm'
 
 		# Read all directories
 		grunt.file.expand("./modules/*").forEach (dir) ->
@@ -223,14 +227,14 @@ module.exports = (grunt) ->
 			exec.push 'cd ../../'
 
 		# Save
-		grunt.config.set 'exec', exec.join('&&')
+		grunt.config.set 'exec_npm', exec.join('&&')
 
 		# When finished run in shell
-		grunt.task.run 'shell'
+		grunt.task.run 'shell:npm'
 
 	grunt.registerTask 'gulp', ->
 
-		exec = grunt.config.get 'exec'
+		exec = grunt.config.get 'exec_gulp'
 
 		# Read all directories
 		grunt.file.expand("./flyers/*").forEach (dir) ->
@@ -240,7 +244,7 @@ module.exports = (grunt) ->
 			exec.push 'cd ../../'
 
 		# Save
-		grunt.config.set 'exec', exec.join('&&')
+		grunt.config.set 'exec_gulp', exec.join('&&')
 
 		# When finished run in shell
-		grunt.task.run 'shell'
+		grunt.task.run 'shell:gulp'
