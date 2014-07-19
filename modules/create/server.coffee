@@ -219,20 +219,25 @@ url = (type, cutlines, user, number, callback) ->
 
 			# Build json
 			data =
+				guide: false
+				template: false
+				codes: false
+				cutlines: true
 				photographer:
 					name: _user.name
 					mail: _user.primarymail
-					template: false
-					codes: false
-					cutlines: true
 				flyers: flyers
 
 			# Set type
 			switch type
+				when 'pdf'
+					data.guide		= 'guides/en.pdf'
 				when 'template'
-					data.template = true
+					data.guide		= 'guides/en.pdf'
+					data.template	= true
 				when 'codes'
-					data.codes = true
+					data.guide		= 'guides/en.pdf'
+					data.codes		= true
 
 			# Set cutlines
 			if cutlines is 'false'
@@ -265,8 +270,11 @@ output = (_url, data, callback) ->
 	_url = _url + '#' + data
 
 	# Set paths
-	file	= "cache/#{ hash() }.pdf"	# Flyers only
-	_file	= "cache/_#{ hash() }.pdf"	# Flyers with guide
+	file = {
+		guide: JSON.parse(data).guide		# Path to guide
+		flyers: "cache/#{ hash() }.pdf"		# Flyers only
+		final: "cache/_#{ hash() }.pdf"		# Flyers with guide
+	}
 
 	# Set size of paper
 	paperSize	= { format: 'A4', orientation: 'portrait', margin: '0.3cm' }
@@ -294,16 +302,25 @@ output = (_url, data, callback) ->
 					else
 
 						setTimeout ->
-							page.render file, ->
-								pdfconcat ['guides/en.pdf', file], _file, (err) ->
+							page.render file.flyers, ->
 
-									if err?
+								if file.guide isnt false
 
-										callback { error: 'Unable to concat the pdfs', details: err }
-										return false
+									pdfconcat [file.guide, file.flyers], file.final, (err) ->
 
-									callback null, _file
+										if err?
+
+											callback { error: 'Unable to concat the pdfs', details: err }
+											return false
+
+										callback null, file.final
+										return true
+
+								else
+
+									callback null, file.flyers
 									return true
+
 						, 200
 
 module.exports = (app, _db) ->
