@@ -5,6 +5,7 @@ joi			= require 'joi'
 _			= require 'underscore'
 phantom		= require 'node-phantom'
 validator	= require 'validator'
+pdfconcat	= require 'pdfconcat'
 Encoder 	= require('qr').Encoder
 encoder 	= new Encoder
 
@@ -263,6 +264,13 @@ output = (_url, data, callback) ->
 	# Concat url and data
 	_url = _url + '#' + data
 
+	# Set paths
+	file	= "cache/#{ hash() }.pdf"	# Flyers only
+	_file	= "cache/_#{ hash() }.pdf"	# Flyers with guide
+
+	# Set size of paper
+	paperSize	= { format: 'A4', orientation: 'portrait', margin: '0.3cm' }
+
 	phantom.create (err, ph) ->
 
 		if err?
@@ -274,9 +282,6 @@ output = (_url, data, callback) ->
 			if err?
 				callback { error: 'Unable to create page for pdf', details: err }
 				return false
-
-			file		= "cache/#{ hash() }.pdf"
-			paperSize	= { format: 'A4', orientation: 'portrait', margin: '0.3cm' }
 
 			page.set 'paperSize', paperSize, ->
 				page.open _url, (err, status) ->
@@ -290,8 +295,15 @@ output = (_url, data, callback) ->
 
 						setTimeout ->
 							page.render file, ->
-								callback null, file
-								return true
+								pdfconcat ['guides/en.pdf', file], _file, (err) ->
+
+									if err?
+
+										callback { error: 'Unable to concat the pdfs', details: err }
+										return false
+
+									callback null, _file
+									return true
 						, 200
 
 module.exports = (app, _db) ->
