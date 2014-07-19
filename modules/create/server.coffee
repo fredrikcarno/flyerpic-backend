@@ -330,7 +330,7 @@ module.exports = (app, _db) ->
 
 	app.get '/api/m/create/url/pdf', middleware.auth, (req, res) ->
 
-		url 'pdf', true, req.session.user, req.query.number, (err, data) ->
+		url 'pdf', req.query.cutlines, req.session.user, req.query.number, (err, data) ->
 
 			if err?
 				log.error 'create', err.error, err.details
@@ -342,7 +342,7 @@ module.exports = (app, _db) ->
 
 	app.get '/api/m/create/url/template', middleware.auth, (req, res) ->
 
-		url 'template', true, req.session.user, 0, (err, data) ->
+		url 'template', req.query.cutlines, req.session.user, 0, (err, data) ->
 
 			if err?
 				log.error 'create', err.error, err.details
@@ -354,7 +354,7 @@ module.exports = (app, _db) ->
 
 	app.get '/api/m/create/url/codes', middleware.auth, (req, res) ->
 
-		url 'codes', true, req.session.user, req.query.number, (err, data) ->
+		url 'codes', req.query.cutlines, req.session.user, req.query.number, (err, data) ->
 
 			if err?
 				log.error 'create', err.error, err.details

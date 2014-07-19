@@ -22,20 +22,21 @@
 			"confirm": "Create Flyers",
 			"dropdown": {
 				"pdf": {
-					"title": "Flyer with Codes",
+					"title": "Flyers with Codes",
 					"info": "PDF to print at home"
 				},
 				"template": {
-					"title": "Flyer without Codes",
+					"title": "Flyers without Codes",
 					"info": "PDF to send to a print service"
 				},
 				"codes": {
-					"title": "Flyer with Codes only",
+					"title": "Flyers with Codes only",
 					"info": "PDF to print over flyers without codes"
 				}
 			},
 			"input": {
-				"number": "Number of pages"
+				"placeholder": "Number of pages",
+				"number": "Flyers"
 			}
 		},
 		"loading": {

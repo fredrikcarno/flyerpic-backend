@@ -8,11 +8,11 @@ m.add m.create =
 
 	show: ->
 
-		$(document).on 'click', '.dropdown .back ul li', ->
+		$(document).on 'click', '.dropdown[data-name="action"] .back ul li', ->
 			if $(this).attr('data-value') is 'template'
-				$('.modal input.text[data-name="number"]').hide()
+				$('.modal .dropdown[data-name="number"]').hide()
 			else
-				$('.modal input.text[data-name="number"]').show()
+				$('.modal .dropdown[data-name="number"]').show()
 
 		modal.show
 			body:	"""
@@ -38,7 +38,50 @@ m.add m.create =
 							</ul>
 						</div>
 					</div>
-					<input class="text" type="text" placeholder="{{ create.dialog.input.number }}" data-name="number">
+					<div class="dropdown" data-name="cutlines" data-value="true">
+						<div class="front text"><span>Include cutting lines</span></div>
+						<div class="back">
+							<ul>
+								<li data-value="true">
+									Include cutting lines
+								</li>
+								<li data-value="false">
+									Exclude cutting lines
+								</li>
+							</ul>
+						</div>
+					</div>
+					<div class="dropdown" data-name="number" data-value="-">
+						<div class="front text"><span>{{ create.dialog.input.placeholder }}</span></div>
+						<div class="back">
+							<ul>
+								<li data-value="1">
+									4 {{ create.dialog.input.number }}
+									<span>1 A4 Pages</span>
+								</li>
+								<li data-value="5">
+									20 {{ create.dialog.input.number }}
+									<span>5 A4 Pages</span>
+								</li>
+								<li data-value="10">
+									40 {{ create.dialog.input.number }}
+									<span>10 A4 Pages</span>
+								</li>
+								<li data-value="15">
+									60 {{ create.dialog.input.number }}
+									<span>15 A4 Pages</span>
+								</li>
+								<li data-value="20">
+									80 {{ create.dialog.input.number }}
+									<span>20 A4 Pages</span>
+								</li>
+								<li data-value="25">
+									100 {{ create.dialog.input.number }}
+									<span>25 A4 Pages</span>
+								</li>
+							</ul>
+						</div>
+					</div>
 					"""
 			class: 'login'
 			buttons:
@@ -74,11 +117,11 @@ m.add m.create =
 		# Set type
 		switch data.action
 			when 'pdf'
-				params	= "api/m/create/url/pdf?number=#{ data.number }"
+				params	= "api/m/create/url/pdf?cutlines=#{ data.cutlines }&number=#{ data.number }"
 			when 'template'
-				params	= "api/m/create/url/template"
+				params	= "api/m/create/url/template?cutlines=#{ data.cutlines }"
 			when 'codes'
-				params	= "api/m/create/url/codes?number=#{ data.number }"
+				params	= "api/m/create/url/codes?cutlines=#{ data.cutlines }&number=#{ data.number }"
 
 		url = 'http://localhost:8888/flyers/01/index.html'
 
