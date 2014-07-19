@@ -40,7 +40,7 @@ m.add m.create =
 					</div>
 					<div class="dropdown" data-name="cutlines" data-value="true">
 						<div class="front text"><span>{{ create.dialog.cutlines.true }}</span></div>
-						<div class="back">
+						<div class="back small">
 							<ul>
 								<li data-value="true">
 									{{ create.dialog.cutlines.true }}
