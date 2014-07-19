@@ -118,7 +118,7 @@ module.exports = (grunt) ->
 
 		shell:
 
-			npm:
+			main:
 				command: '<%= exec %>'
 
 		watch:
@@ -128,6 +128,8 @@ module.exports = (grunt) ->
 					'languages/*.json'
 					'assets/coffee/*.coffee'
 					'assets/js/*.js'
+					'!**/node_modules/**'
+					'!**/bower_components/**'
 				]
 				tasks: ['js']
 				options:
@@ -148,6 +150,8 @@ module.exports = (grunt) ->
 				files: [
 					'languages/*.json'
 					'modules/*/*'
+					'!**/node_modules/**'
+					'!**/bower_components/**'
 				]
 				tasks: ['modules']
 				options:
@@ -174,6 +178,8 @@ module.exports = (grunt) ->
 		'css'
 		'modules'
 		'temp'
+		'npm'
+		'gulp'
 	]
 
 	grunt.registerTask 'js', [
@@ -220,4 +226,21 @@ module.exports = (grunt) ->
 		grunt.config.set 'exec', exec.join('&&')
 
 		# When finished run in shell
-		grunt.task.run 'shell:npm'
+		grunt.task.run 'shell'
+
+	grunt.registerTask 'gulp', ->
+
+		exec = grunt.config.get 'exec'
+
+		# Read all directories
+		grunt.file.expand("./flyers/*").forEach (dir) ->
+
+			exec.push "cd #{ dir }"
+			exec.push 'gulp'
+			exec.push 'cd ../../'
+
+		# Save
+		grunt.config.set 'exec', exec.join('&&')
+
+		# When finished run in shell
+		grunt.task.run 'shell'
