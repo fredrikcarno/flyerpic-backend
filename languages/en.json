@@ -20,7 +20,7 @@
 			"help": "Get help &rsaquo;",
 			"close": "Close",
 			"confirm": "Create Flyers",
-			"dropdown": {
+			"type": {
 				"pdf": {
 					"title": "Flyers with Codes",
 					"info": "PDF to print at home"
@@ -34,9 +34,13 @@
 					"info": "PDF to print over flyers without codes"
 				}
 			},
-			"input": {
-				"placeholder": "Number of pages",
-				"number": "Flyers"
+			"cutlines": {
+				"true": "Include cutting lines",
+				"false": "Exclude cutting lines"
+			},
+			"number": {
+				"placeholder": "Number of flyers",
+				"flyer": "Flyers"
 			}
 		},
 		"loading": {

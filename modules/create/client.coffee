@@ -19,64 +19,64 @@ m.add m.create =
 					<h1>{{ create.dialog.title }}</h1>
 					<p>{{ create.dialog.description }} <a href="#">{{ create.dialog.help }}</a></p>
 					<div class="dropdown" data-name="action" data-value="pdf">
-						<div class="front text"><span>{{ create.dialog.dropdown.pdf.title }}</span></div>
+						<div class="front text"><span>{{ create.dialog.type.pdf.title }}</span></div>
 						<div class="back">
 							<ul>
 								<li data-value="pdf">
-									{{ create.dialog.dropdown.pdf.title }}
-									<span>{{ create.dialog.dropdown.pdf.info }}</span>
+									{{ create.dialog.type.pdf.title }}
+									<span>{{ create.dialog.type.pdf.info }}</span>
 								</li>
 								<li class="separator"></li>
 								<li data-value="template">
-									{{ create.dialog.dropdown.template.title }}
-									<span>{{ create.dialog.dropdown.template.info }}</span>
+									{{ create.dialog.type.template.title }}
+									<span>{{ create.dialog.type.template.info }}</span>
 								</li>
 								<li data-value="codes">
-									{{ create.dialog.dropdown.codes.title }}
-									<span>{{ create.dialog.dropdown.codes.info }}</span>
+									{{ create.dialog.type.codes.title }}
+									<span>{{ create.dialog.type.codes.info }}</span>
 								</li>
 							</ul>
 						</div>
 					</div>
 					<div class="dropdown" data-name="cutlines" data-value="true">
-						<div class="front text"><span>Include cutting lines</span></div>
+						<div class="front text"><span>{{ create.dialog.cutlines.true }}</span></div>
 						<div class="back">
 							<ul>
 								<li data-value="true">
-									Include cutting lines
+									{{ create.dialog.cutlines.true }}
 								</li>
 								<li data-value="false">
-									Exclude cutting lines
+									{{ create.dialog.cutlines.false }}
 								</li>
 							</ul>
 						</div>
 					</div>
 					<div class="dropdown" data-name="number" data-value="-">
-						<div class="front text"><span>{{ create.dialog.input.placeholder }}</span></div>
+						<div class="front text"><span>{{ create.dialog.number.placeholder }}</span></div>
 						<div class="back">
 							<ul>
 								<li data-value="1">
-									4 {{ create.dialog.input.number }}
+									4 {{ create.dialog.number.flyer }}
 									<span>1 A4 Pages</span>
 								</li>
 								<li data-value="5">
-									20 {{ create.dialog.input.number }}
+									20 {{ create.dialog.number.flyer }}
 									<span>5 A4 Pages</span>
 								</li>
 								<li data-value="10">
-									40 {{ create.dialog.input.number }}
+									40 {{ create.dialog.number.flyer }}
 									<span>10 A4 Pages</span>
 								</li>
 								<li data-value="15">
-									60 {{ create.dialog.input.number }}
+									60 {{ create.dialog.number.flyer }}
 									<span>15 A4 Pages</span>
 								</li>
 								<li data-value="20">
-									80 {{ create.dialog.input.number }}
+									80 {{ create.dialog.number.flyer }}
 									<span>20 A4 Pages</span>
 								</li>
 								<li data-value="25">
-									100 {{ create.dialog.input.number }}
+									100 {{ create.dialog.number.flyer }}
 									<span>25 A4 Pages</span>
 								</li>
 							</ul>
