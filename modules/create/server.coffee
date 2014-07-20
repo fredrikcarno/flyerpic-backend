@@ -103,6 +103,20 @@ code = (user, callback) ->
 				callback index is -1
 				return true
 
+	reserve = (code, callback) ->
+
+		###
+		Description:	Add code as album to avoid equal generated codes
+		Return:			Err
+		###
+
+		sysstamp = Math.round(new Date().getTime() / 1000)
+
+		db.source.query "INSERT INTO lychee_albums (title, sysstamp, public, visible) VALUES ('#{ code }', '#{ sysstamp }', '1', '0')", (err, rows) ->
+
+			callback err
+			return true
+
 	looper = ->
 
 		###
@@ -112,15 +126,24 @@ code = (user, callback) ->
 
 		_code = generate()
 
+		# Check if code is unique
 		unique _code, (result) ->
 
 			if result is true
 
-				callback _code
-				return true
+				# Reserve code
+				reserve _code, (err) ->
+
+					if err?
+						callback null
+						return false
+					else
+						callback _code
+						return true
 
 			else
 
+				# Generate new code
 				looper()
 				return false
 
