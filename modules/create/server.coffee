@@ -41,9 +41,7 @@ code = (user, callback) ->
 		final = []
 
 		for x in array
-			do (x) ->
-
-				final.push x.title
+			do (x) -> final.push x.title
 
 		return final
 
@@ -56,6 +54,24 @@ code = (user, callback) ->
 
 		_hash = hash().substr 0, 8
 		_user = if user < 10 then '0' + user else user
+
+		# Replace numbers with unmistakable chars
+		replace = {
+			'0': 'a'
+			'1': 'b'
+			'2': 'd'
+			'3': 'e'
+			'4': 'f'
+			'5': 'g'
+			'6': 'h'
+			'7': 'j'
+			'8': 'k'
+			'9': 'm'
+		}
+
+		# Turn _user into shorthand
+		for x of replace
+			do (x) -> _user = _user.replace x, replace[x]
 
 		return _user + _hash
 
