@@ -157,6 +157,7 @@ m.add m.import =
 				file.type isnt 'image/png' and
 				file.type isnt 'image/gif'
 
+					# File not supported
 					file.ready		= true
 					file.supported	= false
 

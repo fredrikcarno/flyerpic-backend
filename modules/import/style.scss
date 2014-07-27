@@ -1,6 +1,19 @@
 /* Sass ------------------------------------------------*/
 @import '../../assets/scss/helpers';
 
+/* Animations ------------------------------------------------*/
+@keyframes pulse {
+	0% {
+		background: $cMain;
+	}
+	50% {
+		background: lighten($cMain, 15%);
+	}
+	100% {
+		background: $cMain;
+	}
+}
+
 /* Create ------------------------------------------------*/
 #import {
 	display: none;
@@ -11,7 +24,7 @@
 	float: left;
 	margin: 30px 10% 50px 10%;
 	width: 80%;
-	background-color: black(.05);
+	background: black(.1);
 	border-radius: 100px;
 
 	>.bar {
@@ -24,6 +37,7 @@
 		font-size: 13px;
 		text-align: right;
 		transition: width $sDuration;
+		animation: pulse 2s ease-in-out infinite;
 
 		span {
 			margin: 0 8px 0 0;
