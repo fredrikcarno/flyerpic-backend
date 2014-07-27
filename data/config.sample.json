@@ -1,12 +1,23 @@
+// Copy this file and name it config.json
+// Make sure you remove all comments when finished
 {
-	"url": "",
+	// Host of the Database
 	"host": "localhost",
+	// Port of the database
 	"port": "3306",
+	// Username of the database
 	"user": "",
+	// Password of the Database
 	"password": "",
-	"database": "lychee",
-	"login": {
+	// Database name
+	"database": "",
+	"lychee": {
+		// URL to Lychee
+		// The URL must start with http and end with a slash
+		"url": "http://lychee.example.com/",
+		// Username of Lychee
 		"username": "",
+		// Password of Lychee
 		"password": ""
 	}
 }
