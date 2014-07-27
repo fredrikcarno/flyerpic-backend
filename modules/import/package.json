@@ -1,0 +1,6 @@
+{
+  "name": "import",
+  "description": "Import photos",
+  "authors": "Tobias Reich <tobias.reich.ich@gmail.com>",
+  "main": "server.coffee"
+}

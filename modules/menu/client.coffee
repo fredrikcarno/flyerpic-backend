@@ -10,16 +10,16 @@ m.add m.menu =
 			description: '{{ menu.create.description }}'
 		}
 		{
-			id: 'menu_upload'
+			id: 'menu_import'
 			icon: 'ion-ios7-cloud-upload-outline'
-			title: '{{ menu.upload.title }}'
-			description: '{{ menu.upload.description }}'
+			title: '{{ menu.import.title }}'
+			description: '{{ menu.import.description }}'
 		}
 		{
 			id: 'menu_settings'
 			icon: 'ion-ios7-cog-outline'
 			title: '{{ menu.settings.title }}'
-			description: '{{ menu.upload.description }}'
+			description: '{{ menu.settings.description }}'
 		}
 	]
 
@@ -43,7 +43,7 @@ m.add m.menu =
 		dom = m.menu.dom
 
 		dom('#menu_create').on 'click', m.create.show
-		dom('#menu_upload').on 'click', m.create.show
+		dom('#menu_import').on 'click', m.import.show
 		dom('#menu_settings').on 'click', m.create.show
 
 	render:

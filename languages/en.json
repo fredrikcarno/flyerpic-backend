@@ -4,7 +4,7 @@
 			"title": "Create Flyers",
 			"description": "Generate and download flyers"
 		},
-		"upload": {
+		"import": {
 			"title": "Upload Sessions",
 			"description": "Create and upload a new sessions"
 		},
@@ -46,6 +46,15 @@
 		"loading": {
 			"title": "Creating Flyers",
 			"description": "Please wait till your flyers are generated. This process can take a while."
+		}
+	},
+	"import": {
+		"dialog": {
+			"title": "Upload sessions",
+			"description": "Select and upload all photos of your sessions. These must always include the photos of the customer with the corresponding photo of the QR Code.",
+			"help": "Get help &rsaquo;",
+			"close": "Close",
+			"confirm": "Select and upload photos"
 		}
 	}
 }
