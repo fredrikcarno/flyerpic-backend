@@ -132,8 +132,8 @@ module.exports = (grunt) ->
 					'languages/*.json'
 					'assets/coffee/*.coffee'
 					'assets/js/*.js'
-					'!**/node_modules/**'
-					'!**/bower_components/**'
+					'!node_modules/**'
+					'!bower_components/**'
 				]
 				tasks: ['js']
 				options:
@@ -154,8 +154,8 @@ module.exports = (grunt) ->
 				files: [
 					'languages/*.json'
 					'modules/*/*'
-					'!**/node_modules/**'
-					'!**/bower_components/**'
+					'!node_modules/**'
+					'!bower_components/**'
 				]
 				tasks: ['modules']
 				options:
