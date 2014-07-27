@@ -1,14 +1,46 @@
 m.add m.import =
 
 	title: 'Import'
+	url: null
 
 	init: ->
 
 		# Render
 		m.import.dom().append m.import.render()
 
+		# Bind
+		m.import.bind()
+
 		# Authenticate
-		m.import.auth()
+		m.import.getLychee()
+
+	bind: ->
+
+		# Define shorthand
+		dom = m.import.dom
+
+		dom('#upload_files').on 'change', -> m.import.upload(this.files)
+
+	getLychee: ->
+
+		# Request Lychee credentials
+		kanban.api "api/m/import/getLychee", (data) ->
+
+			# Validate response
+			if	not data? or
+				not data.url? or
+				not data.token?
+
+					# Data invalid
+					notification.show {
+						icon: 'alert-circled'
+						text: "Could not request Lychee credentials from server"
+					}
+					return false
+
+			# Save data
+			m.import.url	= data.url + 'php/api.php'
+			m.import.token	= data.token
 
 	show: ->
 

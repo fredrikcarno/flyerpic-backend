@@ -15,9 +15,7 @@
 		// URL to Lychee
 		// The URL must start with http and end with a slash
 		"url": "http://lychee.example.com/",
-		// Username of Lychee
-		"username": "",
-		// Password of Lychee
-		"password": ""
+		// Token of Lychee
+		"token": ""
 	}
 }
