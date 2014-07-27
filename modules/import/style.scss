@@ -5,3 +5,28 @@
 #import {
 	display: none;
 }
+
+/* Progress ------------------------------------------------*/
+.modal .progress {
+	float: left;
+	margin: 30px 10% 50px 10%;
+	width: 80%;
+	background-color: black(.05);
+	border-radius: 100px;
+
+	>.bar {
+		padding: 3px 0;
+		min-width: 30px;
+		width: 0%;
+		background: $cMain;
+		border-radius: 100px;
+		color: #fff;
+		font-size: 13px;
+		text-align: right;
+		transition: width $sDuration;
+
+		span {
+			margin: 0 8px 0 0;
+		}
+	}
+}

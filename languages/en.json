@@ -55,6 +55,10 @@
 			"help": "Get help &rsaquo;",
 			"close": "Close",
 			"confirm": "Select and upload photos"
+		},
+		"upload": {
+			"title": "Uploading sessions",
+			"description": "Please wait till your photos are uploaded and sorted. This process can take a while."
 		}
 	}
 }
