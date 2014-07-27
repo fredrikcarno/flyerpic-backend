@@ -12,9 +12,5 @@ module.exports = (app, _db) ->
 
 	app.get '/api/m/import/getLychee', middleware.auth, (req, res) ->
 
-		res.json {
-			url: config.url
-			username: config.login.username
-			password: config.login.password
-		}
+		res.json config.lychee
 		return true

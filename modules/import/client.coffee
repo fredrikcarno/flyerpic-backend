@@ -7,6 +7,9 @@ m.add m.import =
 		# Render
 		m.import.dom().append m.import.render()
 
+		# Authenticate
+		m.import.auth()
+
 	show: ->
 
 		modal.show
@@ -28,6 +31,42 @@ m.add m.import =
 	get: (data) ->
 
 		# Validate data
+
+	auth: ->
+
+		# Request Lychee credentials
+		kanban.api "api/m/import/getLychee", (data) ->
+
+			# Validate response
+			if	not data? or
+				not data.url? or
+				not data.username? or
+				not data.password?
+
+					# Data invalid
+					notification.show {
+						icon: 'alert-circled'
+						text: "Could not request Lychee credentials from server"
+					}
+					return false
+
+			# Login into Lychee
+			$.ajax
+				type: "POST"
+				url: data.url + 'php/api.php'
+				data:
+					function: 'login'
+					user: data.username
+					password: md5(data.password)
+				success: (data) ->
+
+					if data is ''
+
+						# Data invalid
+						notification.show {
+							icon: 'alert-circled'
+							text: "Could not log in to Lychee"
+						}
 
 	render: ->
 
