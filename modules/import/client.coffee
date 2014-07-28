@@ -78,7 +78,7 @@ m.add m.import =
 			finish = ->
 
 				m.import.dom('#upload_files').val ''
-				m.import.processing()
+				m.import.scan()
 
 			# Check if file is supported
 			if file.supported is false
@@ -199,13 +199,13 @@ m.add m.import =
 			# Upload first file
 			process id, files, files[0]
 
-	processing: ->
+	scan: ->
 
-		# Show processing modal
+		# Show scan modal
 		modal.show
 			body:	"""
-					<h1>{{ import.processing.title }}</h1>
-					<p>{{ import.processing.description }}</p>
+					<h1>{{ import.scan.title }}</h1>
+					<p>{{ import.scan.description }}</p>
 					<div class="spinner qr">
 						<img src="assets/img/qrcode.svg">
 						<div class="scan"></div>
