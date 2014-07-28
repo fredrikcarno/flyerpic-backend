@@ -11,6 +11,7 @@ addAlbum = (callback) ->
 	###
 	Description:	Add temp-album to Lychee
 	Return:			Err, Integer
+					Integer is the ID of the album
 	###
 
 	sysstamp	= Math.round(new Date().getTime() / 1000)
@@ -20,6 +21,32 @@ addAlbum = (callback) ->
 
 		callback err, row.insertId
 		return true
+
+scanAlbum = (id, callback) ->
+
+	###
+	Description:	Scans and sorts an album of Lychee
+	Return:			Err, JSON
+					JSON contains the scanned QR-Code and the corresponding photos
+	###
+
+	# TODO: Check if id is numeric
+
+	decode = (filename) ->
+
+
+
+	db.source.query "SELECT * FROM lychee_photos WHERE album = '#{ id }' ORDER BY takestamp ASC", (err, rows) ->
+
+		# For each photo
+		for row in rows
+			do (row) ->
+
+				filename = config.lychee.url + 'uploads/big/' + row.url
+				console.log filename
+				decode filename
+
+		callback null, null
 
 module.exports = (app, _db) ->
 
@@ -39,4 +66,15 @@ module.exports = (app, _db) ->
 				return false
 			else
 				res.json id
+				return true
+
+	app.get '/api/m/import/scanAlbum', middleware.auth, (req, res) ->
+
+		scanAlbum req.query.id, (err, data) ->
+
+			if err?
+				res.json { error: 'Could not scan sessions', details: err }
+				return false
+			else
+				res.json data
 				return true
