@@ -1,5 +1,4 @@
 # Dependencies
-jsesc		= require 'jsesc'
 async		= require 'async'
 
 # Kanban modules

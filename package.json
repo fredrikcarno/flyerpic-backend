@@ -33,11 +33,6 @@
     "jsesc": "~0.4.3",
     "morgan": "^1.2.2",
     "mysql": "git://github.com/felixge/node-mysql",
-    "node-phantom": "^0.2.5",
-    "pdfconcat": "^1.0.2",
-    "pdfkit": "^0.6.2",
-    "socket.io": "^0.9.16",
-    "sqlite3": "^2.2.4",
     "validator": "^3.16.1"
   },
   "devDependencies": {

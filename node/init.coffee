@@ -11,7 +11,6 @@ cookieParser= require 'cookie-parser'
 session		= require 'express-session'
 
 # Dependencies
-sqlite		= require 'sqlite3'
 fs			= require 'fs'
 async		= require 'async'
 crypto		= require 'crypto'

@@ -6,6 +6,9 @@
   "dependencies": {
     "joi": "^4.6.1",
     "qr": "^0.2.3",
-    "underscore": "^1.6.0"
+    "underscore": "^1.6.0",
+    "node-phantom": "^0.2.5",
+    "pdfconcat": "^1.0.2",
+    "socket.io": "^0.9.16"
   }
 }
