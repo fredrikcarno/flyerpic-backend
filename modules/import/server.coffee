@@ -32,10 +32,6 @@ scanAlbum = (id, callback) ->
 
 	# TODO: Check if id is numeric
 
-	decode = (filename) ->
-
-
-
 	db.source.query "SELECT * FROM lychee_photos WHERE album = '#{ id }' ORDER BY takestamp ASC", (err, rows) ->
 
 		# For each photo
@@ -44,7 +40,7 @@ scanAlbum = (id, callback) ->
 
 				filename = config.lychee.url + 'uploads/big/' + row.url
 				console.log filename
-				decode filename
+				# Scan here
 
 		callback null, null
 
