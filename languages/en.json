@@ -58,7 +58,11 @@
 		},
 		"upload": {
 			"title": "Uploading sessions",
-			"description": "Please wait till your photos are uploaded and sorted. This process can take a while."
+			"description": "Please wait till your photos are uploaded. This process can take a while."
+		},
+		"processing": {
+			"title": "Scanning sessions",
+			"description": "Please wait till your photos are scanned and sorted. This process can take a while."
 		}
 	}
 }

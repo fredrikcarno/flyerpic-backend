@@ -60,8 +60,15 @@ m.add m.import =
 
 		globalProgress = 0
 
+		# Add temp-album to Lychee
+		addAlbum = (callback) ->
+
+			kanban.api 'api/m/import/addAlbum', (id) ->
+
+				if id >= 0 then callback id
+
 		# Upload process
-		process = (files, file) ->
+		process = (id, files, file) ->
 
 			formData	= new FormData()
 			xhr			= new XMLHttpRequest()
@@ -71,7 +78,7 @@ m.add m.import =
 			finish = ->
 
 				m.import.dom('#upload_files').val ''
-				alert 'finished'
+				m.import.processing()
 
 			# Check if file is supported
 			if file.supported is false
@@ -80,7 +87,7 @@ m.add m.import =
 				if file.next?
 
 					# Upload next file
-					process files, file.next
+					process id, files, file.next
 
 				else
 
@@ -100,7 +107,7 @@ m.add m.import =
 				return false
 
 			formData.append 'function', 'upload'
-			formData.append 'albumID', 0
+			formData.append 'albumID', id
 			formData.append 'token', m.import.token
 			formData.append 0, file
 
@@ -136,7 +143,7 @@ m.add m.import =
 					if progress >= (100 / files.length)
 
 						# Upload next file
-						if file.next? then process files, file.next
+						if file.next? then process id, files, file.next
 
 			xhr.send formData
 
@@ -178,16 +185,33 @@ m.add m.import =
 			if globalProgress <= 99
 				$('.modal .progress .bar').css 'width', htmlProgress
 				$('.modal .progress .bar span').html htmlProgress
+				setTimeout p, 100
 			else
 				$('.modal .progress .bar').css 'width', '100%'
 				$('.modal .progress .bar span').html 'Processing'
-			setTimeout p, 100
 
 		# Start progress update
 		p()
 
-		# Upload first file
-		process files, files[0]
+		# Create temp-album
+		addAlbum (id) ->
+
+			# Upload first file
+			process id, files, files[0]
+
+	processing: ->
+
+		# Show processing modal
+		modal.show
+			body:	"""
+					<h1>{{ import.processing.title }}</h1>
+					<p>{{ import.processing.description }}</p>
+					<div class="spinner qr">
+						<img src="assets/img/qrcode.svg">
+						<div class="scan"></div>
+					</div>
+					"""
+			class: 'login'
 
 	render: ->
 
