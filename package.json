@@ -31,7 +31,6 @@
     "express": "^4.6.1",
     "express-session": "^1.7.0",
     "jsesc": "~0.4.3",
-    "jsqrcode": "0.0.6",
     "morgan": "^1.2.0",
     "mysql": "git://github.com/felixge/node-mysql",
     "node-phantom": "^0.2.5",
