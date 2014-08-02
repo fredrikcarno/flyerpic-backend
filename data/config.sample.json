@@ -12,6 +12,9 @@
 	// Database name
 	"database": "",
 	"lychee": {
+		// Absolute path to Lychee
+		// The path must end with a slash
+		"path": "/Users/tobiasreich/Sites/Lychee/",
 		// URL to Lychee
 		// The URL must start with http and end with a slash
 		"url": "http://lychee.example.com/",
