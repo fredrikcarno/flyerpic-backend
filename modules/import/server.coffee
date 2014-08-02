@@ -1,3 +1,7 @@
+# Dependencies
+zbarimg		= require 'zbarimg'
+async		= require 'async'
+
 # Kanban modules
 log			= require './../../node/log'
 middleware	= require './../../node/middleware'
@@ -32,17 +36,33 @@ scanAlbum = (id, callback) ->
 
 	# TODO: Check if id is numeric
 
+	scan = (row, callback) ->
+
+		filename = config.lychee.path + 'uploads/big/' + row.url
+
+		# Scan photo
+		zbarimg filename, (err, code) ->
+
+			# Save code
+			if code? then row.code = code
+			else row.code = ''
+
+			# Reduce photo json
+			row = {
+				id: row.id
+				title: row.title
+				url: row.url
+				takestamp: row.takestamp
+				code: row.code
+			}
+
+			callback null, row
+
+	# Get photos of album from db
 	db.source.query "SELECT * FROM lychee_photos WHERE album = '#{ id }' ORDER BY takestamp ASC", (err, rows) ->
 
-		# For each photo
-		for row in rows
-			do (row) ->
-
-				filename = config.lychee.url + 'uploads/big/' + row.url
-				console.log filename
-				# Scan here
-
-		callback null, null
+		# Scan all photos
+		async.map rows, scan, callback
 
 module.exports = (app, _db) ->
 
