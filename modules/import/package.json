@@ -2,5 +2,8 @@
   "name": "import",
   "description": "Import photos",
   "authors": "Tobias Reich <tobias.reich.ich@gmail.com>",
-  "main": "server.coffee"
+  "main": "server.coffee",
+  "dependencies": {
+    "zbarimg": "^1.0.8"
+  }
 }
