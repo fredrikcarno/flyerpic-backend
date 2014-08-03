@@ -51,7 +51,7 @@ scanAlbum = (id, callback) ->
 			row = {
 				id: row.id
 				title: row.title
-				url: row.url
+				url: config.lychee.path + 'uploads/thumb/' + row.url
 				takestamp: row.takestamp
 				code: row.code
 			}

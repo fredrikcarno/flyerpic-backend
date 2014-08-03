@@ -6,7 +6,7 @@ m.add m.import =
 	init: ->
 
 		# Render
-		m.import.dom().append m.import.render()
+		m.import.dom().append m.import.render.upload()
 
 		# Bind
 		m.import.bind()
@@ -78,7 +78,7 @@ m.add m.import =
 			finish = ->
 
 				m.import.dom('#upload_files').val ''
-				m.import.scan()
+				m.import.scan id
 
 			# Check if file is supported
 			if file.supported is false
@@ -199,7 +199,7 @@ m.add m.import =
 			# Upload first file
 			process id, files, files[0]
 
-	scan: ->
+	scan: (id) ->
 
 		# Show scan modal
 		modal.show
@@ -213,10 +213,72 @@ m.add m.import =
 					"""
 			class: 'login'
 
-	render: ->
+		# Start scanning
+		kanban.api "api/m/import/scanAlbum?id=#{ id }", (photos) ->
 
-		"""
-		<div id="upload">
-			<input id="upload_files" type="file" name="fileElem[]" multiple accept="image/*">
-		</div>
-		"""
+			# Validate response
+			if	not photos? or
+				photos is false
+
+					# Data invalid
+					notification.show {
+						icon: 'alert-circled'
+						text: 'Could not scan sessions'
+					}
+					return false
+
+			# Show verify-dialog
+			m.import.verify id, photos
+
+	verify: (id, photos) ->
+
+		# Close scanning-modal
+		modal.close()
+
+		# Show verify-modal
+		m.import.dom().append m.import.render.verify
+
+		# TODO: Adjust wrapper height
+
+	render:
+
+		upload: ->
+
+			"""
+			<div id="upload">
+				<input id="upload_files" type="file" name="fileElem[]" multiple accept="image/*">
+			</div>
+			"""
+
+		verify: (id, photos) ->
+
+			"""
+			<div class="verify_overlay">
+				<div class="verify">
+					<div class="header">
+						<h1>Confirm structure</h1>
+						<p>Please check and confirm the shown structure of your scanned photos. Mark errors, wrong groupings and incorrect scanned codes to avoid wrong photos in wrong sessions.</p>
+						<div class="buttons">
+							<a class="button">Cancel</a>
+							<a class="button action"><span class="ion-checkmark"></span>Confirm structure</a>
+						</div>
+					</div>
+					<div class="structure_wrapper">
+						<div class="structure">
+							#{ (m.import.render.session photo for photo in photos).join '' }
+						</div>
+					</div>
+				</div>
+			</div>
+			"""
+
+		session: (photo) ->
+
+			"""
+			<div class="session">
+				<div class="code">#{ photo.code }</div>
+				<div class="photo">
+					<img src="#{ photo.url }">
+				</div>
+			</div>
+			"""

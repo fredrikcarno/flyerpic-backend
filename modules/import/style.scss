@@ -16,7 +16,136 @@
 
 /* Create ------------------------------------------------*/
 #import {
-	display: none;
+
+	#upload {
+		display: none;
+	}
+
+	/* Verify Overlay ------------------------------------------------*/
+	.verify_overlay {
+		position: fixed;
+		width: 100%;
+		height: 100%;
+		top: 0px;
+		left: 0px;
+		background-color: rgba(0, 0, 0, .4);
+		z-index: 1000;
+	}
+
+	/* Verify ------------------------------------------------*/
+	.verify {
+		position: relative;
+		top: 30px;
+		left: 10%;
+		width: 80%;
+		height: calc(100% - 60px);
+		background-color: #fff;
+		border-radius: 3px;
+		box-shadow: 0px 1px 2px rgba(0,0,0,.2);
+	}
+
+	/* Verify Header ------------------------------------------------*/
+	.verify .header {
+
+		padding: 45px 0 40px 0;
+		width: 100%;
+		background: black(0.05);
+
+		h1 {
+			margin: 0 0 0 40px;
+			color: rgba(0,0,0,.8);
+			font-size: 28px;
+			font-weight: 400;
+		}
+
+		p {
+			margin: 10px 0 40px 40px;
+			padding: 0 40px 0 0;
+			max-width: 550px;
+			color: #444;
+			line-height: 22px;
+
+			a {
+				color: $cMain;
+				text-decoration: none;
+				border-bottom: 1px dashed rgba($cMain, .8);
+			}
+		}
+
+		.buttons {
+			margin: 0 0 0 35px;
+		}
+
+		.button {
+			margin: 0 5px;
+			padding: 8px 18px 8px 18px;
+			background-color: rgba(0, 0, 0, .15);
+			color: #444;
+			font-weight: bold;
+			text-align: center;
+			cursor: pointer;
+			border-radius: 2px;
+			transition: background-color $sDuration;
+
+			&:hover {
+				background-color: rgba(0, 0, 0, .25);
+			}
+
+			&:active,
+			&.active {
+				background-color: rgba(0, 0, 0, .05);
+			}
+
+			span {
+				margin-right: 10px;
+			}
+
+			&.action {
+				background: $cMain;
+				color: #fff;
+
+				&:hover { background-color: darken($cMain, 10%); }
+
+				&:active,
+				&.active { background-color: lighten($cMain, 10%); }
+			}
+		}
+
+	}
+
+	/* Verify Session Wrapper ------------------------------------------------*/
+	.verify .structure_wrapper {
+		position: relative;
+		width: 100%;
+		height: calc(100% - 250px);
+		overflow-y: scroll;
+	}
+
+	/* Verify Session ------------------------------------------------*/
+	.verify .structure .session {
+		width: calc(100% - 80px);
+		margin: 20px 40px;
+
+		.code {
+			padding: 0 0 2px 0;
+			width: 100%;
+			color: #333;
+			line-height: 22px;
+			border-bottom: 1px solid black(.2);
+		}
+
+		.photo {
+			margin: 10px 10px 0 0;
+			width: 100px;
+			height: 100px;
+
+			img {
+				width: 100%;
+				height: 100%;
+			}
+		}
+	}
+
 }
 
 /* Progress ------------------------------------------------*/
