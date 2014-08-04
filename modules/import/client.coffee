@@ -236,7 +236,7 @@ m.add m.import =
 		modal.close()
 
 		# Show verify-modal
-		m.import.dom().append m.import.render.verify
+		m.import.dom().append m.import.render.verify(id, photos)
 
 		# TODO: Adjust wrapper height
 
