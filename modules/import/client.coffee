@@ -22,7 +22,9 @@ m.add m.import =
 
 		dom('#upload_files').on 'change', -> m.import.upload(this.files)
 
-		$(document).on 'click', '.photo .overlay', m.import.edit
+		$(document)
+			.on 'click', '.photo .overlay', m.import.edit
+			.on 'click', '.verify .button.cancel', -> $('.verify_overlay').remove()
 
 	getLychee: ->
 
@@ -370,7 +372,7 @@ m.add m.import =
 						<h1>Confirm structure</h1>
 						<p>Please check and confirm the shown structure of your scanned photos. Mark errors, wrong groupings and incorrect scanned codes to avoid wrong photos in wrong sessions.</p>
 						<div class="buttons">
-							<a class="button">Cancel</a>
+							<a class="button cancel">Cancel</a>
 							<a class="button action"><span class="ion-checkmark"></span>Confirm structure</a>
 						</div>
 					</div>
