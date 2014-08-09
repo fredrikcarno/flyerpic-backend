@@ -70,7 +70,10 @@ scanAlbum = (id, callback) ->
 		# If photo without code
 		else
 
-			orderedRows[orderedRows.length-1].push row
+			# Check if a session exists
+			if orderedRows.length > 0
+				# TODO: Do not ignore skipped photos
+				orderedRows[orderedRows.length-1].push row
 
 		callback null, row
 

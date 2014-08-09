@@ -22,6 +22,8 @@ m.add m.import =
 
 		dom('#upload_files').on 'change', -> m.import.upload(this.files)
 
+		$(document).on 'click', '.photo .overlay', m.import.edit
+
 	getLychee: ->
 
 		# Request Lychee credentials
@@ -244,6 +246,111 @@ m.add m.import =
 
 		# TODO: Adjust wrapper height
 
+	find: (id, callback) ->
+
+		x = 0
+		y = 0
+
+		found = false
+
+		# For each session
+		for session in m.import.sessions
+			do (session) ->
+
+				# Reset photo
+				y = 0
+
+				# For each photo
+				for photo in session
+					do (photo) ->
+
+						# Is chosen photo
+						if	"#{ photo.id }" is id or
+							photo.id is id
+
+								callback x, y
+								found = true
+
+						# Next photo
+						y++
+
+				# Next session
+				x++
+
+		if found is false
+			callback null, null
+
+	edit: (e) ->
+
+		# Save element
+		that = this
+
+		# Set active status
+		$(this).addClass 'active'
+
+		# Get id of photo
+		id = $(this).parent().attr('data-id')
+
+
+		# Get code of parent session
+		code = $(this).parent().parent().attr('data-code')
+
+		items = [
+			{ type: 'item', title: 'Remove photo', icon: 'ion-trash-b', fn: -> m.import.remove(id, that) }
+			{ type: 'separator' }
+		]
+
+		for session in m.import.sessions
+			do (session) ->
+
+				if session[0].code isnt code
+					items.push { type: 'item', title: session[0].code, icon: 'ion-forward', fn: -> m.import.move(id, session[0], that) }
+
+		context.show items, e, ->
+
+			$(that).removeClass 'active'
+			context.close()
+
+	remove: (id, that) ->
+
+		context.close()
+
+		m.import.find id, (x, y) ->
+
+			return false if not x? or not y?
+
+			# Remove from array
+			m.import.sessions[x].splice y, 1
+
+			# Remove from DOM
+			$(that).parent().remove()
+
+	move: (id, to, that) ->
+
+		$(that).removeClass 'active'
+		context.close()
+
+		m.import.find id, (x, y) ->
+
+			return false if not x? or not y?
+
+			m.import.find to.id, (toX, toY) ->
+
+				return false if not toX? or not toY?
+
+				# Get
+				temp = m.import.sessions[x][y]
+
+				# Remove
+				m.import.sessions[x].splice y, 1
+
+				# Add
+				m.import.sessions[toX].push temp
+
+				# Remove from DOM
+				elem = $(that).parent().detach()
+				m.import.dom(".structure .session[data-code='#{ to.code }']").append elem
+
 	render:
 
 		upload: ->
@@ -279,7 +386,7 @@ m.add m.import =
 		session: (session) ->
 
 			"""
-			<div class="session">
+			<div class="session" data-code="#{ session[0].code }">
 				<div class="code">#{ session[0].code }</div>
 				#{ (m.import.render.photo photo for photo in session).join '' }
 			</div>
@@ -287,8 +394,29 @@ m.add m.import =
 
 		photo: (photo) ->
 
-			"""
-			<div class="photo" data-id="#{ photo.id }">
-				<img src="#{ photo.url }">
-			</div>
-			"""
+			html =	"""
+					<div class="photo" data-id="#{ photo.id }">
+						<img src="#{ photo.url }">
+					"""
+
+			if photo.code is ''
+
+				html +=	"""
+						<div class="overlay">
+							<a class="icon ion-edit" href="#"></a>
+						</div>
+						"""
+
+			else
+
+				html +=	"""
+						<div class="scanned">
+							<a class="icon ion-qr-scanner"></a>
+						</div>
+						"""
+
+			html +=	"""
+					</div>
+					"""
+
+			return html

@@ -33,3 +33,8 @@ body {
 	display: inline-block;
 	width: 100%;
 }
+
+/* Context ------------------------------------------------*/
+.context tr td:hover {
+	background-color: $cMain !important;
+}
