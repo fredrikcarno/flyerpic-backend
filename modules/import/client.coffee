@@ -2,6 +2,7 @@ m.add m.import =
 
 	title: 'Import'
 	url: null
+	sessions: null
 
 	init: ->
 
@@ -214,11 +215,11 @@ m.add m.import =
 			class: 'login'
 
 		# Start scanning
-		kanban.api "api/m/import/scanAlbum?id=#{ id }", (photos) ->
+		kanban.api "api/m/import/scanAlbum?id=#{ id }", (sessions) ->
 
 			# Validate response
-			if	not photos? or
-				photos is false
+			if	not sessions? or
+				sessions is false
 
 					# Data invalid
 					notification.show {
@@ -228,15 +229,18 @@ m.add m.import =
 					return false
 
 			# Show verify-dialog
-			m.import.verify id, photos
+			m.import.verify id, sessions
 
-	verify: (id, photos) ->
+	verify: (id, sessions) ->
+
+		# Save sessions
+		m.import.sessions = sessions
 
 		# Close scanning-modal
 		modal.close()
 
 		# Show verify-modal
-		m.import.dom().append m.import.render.verify(id, photos)
+		m.import.dom().append m.import.render.verify(id, sessions)
 
 		# TODO: Adjust wrapper height
 
@@ -250,7 +254,7 @@ m.add m.import =
 			</div>
 			"""
 
-		verify: (id, photos) ->
+		verify: (id, sessions) ->
 
 			"""
 			<div class="verify_overlay">
@@ -265,20 +269,26 @@ m.add m.import =
 					</div>
 					<div class="structure_wrapper">
 						<div class="structure">
-							#{ (m.import.render.session photo for photo in photos).join '' }
+							#{ (m.import.render.session session for session in sessions).join '' }
 						</div>
 					</div>
 				</div>
 			</div>
 			"""
 
-		session: (photo) ->
+		session: (session) ->
 
 			"""
 			<div class="session">
-				<div class="code">#{ photo.code }</div>
-				<div class="photo">
-					<img src="#{ photo.url }">
-				</div>
+				<div class="code">#{ session[0].code }</div>
+				#{ (m.import.render.photo photo for photo in session).join '' }
+			</div>
+			"""
+
+		photo: (photo) ->
+
+			"""
+			<div class="photo" data-id="#{ photo.id }">
+				<img src="#{ photo.url }">
 			</div>
 			"""

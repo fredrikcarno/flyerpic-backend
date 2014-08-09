@@ -123,6 +123,7 @@
 
 	/* Verify Session ------------------------------------------------*/
 	.verify .structure .session {
+		display: inline-block;
 		width: calc(100% - 80px);
 		margin: 20px 40px;
 
@@ -135,6 +136,7 @@
 		}
 
 		.photo {
+			float: left;
 			margin: 10px 10px 0 0;
 			width: 100px;
 			height: 100px;

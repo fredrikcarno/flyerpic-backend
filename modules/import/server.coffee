@@ -36,6 +36,8 @@ scanAlbum = (id, callback) ->
 
 	# TODO: Check if id is numeric
 
+	orderedRows = []
+
 	scan = (row, callback) ->
 
 		filename = config.lychee.path + 'uploads/big/' + row.url
@@ -58,11 +60,29 @@ scanAlbum = (id, callback) ->
 
 			callback null, row
 
+	order = (row, callback) ->
+
+		# If photo with code
+		if row.code isnt ''
+
+			orderedRows.push [row]
+
+		# If photo without code
+		else
+
+			orderedRows[orderedRows.length-1].push row
+
+		callback null, row
+
 	# Get photos of album from db
 	db.source.query "SELECT * FROM lychee_photos WHERE album = '#{ id }' ORDER BY takestamp ASC", (err, rows) ->
 
 		# Scan all photos
-		async.map rows, scan, callback
+		async.map rows, scan, (err, rows) ->
+
+			# Order by code
+			async.mapSeries rows, order, (err, rows) ->
+				callback err, orderedRows
 
 module.exports = (app, _db) ->
 
