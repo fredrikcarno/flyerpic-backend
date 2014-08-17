@@ -20,11 +20,12 @@ m.add m.import =
 		# Define shorthand
 		dom = m.import.dom
 
-		dom('#upload_files').on 'change', -> m.import.upload(this.files)
+		dom('#upload_files').on 'change', -> m.import.step[1](this.files)
 
 		$(document)
-			.on 'click', '.photo .overlay', m.import.edit
+			.on 'click', '.verify .photo .overlay', m.import.edit.show
 			.on 'click', '.verify .button.cancel', -> $('.verify_overlay').remove()
+			.on 'click', '.verify .button.action', m.import.step[4]
 
 	getLychee: ->
 
@@ -47,206 +48,246 @@ m.add m.import =
 			m.import.url	= data.url + 'php/api.php'
 			m.import.token	= data.token
 
-	show: ->
+	step: [
 
-		modal.show
-			body:	"""
-					<h1>{{ import.dialog.title }}</h1>
-					<p>{{ import.dialog.description }} <a href="#">{{ import.dialog.help }}</a></p>
-					"""
-			class: 'login'
-			buttons:
-				action:
-					title: '{{ import.dialog.confirm }}'
-					color: 'normal'
-					fn: -> m.import.dom('#upload_files').click()
+		# Step 01
+		# Show upload instructions
+		->
 
-	upload: (files) ->
+			modal.show
+				body:	"""
+						<h1>{{ import.dialog.title }}</h1>
+						<p>{{ import.dialog.description }} <a href="#">{{ import.dialog.help }}</a></p>
+						"""
+				class: 'login'
+				buttons:
+					action:
+						title: '{{ import.dialog.confirm }}'
+						color: 'normal'
+						fn: -> m.import.dom('#upload_files').click()
 
-		globalProgress = 0
+		# Step 02
+		# Upload photos
+		, (files) ->
 
-		# Add temp-album to Lychee
-		addAlbum = (callback) ->
+			globalProgress = 0
 
-			kanban.api 'api/m/import/addAlbum', (id) ->
+			# Add temp-album to Lychee
+			addAlbum = (callback) ->
 
-				if id >= 0 then callback id
+				kanban.api 'api/m/import/addAlbum', (id) ->
 
-		# Upload process
-		process = (id, files, file) ->
+					if id >= 0 then callback id
 
-			formData	= new FormData()
-			xhr			= new XMLHttpRequest()
-			progress	= 0
-			preProgress	= 0
+			# Upload process
+			process = (id, files, file) ->
 
-			finish = ->
+				formData	= new FormData()
+				xhr			= new XMLHttpRequest()
+				progress	= 0
+				preProgress	= 0
 
-				m.import.dom('#upload_files').val ''
-				m.import.scan id
+				finish = ->
 
-			# Check if file is supported
-			if file.supported is false
+					m.import.dom('#upload_files').val ''
+					m.import.step[2] id
 
-				# Skip file
-				if file.next?
+				# Check if file is supported
+				if file.supported is false
 
-					# Upload next file
-					process id, files, file.next
-
-				else
-
-					# Look for supported files
-					# If zero files are supported, hide the upload after a delay
-
-					hasSupportedFiles = false
-
-					# For each file
-					$.each files, (i, file) ->
-
-						if file.supported is true
-							hasSupportedFiles = true
-
-					if hasSupportedFiles is false then finish()
-
-				return false
-
-			formData.append 'function', 'upload'
-			formData.append 'albumID', id
-			formData.append 'token', m.import.token
-			formData.append 0, file
-
-			xhr.open 'POST', m.import.url
-
-			xhr.onload = ->
-
-				# On success
-				if xhr.status is 200
-
-					file.ready = true;
-					wait = false;
-
-					# Check if there are file which are not finished
-					# For each file
-					$.each files, (i, file) ->
-
-						if file.ready is false
-							wait = true
-
-					# Finish upload when all files are finished
-					if wait is false then finish()
-
-			xhr.upload.onprogress = (e) ->
-
-				if e.lengthComputable
-
-					# Calculate progress
-					progress		= (e.loaded / e.total * 100 | 0) / files.length
-					globalProgress	= globalProgress - preProgress + progress
-					preProgress		= progress
-
-					if progress >= (100 / files.length)
+					# Skip file
+					if file.next?
 
 						# Upload next file
-						if file.next? then process id, files, file.next
+						process id, files, file.next
 
-			xhr.send formData
+					else
 
-		# Check if files are selected
-		if files.length <= 0 then return false
+						# Look for supported files
+						# If zero files are supported, hide the upload after a delay
 
-		# For each file
-		$.each files, (i, file) ->
+						hasSupportedFiles = false
 
-			file.num		= i
-			file.ready		= false
-			file.supported	= true
-			file.next		= if i < (files.length-1) then files[i+1] else null
+						# For each file
+						$.each files, (i, file) ->
 
-			# Check if file is supported
-			if	file.type isnt 'image/jpeg' and
-				file.type isnt 'image/jpg' and
-				file.type isnt 'image/png' and
-				file.type isnt 'image/gif'
+							if file.supported is true
+								hasSupportedFiles = true
 
-					# File not supported
-					file.ready		= true
-					file.supported	= false
+						if hasSupportedFiles is false then finish()
 
-		# Show loading modal
-		modal.show
-			body:	"""
-					<h1>{{ import.upload.title }}</h1>
-					<p>{{ import.upload.description }}</p>
-					<div class="progress">
-						<div class="bar"><span>0%</span></div>
-					</div>
-					"""
-			class: 'login'
-
-		# Update progress
-		p = ->
-			htmlProgress = Math.round(globalProgress) + '%'
-			if globalProgress <= 99
-				$('.modal .progress .bar').css 'width', htmlProgress
-				$('.modal .progress .bar span').html htmlProgress
-				setTimeout p, 100
-			else
-				$('.modal .progress .bar').css 'width', '100%'
-				$('.modal .progress .bar span').html 'Processing'
-
-		# Start progress update
-		p()
-
-		# Create temp-album
-		addAlbum (id) ->
-
-			# Upload first file
-			process id, files, files[0]
-
-	scan: (id) ->
-
-		# Show scan modal
-		modal.show
-			body:	"""
-					<h1>{{ import.scan.title }}</h1>
-					<p>{{ import.scan.description }}</p>
-					<div class="spinner qr">
-						<img src="assets/img/qrcode.svg">
-						<div class="scan"></div>
-					</div>
-					"""
-			class: 'login'
-
-		# Start scanning
-		kanban.api "api/m/import/scanAlbum?id=#{ id }", (sessions) ->
-
-			# Validate response
-			if	not sessions? or
-				sessions is false
-
-					# Data invalid
-					notification.show {
-						icon: 'alert-circled'
-						text: 'Could not scan sessions'
-					}
 					return false
 
-			# Show verify-dialog
-			m.import.verify id, sessions
+				formData.append 'function', 'upload'
+				formData.append 'albumID', id
+				formData.append 'token', m.import.token
+				formData.append 0, file
 
-	verify: (id, sessions) ->
+				xhr.open 'POST', m.import.url
 
-		# Save sessions
-		m.import.sessions = sessions
+				xhr.onload = ->
 
-		# Close scanning-modal
-		modal.close()
+					# On success
+					if xhr.status is 200
 
-		# Show verify-modal
-		m.import.dom().append m.import.render.verify(id, sessions)
+						file.ready = true;
+						wait = false;
 
-		# TODO: Adjust wrapper height
+						# Check if there are file which are not finished
+						# For each file
+						$.each files, (i, file) ->
+
+							if file.ready is false
+								wait = true
+
+						# Finish upload when all files are finished
+						if wait is false then finish()
+
+				xhr.upload.onprogress = (e) ->
+
+					if e.lengthComputable
+
+						# Calculate progress
+						progress		= (e.loaded / e.total * 100 | 0) / files.length
+						globalProgress	= globalProgress - preProgress + progress
+						preProgress		= progress
+
+						if progress >= (100 / files.length)
+
+							# Upload next file
+							if file.next? then process id, files, file.next
+
+				xhr.send formData
+
+			# Check if files are selected
+			if files.length <= 0 then return false
+
+			# For each file
+			$.each files, (i, file) ->
+
+				file.num		= i
+				file.ready		= false
+				file.supported	= true
+				file.next		= if i < (files.length-1) then files[i+1] else null
+
+				# Check if file is supported
+				if	file.type isnt 'image/jpeg' and
+					file.type isnt 'image/jpg' and
+					file.type isnt 'image/png' and
+					file.type isnt 'image/gif'
+
+						# File not supported
+						file.ready		= true
+						file.supported	= false
+
+			# Show loading modal
+			modal.show
+				body:	"""
+						<h1>{{ import.upload.title }}</h1>
+						<p>{{ import.upload.description }}</p>
+						<div class="progress">
+							<div class="bar"><span>0%</span></div>
+						</div>
+						"""
+				class: 'login'
+
+			# Update progress
+			p = ->
+				htmlProgress = Math.round(globalProgress) + '%'
+				if globalProgress <= 99
+					$('.modal .progress .bar').css 'width', htmlProgress
+					$('.modal .progress .bar span').html htmlProgress
+					setTimeout p, 100
+				else
+					$('.modal .progress .bar').css 'width', '100%'
+					$('.modal .progress .bar span').html 'Processing'
+
+			# Start progress update
+			p()
+
+			# Create temp-album
+			addAlbum (id) ->
+
+				# Upload first file
+				process id, files, files[0]
+
+		# Step 03
+		# Show scan loading-modal
+		, (id) ->
+
+
+
+			modal.show
+				body:	"""
+						<h1>{{ import.scan.title }}</h1>
+						<p>{{ import.scan.description }}</p>
+						<div class="spinner qr">
+							<img src="assets/img/qrcode.svg">
+							<div class="scan"></div>
+						</div>
+						"""
+				class: 'login'
+
+			# Start scanning
+			kanban.api "api/m/import/scanAlbum?id=#{ id }", (sessions) ->
+
+				# Validate response
+				if	not sessions? or
+					sessions is false
+
+						# Data invalid
+						notification.show {
+							icon: 'alert-circled'
+							text: 'Could not scan sessions'
+						}
+						return false
+
+				# Show verify-dialog
+				m.import.step[3] id, sessions
+
+		# Step 04
+		# Show the verify dialog
+		, (id, sessions) ->
+
+			# Save sessions
+			m.import.sessions = sessions
+
+			# Close scanning-modal
+			modal.close()
+
+			# Show verify-modal
+			m.import.dom().append m.import.render.verify(id, m.import.sessions)
+
+			# TODO: Adjust wrapper height
+
+		# Step 05
+		# Apply the verified structure
+		, ->
+
+			console.log m.import.sessions
+
+			# Convert structure
+			structure = JSON.stringify m.import.sessions
+
+			# Send structure
+			kanban.api "api/m/import/setStructure?structure=#{ structure }", (data) ->
+
+				if	not data? or
+					data isnt true
+
+						# Sorting failed
+						notification.show {
+							icon: 'alert-circled'
+							text: 'Could not apply the given structure'
+						}
+						return false
+
+				# Hide verify-modal
+				$('.verify_overlay').remove()
+
+				# TODO: Show final success dialog
+
+	]
 
 	find: (id, callback) ->
 
@@ -282,76 +323,78 @@ m.add m.import =
 		if found is false
 			callback null, null
 
-	edit: (e) ->
+	edit:
 
-		# Save element
-		that = this
+		show: (e) ->
 
-		# Set active status
-		$(this).addClass 'active'
+			# Save element
+			that = this
 
-		# Get id of photo
-		id = $(this).parent().attr('data-id')
+			# Set active status
+			$(this).addClass 'active'
+
+			# Get id of photo
+			id = $(this).parent().attr('data-id')
 
 
-		# Get code of parent session
-		code = $(this).parent().parent().attr('data-code')
+			# Get code of parent session
+			code = $(this).parent().parent().attr('data-code')
 
-		items = [
-			{ type: 'item', title: 'Remove photo', icon: 'ion-trash-b', fn: -> m.import.remove(id, that) }
-			{ type: 'separator' }
-		]
+			items = [
+				{ type: 'item', title: 'Remove photo', icon: 'ion-trash-b', fn: -> m.import.edit.remove(id, that) }
+				{ type: 'separator' }
+			]
 
-		for session in m.import.sessions
-			do (session) ->
+			for session in m.import.sessions
+				do (session) ->
 
-				if session[0].code isnt code
-					items.push { type: 'item', title: session[0].code, icon: 'ion-forward', fn: -> m.import.move(id, session[0], that) }
+					if session[0].code isnt code
+						items.push { type: 'item', title: session[0].code, icon: 'ion-forward', fn: -> m.import.edit.move(id, session[0], that) }
 
-		context.show items, e, ->
+			context.show items, e, ->
+
+				$(that).removeClass 'active'
+				context.close()
+
+		remove: (id, that) ->
+
+			context.close()
+
+			m.import.find id, (x, y) ->
+
+				return false if not x? or not y?
+
+				# Remove from array
+				m.import.sessions[x].splice y, 1
+
+				# Remove from DOM
+				$(that).parent().remove()
+
+		move: (id, to, that) ->
 
 			$(that).removeClass 'active'
 			context.close()
 
-	remove: (id, that) ->
+			m.import.find id, (x, y) ->
 
-		context.close()
+				return false if not x? or not y?
 
-		m.import.find id, (x, y) ->
+				m.import.find to.id, (toX, toY) ->
 
-			return false if not x? or not y?
+					return false if not toX? or not toY?
 
-			# Remove from array
-			m.import.sessions[x].splice y, 1
+					# Get
+					temp = m.import.sessions[x][y]
 
-			# Remove from DOM
-			$(that).parent().remove()
+					# Remove
+					m.import.sessions[x].splice y, 1
 
-	move: (id, to, that) ->
+					# Add
+					m.import.sessions[toX].push temp
 
-		$(that).removeClass 'active'
-		context.close()
-
-		m.import.find id, (x, y) ->
-
-			return false if not x? or not y?
-
-			m.import.find to.id, (toX, toY) ->
-
-				return false if not toX? or not toY?
-
-				# Get
-				temp = m.import.sessions[x][y]
-
-				# Remove
-				m.import.sessions[x].splice y, 1
-
-				# Add
-				m.import.sessions[toX].push temp
-
-				# Remove from DOM
-				elem = $(that).parent().detach()
-				m.import.dom(".structure .session[data-code='#{ to.code }']").append elem
+					# Remove from DOM
+					elem = $(that).parent().detach()
+					m.import.dom(".structure .session[data-code='#{ to.code }']").append elem
 
 	render:
 

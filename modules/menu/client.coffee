@@ -43,7 +43,7 @@ m.add m.menu =
 		dom = m.menu.dom
 
 		dom('#menu_create').on 'click', m.create.show
-		dom('#menu_import').on 'click', m.import.show
+		dom('#menu_import').on 'click', m.import.step[0]
 		dom('#menu_settings').on 'click', m.create.show
 
 	render:

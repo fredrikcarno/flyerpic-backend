@@ -87,6 +87,81 @@ scanAlbum = (id, callback) ->
 			async.mapSeries rows, order, (err, rows) ->
 				callback err, orderedRows
 
+setStructure = (structure, callback) ->
+
+	###
+	Description:	Moves all photos from the temp-album to their own reserved album
+					based on the QR and the given and verified structure
+	Return:			Err
+	###
+
+	# Convert structure
+	structure = JSON.parse structure
+
+	# For each session in structure
+	async.map structure, (session, callback) ->
+
+		# Get code of first photo
+		code = session[0].code
+
+		if	not code? or
+			code is ''
+
+				callback 'Code not found in session', session
+				return false
+
+		# Get id of album
+		db.source.query "SELECT id FROM lychee_albums WHERE title = '#{ code }' LIMIT 1", (err, rows) ->
+
+			if err?
+
+				# Database error
+				callback err, session
+				return false
+
+			if	not rows? or
+				not rows[0].id?
+
+					# Album not found
+					callback "No album with the code '#{ code }' found", session
+					return false
+
+			# Save id
+			id = rows[0].id
+
+			# For each photo in session
+			async.map session, (photo, callback) ->
+
+				if photo.code is ''
+
+					# Move photo to album
+					db.source.query "UPDATE lychee_photos SET album = '#{ id }' WHERE id = '#{ photo.id }';", (err, rows) ->
+
+						if err?
+
+							# Database error
+							callback err, photo
+							return false
+
+						else
+
+							callback null, photo
+							return true
+
+				else
+
+					# Skip photo
+					callback null, photo
+					return true
+
+			, (err, rows) ->
+
+				callback err, session
+
+	, (err, rows) ->
+
+		callback err
+
 module.exports = (app, _db) ->
 
 	db = _db
@@ -116,4 +191,15 @@ module.exports = (app, _db) ->
 				return false
 			else
 				res.json data
+				return true
+
+	app.get '/api/m/import/setStructure', middleware.auth, (req, res) ->
+
+		setStructure req.query.structure, (err) ->
+
+			if err?
+				res.json { error: 'Could not apply the given structure', details: err }
+				return false
+			else
+				res.json true
 				return true
