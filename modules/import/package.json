@@ -4,6 +4,6 @@
   "authors": "Tobias Reich <tobias.reich.ich@gmail.com>",
   "main": "server.coffee",
   "dependencies": {
-    "zbarimg": "^1.0.8"
+    "zbarimg": "^1.0.9"
   }
 }
