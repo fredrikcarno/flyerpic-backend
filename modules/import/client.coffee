@@ -217,8 +217,6 @@ m.add m.import =
 		# Show scan loading-modal
 		, (id) ->
 
-
-
 			modal.show
 				body:	"""
 						<h1>{{ import.scan.title }}</h1>
@@ -283,7 +281,16 @@ m.add m.import =
 				# Hide verify-modal
 				$('.verify_overlay').remove()
 
-				# TODO: Show final success dialog
+				m.import.step[5]()
+
+		# Step 06
+		# Confirm that sorting was successful
+		, ->
+
+			notification.show {
+				icon: 'android-checkmark'
+				text: 'Sessions successful sorted'
+			}
 
 	]
 
