@@ -329,13 +329,13 @@ m.add m.import =
 			that = this
 
 			# Set active status
-			$(this).addClass 'active'
+			$(that).addClass 'active'
 
 			# Get id of photo
-			id = $(this).parent().attr('data-id')
+			id = $(that).parent().attr('data-id')
 
 			# Get code of parent session
-			code = $(this).parent().parent().attr('data-code')
+			code = $(that).parent().parent().attr('data-code')
 
 			# Default menu
 			items = [
@@ -343,20 +343,21 @@ m.add m.import =
 			]
 
 			# Add remove
-			if $(this).hasClass('scanned') is false
+			if $(that).hasClass('scanned') is false
 				items.push { type: 'separator' }
 				items.push { type: 'item', title: 'Remove photo', icon: 'ion-trash-b', fn: -> m.import.edit.remove(id, that) }
 
-			# Add separator
-			if m.import.sessions.length > 1
-				items.push { type: 'separator' }
-
 			# Add move
-			for session in m.import.sessions
-				do (session) ->
+			if	m.import.sessions.length > 1 and
+				$(that).hasClass('scanned') is false
 
-					if session[0].code isnt code
-						items.push { type: 'item', title: session[0].code, icon: 'ion-forward', fn: -> m.import.edit.move(id, session[0], that) }
+					items.push { type: 'separator' }
+
+					for session in m.import.sessions
+						do (session) ->
+
+							if session[0].code isnt code
+								items.push { type: 'item', title: session[0].code, icon: 'ion-forward', fn: -> m.import.edit.move(id, session[0], that) }
 
 			context.show items, e, ->
 
