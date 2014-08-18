@@ -277,10 +277,6 @@ m.add m.import =
 					data isnt true
 
 						# Sorting failed
-						notification.show {
-							icon: 'alert-circled'
-							text: 'Could not apply the given structure'
-						}
 						return false
 
 				# Hide verify-modal
