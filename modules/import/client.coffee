@@ -24,6 +24,7 @@ m.add m.import =
 
 		$(document)
 			.on 'click', '.verify .code a.edit', m.import.edit.rename
+			.on 'click', '.verify .photo .scanned', m.import.edit.show
 			.on 'click', '.verify .photo .overlay', m.import.edit.show
 			.on 'click', '.verify .button.cancel', -> $('.verify_overlay').remove()
 			.on 'click', '.verify .button.action', m.import.step[4]
@@ -336,16 +337,21 @@ m.add m.import =
 			# Get code of parent session
 			code = $(this).parent().parent().attr('data-code')
 
+			# Default menu
 			items = [
 				{ type: 'item', title: 'Full photo', icon: 'ion-arrow-expand', fn: -> m.import.edit.full(id, that) }
-				{ type: 'separator' }
-				{ type: 'item', title: 'Remove photo', icon: 'ion-trash-b', fn: -> m.import.edit.remove(id, that) }
 			]
+
+			# Add remove
+			if $(this).hasClass('scanned') is false
+				items.push { type: 'separator' }
+				items.push { type: 'item', title: 'Remove photo', icon: 'ion-trash-b', fn: -> m.import.edit.remove(id, that) }
 
 			# Add separator
 			if m.import.sessions.length > 1
 				items.push { type: 'separator' }
 
+			# Add move
 			for session in m.import.sessions
 				do (session) ->
 
