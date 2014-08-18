@@ -1,6 +1,7 @@
 # Dependencies
 zbarimg		= require 'zbarimg'
 async		= require 'async'
+validator	= require 'validator'
 
 # Kanban modules
 log			= require './../../node/log'
@@ -34,7 +35,10 @@ scanAlbum = (id, callback) ->
 					JSON contains the scanned QR-Code and the corresponding photos
 	###
 
-	# TODO: Check if id is numeric
+	if	not id? or
+		not validator.isAlphanumeric(id)
+
+			callback 'ID needs to be alphanumeric', null
 
 	orderedRows = []
 
