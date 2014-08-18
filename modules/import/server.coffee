@@ -95,6 +95,14 @@ setStructure = (structure, callback) ->
 	Return:			Err
 	###
 
+	# Check structure
+	if	not structure? or
+		structure is ''
+
+			# Parameter error
+			callback 'Could not parse structure'
+			return false
+
 	# Convert structure
 	structure = JSON.parse structure
 
@@ -119,12 +127,11 @@ setStructure = (structure, callback) ->
 				callback err, session
 				return false
 
-			if	not rows? or
-				not rows[0].id?
+			if not rows[0]?.id?
 
-					# Album not found
-					callback "No album with the code '#{ code }' found", session
-					return false
+				# Album not found
+				callback "No album with the code '#{ code }' found", session
+				return false
 
 			# Save id
 			id = rows[0].id
