@@ -131,8 +131,19 @@
 			padding: 0 0 2px 0;
 			width: 100%;
 			color: #333;
+			font-size: 16px;
 			line-height: 22px;
 			border-bottom: 1px solid black(.2);
+
+			a.edit {
+				color: #888;
+				padding-left: 10px;
+				transition: color .2s ease;
+
+				&:hover {
+					color: $cMain;
+				}
+			}
 		}
 
 		.photo {

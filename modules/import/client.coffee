@@ -23,6 +23,7 @@ m.add m.import =
 		dom('#upload_files').on 'change', -> m.import.step[1](this.files)
 
 		$(document)
+			.on 'click', '.verify .code a.edit', m.import.edit.rename
 			.on 'click', '.verify .photo .overlay', m.import.edit.show
 			.on 'click', '.verify .button.cancel', -> $('.verify_overlay').remove()
 			.on 'click', '.verify .button.action', m.import.step[4]
@@ -336,14 +337,18 @@ m.add m.import =
 			# Get id of photo
 			id = $(this).parent().attr('data-id')
 
-
 			# Get code of parent session
 			code = $(this).parent().parent().attr('data-code')
 
 			items = [
-				{ type: 'item', title: 'Remove photo', icon: 'ion-trash-b', fn: -> m.import.edit.remove(id, that) }
+				{ type: 'item', title: 'Full photo', icon: 'ion-arrow-expand', fn: -> m.import.edit.full(id, that) }
 				{ type: 'separator' }
+				{ type: 'item', title: 'Remove photo', icon: 'ion-trash-b', fn: -> m.import.edit.remove(id, that) }
 			]
+
+			# Add separator
+			if m.import.sessions.length > 1
+				items.push { type: 'separator' }
 
 			for session in m.import.sessions
 				do (session) ->
@@ -355,6 +360,41 @@ m.add m.import =
 
 				$(that).removeClass 'active'
 				context.close()
+
+		rename: () ->
+
+			that = this
+
+			id = $(that).attr('data-id')
+			console.log id
+
+			m.import.find id, (x, y) ->
+
+				return false if not x? or not y?
+
+				name = window.prompt 'Please correct the code for this session:', m.import.sessions[x][0].code
+
+				if	name? and
+					name isnt ''
+
+						m.import.sessions[x][0].code = name
+						$(that).parent().find('span').html name
+
+		full: (id, that) ->
+
+			$(that).removeClass 'active'
+			context.close()
+
+			m.import.find id, (x, y) ->
+
+				return false if not x? or not y?
+
+				# Convert to @2x
+				url = m.import.sessions[x][y].url
+				url = url.slice(0, -5) + '@2x.jpeg'
+
+				# Open image
+				window.open url
 
 		remove: (id, that) ->
 
@@ -432,7 +472,7 @@ m.add m.import =
 
 			"""
 			<div class="session" data-code="#{ session[0].code }">
-				<div class="code">#{ session[0].code }</div>
+				<div class="code"><span>#{ session[0].code }</span><a class="edit ion-edit" href="#" data-id="#{ session[0].id }"></a></div>
 				#{ (m.import.render.photo photo for photo in session).join '' }
 			</div>
 			"""
