@@ -41,6 +41,7 @@ scanAlbum = (id, callback) ->
 			callback 'ID needs to be alphanumeric', null
 
 	orderedRows = []
+	unknownRows = []
 
 	scan = (row, callback) ->
 
@@ -76,8 +77,20 @@ scanAlbum = (id, callback) ->
 
 			# Check if a session exists
 			if orderedRows.length > 0
-				# TODO: Do not ignore skipped photos
+
+				# Add to existing session
 				orderedRows[orderedRows.length-1].push row
+
+				if unknownRows.length isnt 0
+
+					# Add previous unknown sessions to last session
+					orderedRows[orderedRows.length-1] = orderedRows[orderedRows.length-1].concat unknownRows
+					unknownRows = []
+
+			else
+
+				# Add to unknown session
+				unknownRows.push row
 
 		callback null, row
 
