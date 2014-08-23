@@ -127,6 +127,10 @@ module.exports = (grunt) ->
 			gulp:
 				command: '<%= exec_gulp %>'
 
+		checkDependencies:
+
+			this: {}
+
 		watch:
 
 			js:
@@ -180,6 +184,7 @@ module.exports = (grunt) ->
 	require('load-grunt-tasks')(grunt)
 
 	grunt.registerTask 'default', [
+		'checkDependencies'
 		'js'
 		'css'
 		'modules'
