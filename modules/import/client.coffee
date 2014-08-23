@@ -289,7 +289,7 @@ m.add m.import =
 
 			notification.show {
 				icon: 'android-checkmark'
-				text: '{{ import.verify.success }}'
+				text: '{{ import.success }}'
 			}
 
 	]
