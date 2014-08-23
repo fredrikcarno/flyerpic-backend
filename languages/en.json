@@ -63,6 +63,18 @@
 		"scan": {
 			"title": "Scanning sessions",
 			"description": "Please wait till your photos are scanned and sorted. This process can take a while."
-		}
+		},
+		"verify": {
+			"title": "Confirm structure",
+			"description": "Please check and confirm the shown structure of your scanned photos. Mark errors, wrong groupings and incorrect scanned codes to avoid wrong photos in wrong sessions.",
+			"confirm": "Confirm structure",
+			"cancel": "Cancel",
+			"context": {
+				"full": "Full photo",
+				"remove": "Remove photo"
+			},
+			"rename": "Please correct the code for this session:"
+		},
+		"success": "Sessions successful sorted"
 	}
 }

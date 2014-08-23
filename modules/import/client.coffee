@@ -289,7 +289,7 @@ m.add m.import =
 
 			notification.show {
 				icon: 'android-checkmark'
-				text: 'Sessions successful sorted'
+				text: '{{ import.verify.success }}'
 			}
 
 	]
@@ -346,13 +346,13 @@ m.add m.import =
 
 			# Default menu
 			items = [
-				{ type: 'item', title: 'Full photo', icon: 'ion-arrow-expand', fn: -> m.import.edit.full(id, that) }
+				{ type: 'item', title: '{{ import.verify.context.full }}', icon: 'ion-arrow-expand', fn: -> m.import.edit.full(id, that) }
 			]
 
 			# Add remove
 			if $(that).hasClass('scanned') is false
 				items.push { type: 'separator' }
-				items.push { type: 'item', title: 'Remove photo', icon: 'ion-trash-b', fn: -> m.import.edit.remove(id, that) }
+				items.push { type: 'item', title: '{{ import.verify.context.remove }}', icon: 'ion-trash-b', fn: -> m.import.edit.remove(id, that) }
 
 			# Add move
 			if	m.import.sessions.length > 1 and
@@ -382,7 +382,7 @@ m.add m.import =
 
 				return false if not x? or not y?
 
-				name = window.prompt 'Please correct the code for this session:', m.import.sessions[x][0].code
+				name = window.prompt '{{ import.verify.rename }}', m.import.sessions[x][0].code
 
 				if	name? and
 					name isnt ''
@@ -462,11 +462,11 @@ m.add m.import =
 			<div class="verify_overlay">
 				<div class="verify">
 					<div class="header">
-						<h1>Confirm structure</h1>
-						<p>Please check and confirm the shown structure of your scanned photos. Mark errors, wrong groupings and incorrect scanned codes to avoid wrong photos in wrong sessions.</p>
+						<h1>{{ import.verify.title }}</h1>
+						<p>{{ import.verify.description }}</p>
 						<div class="buttons">
-							<a class="button cancel">Cancel</a>
-							<a class="button action"><span class="ion-checkmark"></span>Confirm structure</a>
+							<a class="button cancel">{{ import.verify.cancel }}</a>
+							<a class="button action"><span class="ion-checkmark"></span>{{ import.verify.confirm }}</a>
 						</div>
 					</div>
 					<div class="structure_wrapper">
