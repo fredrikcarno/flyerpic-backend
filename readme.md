@@ -50,3 +50,27 @@ The Backend creates a table called `lychee_users` with the following fields:
 | `priceperphoto` | Price for one single photo (e.g. 5.99) |
 | `percentperprice` | A number between 0 and 100. This is the percent of the `priceperalbum` or `priceperphoto` which goes to the `secondarymail`. The rest will go the the `primarymail`. |
 | `watermark` | The watermark-id of the watermark which belongs to the user |
+
+## Shorthand ID
+
+The Backend uses a shorthand ID on the flyer to identify the photographer.
+
+- The shorthand must be 2 chars long
+- The code on the flyer must start with the shorthand
+
+The shorthand ID is the ID of the photographer converted to letters. Letters are easier to read when the customer needs to enter the code on the website. The following table shows how to convert the ID into a shorthand ID:
+
+| Number | Shorthand Equivalent |
+|:-----------|:------------|
+| 0 | a |
+| 1 | b |
+| 2 | d |
+| 3 | e |
+| 4 | f |
+| 5 | g |
+| 6 | h |
+| 7 | j |
+| 8 | k |
+| 9 | m |
+
+Example: The photographer with the ID `01` has the shorthand ID `ab`.
