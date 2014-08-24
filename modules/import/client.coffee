@@ -81,6 +81,17 @@ m.add m.import =
 
 					if id >= 0 then callback id
 
+			# Generate random hash
+			randomString = (length) ->
+				result	= ''
+				chars	= '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
+
+				while length > 0
+					result += chars[Math.round(Math.random() * (chars.length - 1))]
+					length--
+
+				return result;
+
 			# Upload process
 			process = (id, files, file) ->
 
@@ -122,6 +133,7 @@ m.add m.import =
 
 				formData.append 'function', 'upload'
 				formData.append 'albumID', id
+				formData.append 'tags', randomString(32)
 				formData.append 'token', m.import.token
 				formData.append 0, file
 
