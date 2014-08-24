@@ -1,7 +1,6 @@
 # Dependencies
 async		= require 'async'
 crypto		= require 'crypto'
-joi			= require 'joi'
 _			= require 'underscore'
 phantom		= require 'node-phantom'
 validator	= require 'validator'
