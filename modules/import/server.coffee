@@ -95,7 +95,7 @@ scanAlbum = (id, callback) ->
 		callback null, row
 
 	# Get photos of album from db
-	db.source.query 'SELECT * FROM lychee_photos WHERE album = ? ORDER BY takestamp ASC', [id], (err, rows) ->
+	db.source.query "SELECT * FROM lychee_photos WHERE album = ? AND tags NOT LIKE '%watermarked%' ORDER BY takestamp ASC", [id], (err, rows) ->
 
 		# Scan all photos
 		async.map rows, scan, (err, rows) ->
