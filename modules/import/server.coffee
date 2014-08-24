@@ -22,7 +22,7 @@ addAlbum = (callback) ->
 	sysstamp	= Math.round(new Date().getTime() / 1000)
 	name		= "[TEMP] #{ sysstamp }"
 
-	db.source.query "INSERT INTO lychee_albums (title, sysstamp, public, visible) VALUES ('#{ name }', '#{ sysstamp }', '0', '0')", (err, row) ->
+	db.source.query 'INSERT INTO lychee_albums (title, sysstamp, public, visible, downloadable) VALUES (?, ?, 0, 0, 0)', [name, sysstamp], (err, row) ->
 
 		callback err, row.insertId
 		return true
@@ -95,7 +95,7 @@ scanAlbum = (id, callback) ->
 		callback null, row
 
 	# Get photos of album from db
-	db.source.query "SELECT * FROM lychee_photos WHERE album = '#{ id }' ORDER BY takestamp ASC", (err, rows) ->
+	db.source.query 'SELECT * FROM lychee_photos WHERE album = ? ORDER BY takestamp ASC', [id], (err, rows) ->
 
 		# Scan all photos
 		async.map rows, scan, (err, rows) ->
@@ -136,7 +136,7 @@ setStructure = (structure, callback) ->
 				return false
 
 		# Get id of album
-		db.source.query "SELECT id FROM lychee_albums WHERE title = '#{ code }' LIMIT 1", (err, rows) ->
+		db.source.query 'SELECT id FROM lychee_albums WHERE title = ? LIMIT 1', [code], (err, rows) ->
 
 			if err?
 
@@ -159,7 +159,7 @@ setStructure = (structure, callback) ->
 				if photo.code is ''
 
 					# Move photo to album
-					db.source.query "UPDATE lychee_photos SET album = '#{ id }' WHERE id = '#{ photo.id }';", (err, rows) ->
+					db.source.query 'UPDATE lychee_photos SET album = ? WHERE id = ?', [id, photo.id], (err, rows) ->
 
 						if err?
 

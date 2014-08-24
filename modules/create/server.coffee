@@ -112,7 +112,7 @@ code = (user, callback) ->
 
 		sysstamp = Math.round(new Date().getTime() / 1000)
 
-		db.source.query "INSERT INTO lychee_albums (title, sysstamp, public, visible) VALUES ('#{ code }', '#{ sysstamp }', '1', '0')", (err, rows) ->
+		db.source.query 'INSERT INTO lychee_albums (title, sysstamp, public, visible, downloadable) VALUES (?, ?, 1, 0, 1)', [code, sysstamp], (err, rows) ->
 
 			callback err
 			return true

@@ -30,11 +30,11 @@ structure	=	"""
 				) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 				"""
 
-user =	(username, password) ->
+user = ->
 
 	"""
 	INSERT INTO `lychee_users` (`username`, `password`, `name`, `description`, `primarymail`, `secondarymail`, `helpmail`, `service`, `currencycode`, `currencysymbol`, `currencyposition`, `priceperalbum`, `priceperphoto`, `percentperprice`, `watermark`)
-	VALUES ('#{ username }','#{ password }','',NULL,'','','','paypal','USD','$',0,9.99,5.99,20,1)
+	VALUES (?,?,'',NULL,'','','','paypal','USD','$',0,9.99,5.99,20,1)
 	"""
 
 create = (callback) ->
@@ -132,7 +132,7 @@ db = module.exports =
 
 		add: (username, password, callback) ->
 
-			db.source.query user(username, password), (err, rows) ->
+			db.source.query user, [username, password], (err, rows) ->
 
 				if err?
 					log.error 'db', 'Could not add user to database', err
@@ -156,7 +156,7 @@ db = module.exports =
 
 		me: (id, callback) ->
 
-			db.source.query "SELECT * FROM lychee_users WHERE id = '#{ id }' LIMIT 1", (err, rows) ->
+			db.source.query 'SELECT * FROM lychee_users WHERE id = ? LIMIT 1', [id], (err, rows) ->
 
 				if err? or rows.length is 0
 					log.error 'db', 'Could not get users from database', err
