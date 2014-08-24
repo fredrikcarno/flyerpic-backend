@@ -144,6 +144,9 @@ m.add m.import =
 					# On success
 					if xhr.status is 200
 
+						# Upload next file
+						if file.next? then process id, files, file.next
+
 						file.ready = true;
 						wait = false;
 
@@ -165,11 +168,6 @@ m.add m.import =
 						progress		= (e.loaded / e.total * 100 | 0) / files.length
 						globalProgress	= globalProgress - preProgress + progress
 						preProgress		= progress
-
-						if progress >= (100 / files.length)
-
-							# Upload next file
-							if file.next? then process id, files, file.next
 
 				xhr.send formData
 
