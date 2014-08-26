@@ -2,6 +2,7 @@
 zbarimg		= require 'zbarimg'
 async		= require 'async'
 validator	= require 'validator'
+querystring	= require 'querystring'
 
 # Kanban modules
 log			= require './../../node/log'
@@ -61,6 +62,7 @@ scanAlbum = (id, callback) ->
 				url: config.lychee.url + 'uploads/thumb/' + row.thumbUrl
 				takestamp: row.takestamp
 				code: row.code
+				tags: row.tags
 			}
 
 			callback null, row
@@ -158,8 +160,14 @@ setStructure = (structure, callback) ->
 
 				if photo.code is ''
 
+					# TODO: Check tag
+
+					# Select identifier tag
+					photo.tags = photo.tags.split ','
+					photo.tags = querystring.escape photo.tags[0]
+
 					# Move photo to album
-					db.source.query 'UPDATE lychee_photos SET album = ? WHERE id = ?', [id, photo.id], (err, rows) ->
+					db.source.query "UPDATE lychee_photos SET album = ? WHERE tags LIKE '%#{ photo.tags }%'", [id], (err, rows) ->
 
 						if err?
 
