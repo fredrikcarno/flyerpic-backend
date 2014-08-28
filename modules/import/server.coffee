@@ -12,7 +12,26 @@ middleware	= require './../../node/middleware'
 db			= null
 config		= require './../../data/config.json'
 
-addAlbum = (callback) ->
+addAlbum = (title, shared, visible, downloadable, callback) ->
+
+	###
+	Description:	Add a album to Lychee
+	Return:			Err, Integer
+					Integer is the ID of the album
+	###
+
+	title			= title || 'Unnamed'
+	shared			= shared || 0
+	visible			= visible || 1
+	downloadable	= downloadable || 0
+	sysstamp		= Math.round(new Date().getTime() / 1000)
+
+	db.source.query 'INSERT INTO lychee_albums (title, sysstamp, public, visible, downloadable) VALUES (?, ?, ?, ?, ?)', [title, sysstamp, shared, visible, downloadable], (err, row) ->
+
+		callback err, row.insertId
+		return true
+
+addTempAlbum = (callback) ->
 
 	###
 	Description:	Add temp-album to Lychee
@@ -21,11 +40,82 @@ addAlbum = (callback) ->
 	###
 
 	sysstamp	= Math.round(new Date().getTime() / 1000)
-	name		= "[TEMP] #{ sysstamp }"
+	title		= "[TEMP] #{ sysstamp }"
 
-	db.source.query 'INSERT INTO lychee_albums (title, sysstamp, public, visible, downloadable) VALUES (?, ?, 0, 0, 0)', [name, sysstamp], (err, row) ->
+	db.source.query 'INSERT INTO lychee_albums (title, sysstamp, public, visible, downloadable) VALUES (?, ?, 0, 0, 0)', [title, sysstamp], (err, row) ->
 
 		callback err, row.insertId
+		return true
+
+getAlbum = (title, callback) ->
+
+	###
+	Description:	Get the id of an album based on the title
+					Adds a new album when title not found
+	Return:			Err, Integer
+					Integer is the ID of the album
+	###
+
+	if	not title? or
+		title is ''
+
+			callback 'Title missing or empty'
+			return false
+
+	# Get id of album
+	db.source.query 'SELECT id FROM lychee_albums WHERE title = ? LIMIT 1', [title], (err, rows) ->
+
+		if err?
+
+			# Database error
+			log.error 'import', 'Could not get album from database', err
+			callback err, null
+			return false
+
+		if not rows[0]?.id?
+
+			# Album not found => Add new album
+			addAlbum title, 1, 0, 1, callback
+			return true
+
+		# Save id
+		id = rows[0].id
+
+		# Return the id of the album
+		callback null, id
+		return true
+
+setAlbum = (id, tag, callback) ->
+
+	###
+	Description:	Moves a photo and its watermarked version to an album
+	Return:			Err
+	###
+
+	if	not id? or
+		id is ''
+
+			callback 'Album id missing for moving photo to album'
+			return false
+
+	if	not tag? or
+		tag is ''
+
+			callback 'Missing identifier tag for moving photo to album'
+			return false
+
+	# Move photo to album
+	db.source.query "UPDATE lychee_photos SET album = ? WHERE tags LIKE '%#{ tag }%'", [id], (err, rows) ->
+
+		if err?
+
+			# Database error
+			log.error 'import', 'Could not set album of photo', err
+			callback err
+			return false
+
+		# Photos moved successful
+		callback null
 		return true
 
 scanAlbum = (id, callback) ->
@@ -99,8 +189,20 @@ scanAlbum = (id, callback) ->
 	# Get photos of album from db
 	db.source.query "SELECT * FROM lychee_photos WHERE album = ? AND tags NOT LIKE '%watermarked%' ORDER BY takestamp ASC", [id], (err, rows) ->
 
+		if err?
+
+			log.error 'import', 'Could not get list of photos from database', err
+			callback 'Could not get list of photos from database', null
+			return false
+
 		# Scan all photos
 		async.map rows, scan, (err, rows) ->
+
+			if err?
+
+				log.error 'import', 'Could not scan photos', err
+				callback 'Could not scan photos', null
+				return false
 
 			# Order by code
 			async.mapSeries rows, order, (err, rows) ->
@@ -128,57 +230,29 @@ setStructure = (structure, callback) ->
 	# For each session in structure
 	async.map structure, (session, callback) ->
 
-		# Get code of first photo
-		code = session[0].code
-
-		if	not code? or
-			code is ''
-
-				callback 'Code not found in session', session
-				return false
-
 		# Get id of album
-		db.source.query 'SELECT id FROM lychee_albums WHERE title = ? LIMIT 1', [code], (err, rows) ->
+		getAlbum session[0].code, (err, id) ->
 
-			if err?
+			console.log err, id
 
-				# Database error
-				callback err, session
-				return false
+			if	err? or
+				not id?
 
-			if not rows[0]?.id?
-
-				# Album not found
-				callback "No album with the code '#{ code }' found", session
-				return false
-
-			# Save id
-			id = rows[0].id
+					callback 'Could not get album with code', session
+					return false
 
 			# For each photo in session
 			async.map session, (photo, callback) ->
 
+				# Check if photo is a photo without code
+				# Only photos without a code will be moved
 				if photo.code is ''
 
-					# TODO: Check tag
-
-					# Select identifier tag
-					photo.tags = photo.tags.split ','
-					photo.tags = querystring.escape photo.tags[0]
-
 					# Move photo to album
-					db.source.query "UPDATE lychee_photos SET album = ? WHERE tags LIKE '%#{ photo.tags }%'", [id], (err, rows) ->
+					setAlbum id, photo.tags, (err) ->
 
-						if err?
-
-							# Database error
-							callback err, photo
-							return false
-
-						else
-
-							callback null, photo
-							return true
+						callback err, photo
+						return true
 
 				else
 
@@ -205,9 +279,10 @@ module.exports = (app, _db) ->
 
 	app.get '/api/m/import/addAlbum', middleware.auth, (req, res) ->
 
-		addAlbum (err, id) ->
+		addTempAlbum (err, id) ->
 
 			if err? or not id?
+				log.error 'import', 'Unable to add temp-album to Lychee', err
 				res.json { error: 'Unable to add temp-album to Lychee', details: err }
 				return false
 			else
@@ -219,6 +294,7 @@ module.exports = (app, _db) ->
 		scanAlbum req.query.id, (err, data) ->
 
 			if err?
+				log.error 'import', 'Could not scan sessions', err
 				res.json { error: 'Could not scan sessions', details: err }
 				return false
 			else
@@ -230,6 +306,7 @@ module.exports = (app, _db) ->
 		setStructure req.query.structure, (err) ->
 
 			if err?
+				log.error 'import', 'Could not apply the given structure', err
 				res.json { error: 'Could not apply the given structure', details: err }
 				return false
 			else
