@@ -269,15 +269,13 @@ url = (type, cutlines, user, number, callback) ->
 					background: _user.background
 				flyers: flyers
 
-			# Set type
+			# Set type specific settings
 			switch type
 				when 'pdf'
 					data.guide		= 'guides/en.pdf'
 				when 'template'
-					data.guide		= 'guides/en.pdf'
 					data.template	= true
 				when 'codes'
-					data.guide		= 'guides/en.pdf'
 					data.codes		= true
 
 			# Set cutlines
@@ -308,7 +306,9 @@ output = (_url, data, callback) ->
 		return false
 
 	# Concat url and data
-	_url = _url + '#' + data
+	_url = _url + '#' + encodeURIComponent(data)
+
+	console.log _url
 
 	# Set paths
 	file = {
@@ -326,14 +326,20 @@ output = (_url, data, callback) ->
 			callback { error: 'Unable to init phantom', details: err }
 			return false
 
+		console.log '1'
+
 		ph.createPage (err, page) ->
 
 			if err?
 				callback { error: 'Unable to create page for pdf', details: err }
 				return false
 
+			console.log '2'
+
 			page.set 'paperSize', paperSize, ->
 				page.open _url, (err, status) ->
+
+					console.log '3'
 
 					if status isnt 'success' or err?
 
