@@ -16,8 +16,12 @@ build =
 
 		"""
 		<div class="flyer">
-			<div class="head">
-				<img src="https://avatars1.githubusercontent.com/u/499088?s=460" width="48" height="48">
+			<div class="head" style="
+				background-image: -webkit-linear-gradient(to bottom, rgba(0,0,0,.1) 0%, rgba(255,255,255,1) 100%), url('#{ photographer.background }');
+				background-image: linear-gradient(top, rgba(0,0,0,.1) 0%, rgba(255,255,255,1) 100%), url('#{ photographer.background }');
+				background-image: -webkit-linear-gradient(top, rgba(0,0,0,.1) 0%, rgba(255,255,255,1) 100%), url('#{ photographer.background }');
+				">
+				<img src="#{ photographer.avatar }" width="48" height="48">
 				<h1>#{ photographer.name }</h1>
 				<a>#{ photographer.mail }</a>
 			</div>

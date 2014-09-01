@@ -43,6 +43,8 @@ The Backend creates a table called `lychee_users` with the following fields:
 | `primarymail` | This paypal-mail will get 100% - `percentperprice` of the `priceperalbum` or `priceperphoto` |
 | `secondarymail` | This paypal-mail will get the `percentperprice` of the `priceperalbum` or `priceperphoto` |
 | `helpmail` | This mail will be shown in the footer of each flyer |
+| `avatar` | URL (starting with `http://`) to the avatar-image of the photographer |
+| `background` | URL (starting with `http://`) to the background-image of the photographer for the flyer |
 | `service` | "paypal" |
 | `currencycode` | A valid ISO 4217 currency code (e.g. "USD", "EUR") |
 | `currencyposition` | Choose if the currency-symbol should be before or after the amount of money: 0 = $10; 1 = 10$; |

@@ -18,6 +18,8 @@ structure	=	"""
 				  `primarymail` varchar(100) CHARACTER SET latin1 NOT NULL,
 				  `secondarymail` varchar(100) CHARACTER SET latin1 NOT NULL DEFAULT '',
 				  `helpmail` varchar(100) CHARACTER SET latin1 NOT NULL DEFAULT '',
+				  `avatar` varchar(1000) NOT NULL DEFAULT '',
+				  `background` varchar(1000) NOT NULL DEFAULT '',
 				  `service` varchar(30) CHARACTER SET latin1 NOT NULL DEFAULT 'paypal',
 				  `currencycode` varchar(3) CHARACTER SET latin1 NOT NULL DEFAULT 'USD',
 				  `currencysymbol` varchar(1) CHARACTER SET latin1 NOT NULL DEFAULT '$',
@@ -30,11 +32,11 @@ structure	=	"""
 				) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 				"""
 
-user = ->
+user =
 
 	"""
-	INSERT INTO `lychee_users` (`username`, `password`, `name`, `description`, `primarymail`, `secondarymail`, `helpmail`, `service`, `currencycode`, `currencysymbol`, `currencyposition`, `priceperalbum`, `priceperphoto`, `percentperprice`, `watermark`)
-	VALUES (?,?,'',NULL,'','','','paypal','USD','$',0,9.99,5.99,20,1)
+	INSERT INTO `lychee_users` (`username`, `password`, `name`, `description`, `primarymail`, `secondarymail`, `helpmail`, `avatar`, `background`, `service`, `currencycode`, `currencysymbol`, `currencyposition`, `priceperalbum`, `priceperphoto`, `percentperprice`, `watermark`)
+	VALUES (?,?,'',NULL,'','','','','','paypal','USD','$',0,9.99,5.99,20,1)
 	"""
 
 create = (callback) ->

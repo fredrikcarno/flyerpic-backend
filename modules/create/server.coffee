@@ -265,6 +265,8 @@ url = (type, cutlines, user, number, callback) ->
 					name: _user.name
 					mail: _user.primarymail
 					help: _user.helpmail
+					avatar: _user.avatar
+					background: _user.background
 				flyers: flyers
 
 			# Set type
