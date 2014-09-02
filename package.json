@@ -28,12 +28,12 @@
     "colors": "~0.6.2",
     "compression": "^1.0.11",
     "cookie-parser": "^1.3.2",
-    "express": "^4.8.5",
+    "express": "^4.8.7",
     "express-session": "^1.7.6",
     "jsesc": "~0.5.0",
-    "morgan": "^1.2.3",
+    "morgan": "^1.3.0",
     "mysql": "git://github.com/felixge/node-mysql",
-    "validator": "^3.17.0"
+    "validator": "^3.17.1"
   },
   "devDependencies": {
     "grunt": "~0.4.5",
@@ -47,8 +47,8 @@
     "grunt-contrib-uglify": "^0.5.1",
     "grunt-contrib-watch": "~0.6.1",
     "grunt-notify": "^0.3.1",
-    "grunt-sass": "^0.14.0",
-    "grunt-shell": "^1.0.1",
+    "grunt-sass": "^0.14.1",
+    "grunt-shell": "^1.1.1",
     "load-grunt-tasks": "^0.6.0"
   }
 }
