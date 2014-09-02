@@ -31,7 +31,7 @@ build =
 						<a href="#" class="number">1</a>
 					</div>
 					<div class="right">
-						<p>Visit example.com and enter your private code or scan the QR-Code with your phone</p>
+						<p>Visit www.flyerpic.com and enter your private code or scan the QR-Code with your phone</p>
 						<div class="codes">
 							<div class="qr">
 								<img src="../../cache/#{ data.code }.png" alt="" width="100" height="100">
@@ -62,7 +62,7 @@ build =
 				</div>
 			</div>
 			<p class="note">
-				Photos are available from the next business day till 15 days from now. Payment using PayPal. Questions? #{ photographer.help }
+				Photos are available online for 15 days. Payment using PayPal. Questions? #{ photographer.help }
 			</p>
 		</div>
 		"""
