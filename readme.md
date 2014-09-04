@@ -11,8 +11,8 @@ Make sure the following tools are installed on your system:
 
 After [installing Node.js](http://nodejs.org) you can use the following commands to install the dependencies and build miniLychee:
 
-	npm install -g bower coffee-script grunt-cli
-	npm install
+	npm install -g bower coffee-script grunt-cli;
+	npm install;
 	
 ## Configuration
 
@@ -27,6 +27,15 @@ Use the following command to start the Backend:
 	npm start
 	
 Open the Backend in your browser and follow the given steps. The first user will be the admin.
+
+## Build Flyers
+
+Build the flyers with the following commands:
+
+	cd flyers/01/;
+	npm install;
+	bower install;
+	gulp;
 
 ## Database
 
