@@ -212,7 +212,7 @@ scanAlbum = (id, callback) ->
 
 					# Create placeholder photo which will be handled as the QR photo
 					row = {
-						id: 0
+						id: 'placeholder' + new Date().getTime()
 						title: ''
 						url: 'assets/img/qrcode.svg'
 						takestamp: 0
@@ -250,8 +250,6 @@ setStructure = (structure, callback) ->
 
 		# Get id of album
 		getAlbum session[0].code, (err, id) ->
-
-			console.log err, id
 
 			if	err? or
 				not id?

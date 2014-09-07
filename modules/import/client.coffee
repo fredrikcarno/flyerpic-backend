@@ -24,6 +24,7 @@ m.add m.import =
 
 		$(document)
 			.on 'click', '.verify .code a.edit', m.import.edit.rename
+			.on 'click', '.verify .code a.add', m.import.edit.add
 			.on 'click', '.verify .photo .scanned', m.import.edit.show
 			.on 'click', '.verify .photo .overlay', m.import.edit.show
 			.on 'click', '.verify .button.cancel', -> $('.verify_overlay').remove()
@@ -320,6 +321,8 @@ m.add m.import =
 				for photo in session
 					do (photo) ->
 
+						return false if found is true
+
 						# Is chosen photo
 						if	"#{ photo.id }" is id or
 							photo.id is id
@@ -379,7 +382,7 @@ m.add m.import =
 				$(that).removeClass 'active'
 				context.close()
 
-		rename: () ->
+		rename: ->
 
 			that = this
 
@@ -389,13 +392,34 @@ m.add m.import =
 
 				return false if not x? or not y?
 
-				name = window.prompt '{{ import.verify.rename }}', m.import.sessions[x][0].code
+				oldname	= m.import.sessions[x][0].code
+				name	= window.prompt '{{ import.verify.rename }}', oldname
 
 				if	name? and
 					name isnt ''
 
 						m.import.sessions[x][0].code = name
+						m.import.dom(".structure .session[data-code='#{ oldname }']").attr 'data-code', name
 						$(that).parent().find('span').html name
+
+		add: ->
+
+			# Create placeholder photo which will be handled as the QR photo
+			session = [{
+				id: 'placeholder' + new Date().getTime()
+				title: ''
+				url: 'assets/img/qrcode.svg'
+				takestamp: 0
+				code: 'Unnamed Session'
+				tags: ''
+			}]
+
+			# Add new session the DOM
+			html = m.import.render.session session
+			m.import.dom(".structure .session--add").before html
+
+			# Add new session to JSON
+			m.import.sessions.push session
 
 		full: (id, that) ->
 
@@ -479,6 +503,9 @@ m.add m.import =
 					<div class="structure_wrapper">
 						<div class="structure">
 							#{ (m.import.render.session session for session in sessions).join '' }
+							<div class="session session--add">
+								<div class="code"><span>Add Session</span><a class="add ion-plus" href="#"></a></div>
+							</div>
 						</div>
 					</div>
 				</div>

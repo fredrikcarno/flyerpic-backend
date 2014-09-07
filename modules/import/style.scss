@@ -135,7 +135,8 @@
 			line-height: 22px;
 			border-bottom: 1px solid black(.2);
 
-			a.edit {
+			a.edit,
+			a.add {
 				color: #888;
 				padding-left: 10px;
 				transition: color .2s ease;
