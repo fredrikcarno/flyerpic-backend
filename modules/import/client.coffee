@@ -64,6 +64,9 @@ m.add m.import =
 						"""
 				class: 'login'
 				buttons:
+					cancel:
+						title: ''
+						fn: -> modal.close()
 					action:
 						title: '{{ import.dialog.confirm }}'
 						color: 'normal'

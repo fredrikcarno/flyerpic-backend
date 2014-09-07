@@ -85,6 +85,9 @@ m.add m.create =
 					"""
 			class: 'login'
 			buttons:
+				cancel:
+					title: ''
+					fn: -> modal.close()
 				action:
 					title: '{{ create.dialog.confirm }}'
 					color: 'normal'

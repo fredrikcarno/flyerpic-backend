@@ -34,9 +34,6 @@ this.login =
 			closable: false
 			class: 'login'
 			buttons:
-				cancel:
-					title: ''
-					fn: -> modal.close() # @todo Link to github page
 				action:
 					title: 'Sign in and continue'
 					color: 'normal'
