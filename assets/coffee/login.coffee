@@ -63,9 +63,6 @@ this.login =
 					closable: false
 					class: 'login'
 					buttons:
-						cancel:
-							title: ''
-							fn: -> modal.close true
 						action:
 							title: 'Create login and continue'
 							color: 'normal'
