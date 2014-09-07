@@ -396,7 +396,19 @@ m.add m.import =
 				name	= window.prompt '{{ import.verify.rename }}', oldname
 
 				if	name? and
-					name isnt ''
+					name isnt '' and
+					name isnt oldname
+
+						exists = false
+
+						# Check if name is already taken
+						$('.structure .session').each ->
+							exists = true if $(this).attr('data-code') is name
+
+						# Show error when name is taken
+						if exists is true
+							alert '{{ import.verify.taken }}'
+							return false
 
 						m.import.sessions[x][0].code = name
 						m.import.dom(".structure .session[data-code='#{ oldname }']").attr 'data-code', name
@@ -404,13 +416,20 @@ m.add m.import =
 
 		add: ->
 
+			number = ''
+
+			# Count unnamed sessions
+			$('.structure .session[data-code^="Unnamed Session"]').each ->
+				number = 1 if number is ''
+				number++
+
 			# Create placeholder photo which will be handled as the QR photo
 			session = [{
 				id: 'placeholder' + new Date().getTime()
 				title: ''
 				url: 'assets/img/qrcode.svg'
 				takestamp: 0
-				code: 'Unnamed Session'
+				code: "Unnamed Session #{ number }"
 				tags: ''
 			}]
 

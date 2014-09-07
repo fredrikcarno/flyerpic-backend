@@ -73,7 +73,8 @@
 				"full": "Full photo",
 				"remove": "Remove photo"
 			},
-			"rename": "Please correct the code for this session:"
+			"rename": "Please correct the code for this session:",
+			"taken": "The chosen name is already taken by another session. Duplicates are not allowed. Please chose a different name for this session."
 		},
 		"success": "Sessions successful sorted"
 	}
