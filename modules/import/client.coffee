@@ -269,7 +269,9 @@ m.add m.import =
 			# Show verify-modal
 			m.import.dom().append m.import.render.verify(id, m.import.sessions)
 
-			# TODO: Adjust wrapper height
+			# Adjust wrapper height
+			height = m.import.dom('.header').outerHeight()
+			m.import.dom('.structure_wrapper').css 'height', "calc(100% - #{ height }px)"
 
 		# Step 05
 		# Apply the verified structure
