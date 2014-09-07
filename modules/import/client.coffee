@@ -274,8 +274,6 @@ m.add m.import =
 		# Apply the verified structure
 		, ->
 
-			console.log m.import.sessions
-
 			# Convert structure
 			structure = JSON.stringify m.import.sessions
 
@@ -386,7 +384,6 @@ m.add m.import =
 			that = this
 
 			id = $(that).attr('data-id')
-			console.log id
 
 			m.import.find id, (x, y) ->
 

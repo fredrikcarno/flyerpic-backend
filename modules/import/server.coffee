@@ -206,6 +206,24 @@ scanAlbum = (id, callback) ->
 
 			# Order by code
 			async.mapSeries rows, order, (err, rows) ->
+
+				# Check if there are still photos in unknownRows
+				if unknownRows.length isnt 0
+
+					# Create placeholder photo which will be handled as the QR photo
+					row = {
+						id: 0
+						title: ''
+						url: 'assets/img/qrcode.svg'
+						takestamp: 0
+						code: 'Unknwon Session'
+						tags: ''
+					}
+
+					# Add rest as new session
+					unknownRows.unshift row
+					orderedRows.push unknownRows
+
 				callback err, orderedRows
 
 setStructure = (structure, callback) ->
