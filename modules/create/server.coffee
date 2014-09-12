@@ -308,8 +308,6 @@ output = (_url, data, callback) ->
 	# Concat url and data
 	_url = _url + '#' + encodeURIComponent(data)
 
-	console.log _url
-
 	# Set paths
 	file = {
 		guide: JSON.parse(data).guide		# Path to guide
@@ -326,20 +324,14 @@ output = (_url, data, callback) ->
 			callback { error: 'Unable to init phantom', details: err }
 			return false
 
-		console.log '1'
-
 		ph.createPage (err, page) ->
 
 			if err?
 				callback { error: 'Unable to create page for pdf', details: err }
 				return false
 
-			console.log '2'
-
 			page.set 'paperSize', paperSize, ->
 				page.open _url, (err, status) ->
-
-					console.log '3'
 
 					if status isnt 'success' or err?
 
