@@ -1,5 +1,5 @@
 {
-  "name": "Kanban",
+  "name": "FlyerpicBackend",
   "dependencies": {
     "jQuery": "~2.1.1",
     "ionicons": "~1.5.2",
