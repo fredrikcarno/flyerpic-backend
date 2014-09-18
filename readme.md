@@ -1,6 +1,6 @@
 # Backend
 
-The Backend works together with Lychee and  miniLychee and allows photographers to generate flyers, upload photos and manage their settings.
+The Backend works together with Frontend and Lychee and allows photographers to generate flyers, upload photos and manage their settings.
 
 ## Installation
 
