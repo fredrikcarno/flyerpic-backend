@@ -78,6 +78,7 @@
 	margin-top: -1 * $height / 2;
 	margin-left: -1 * $width / 2;
 	width: $width;
+	transition: filter $duration;
 
 	&.blur {
 		filter: blur(10px);
