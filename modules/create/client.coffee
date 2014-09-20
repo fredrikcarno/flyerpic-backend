@@ -4,7 +4,7 @@ m.add m.create =
 
 	init: ->
 
-		# Do something
+		return true
 
 	show: ->
 

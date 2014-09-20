@@ -1,0 +1,6 @@
+{
+  "name": "settings",
+  "description": "Edit the settings of your account",
+  "authors": "Tobias Reich <tobias.reich.ich@gmail.com>",
+  "main": "server.coffee"
+}

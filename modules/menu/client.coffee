@@ -25,17 +25,21 @@ m.add m.menu =
 
 	init: ->
 
-		# Render
-		m.menu.dom().append m.menu.render.all()
+		document.addEventListener 'moduleLoaded', (e) ->
 
-		# Bind menus
-		m.menu.bind()
+			# Wait until the last module has been loaded
+			if e.detail.name is 'settings'
 
-		# Show menus
-		setTimeout ->
-			m.menu.dom().show()
-		, 100
+				# Render
+				m.menu.dom().append m.menu.render.all()
 
+				# Bind menus
+				m.menu.bind()
+
+				# Show menus
+				setTimeout ->
+					m.menu.dom().show()
+				, 100
 
 	bind: ->
 
@@ -44,7 +48,7 @@ m.add m.menu =
 
 		dom('#menu_create').on 'click', m.create.show
 		dom('#menu_import').on 'click', m.import.step[0]
-		dom('#menu_settings').on 'click', m.create.show
+		dom('#menu_settings').on 'click', m.settings.show
 
 	render:
 

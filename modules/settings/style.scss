@@ -1,0 +1,89 @@
+/* Sass ------------------------------------------------*/
+@import '../../assets/scss/helpers';
+
+/* Settings ------------------------------------------------*/
+#settings {
+
+	display: none;
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background: white(.5);
+	overflow: hidden;
+
+	/* Close ------------------------------------------------*/
+	a.close {
+		display: block;
+		position: absolute;
+		top: 0px;
+		right: 20px;
+		font-size: 62px;
+		color: black(.3);
+		line-height: 0;
+		text-decoration: none;
+	}
+
+	/* Wrapper ------------------------------------------------*/
+	.wrapper {
+		padding: 0 25%;
+		width: 50%;
+		height: 100%;
+		margin: 0 auto;
+		overflow-y: scroll;
+	}
+
+	/* Row ------------------------------------------------*/
+	.row {
+		display: inline-block;
+		position: relative;
+		width: 100%;
+		border-bottom: 1px solid black(.1);
+		cursor: pointer;
+		transition: background-color $sDuration;
+
+		&:last-child {
+			margin: 0 0 200px 0;
+		}
+
+		&:hover {
+			background-color: rgba($cMain, .04);
+		}
+
+		&:hover p.title,
+		&:hover p.arrow {
+			color: $cMain;
+		}
+	}
+
+	/* Text ------------------------------------------------*/
+	h2 {
+		margin: 50px 0 0 0;
+		color: black(.4);
+		font-size: 14px;
+		text-transform: uppercase;
+
+		&:first-child {
+			margin: 200px 0 0 0;
+		}
+	}
+
+	p.title,
+	p.arrow {
+		transition: color $sDuration;
+	}
+
+	p.title {
+		font-size: 21px;
+	}
+
+	p.arrow {
+		position: absolute;
+		right: 0;
+		margin-top: .95em;
+		color: black(.4);
+		font-size: 23px;
+	}
+
+}
