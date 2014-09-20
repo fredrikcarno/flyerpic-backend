@@ -57,6 +57,21 @@ setBackground = (user, url, callback) ->
 	db.source.query "UPDATE lychee_users SET background = ? WHERE id = ?", [url, user], callback
 	return true
 
+setMail = (user, mail, callback) ->
+
+	if not validator.isInt(user)
+
+		callback 'Wrong type for parameter user'
+		return false
+
+	if not validator.isEmail(mail)
+
+		callback 'Wrong type for parameter mail'
+		return false
+
+	db.source.query "UPDATE lychee_users SET primarymail = ? WHERE id = ?", [mail, user], callback
+	return true
+
 module.exports = (app, _db) ->
 
 	db = _db
@@ -92,6 +107,18 @@ module.exports = (app, _db) ->
 			if err?
 				log.error 'settings', 'Could not save background', err
 				res.json { error: 'Could not save background', details: err }
+				return false
+			else
+				res.json true
+				return true
+
+	app.get '/api/m/settings/mail', middleware.auth, (req, res) ->
+
+		setMail req.session.user, req.query.mail, (err) ->
+
+			if err?
+				log.error 'settings', 'Could not save PyaPal mail', err
+				res.json { error: 'Could not save PyaPal mail', details: err }
 				return false
 			else
 				res.json true

@@ -82,6 +82,8 @@ m.add m.settings =
 
 		dom('#settings_background').on 'click', m.settings.set.background
 
+		dom('#settings_mail').on 'click', m.settings.set.mail
+
 	set:
 
 		avatar: ->
@@ -103,9 +105,11 @@ m.add m.settings =
 							icon: 'android-checkmark'
 							text: 'Changed avatar'
 						}
+						modal.close
+						return true
 
-					modal.close()
-					return true
+					modal.error 'avatar'
+					return false
 
 			modal.show
 				body:	"""
@@ -145,9 +149,11 @@ m.add m.settings =
 							icon: 'android-checkmark'
 							text: 'Changed password'
 						}
+						modal.close()
+						return true
 
-					modal.close()
-					return true
+					modal.error 'password'
+					return false
 
 			modal.show
 				body:	"""
@@ -183,9 +189,11 @@ m.add m.settings =
 							icon: 'android-checkmark'
 							text: 'Changed background'
 						}
+						modal.close()
+						return true
 
-					modal.close()
-					return true
+					modal.error 'background'
+					return false
 
 			modal.show
 				body:	"""
@@ -199,6 +207,45 @@ m.add m.settings =
 						fn: -> modal.close()
 					action:
 						title: 'Save Background'
+						fn: validate
+
+		mail: ->
+
+			validate = (data) ->
+
+				if	not data.mail? or
+					data.mail.length <= 6
+
+						modal.error 'mail'
+						return false
+
+				url = 'api/m/settings/mail?mail=' + encodeURI(data.mail)
+				kanban.api url, (data) ->
+
+					if data is true
+
+						notification.show {
+							icon: 'android-checkmark'
+							text: 'Changed PayPal Email'
+						}
+						modal.close()
+						return true
+
+					modal.error 'mail'
+					return false
+
+			modal.show
+				body:	"""
+						<h1>PayPal Email</h1>
+						<p>The money of each purchase will be transfered to the PayPal Email below:</p>
+						<input class="text" type="text" placeholder="mail@example.com" data-name="mail">
+						"""
+				class: 'login'
+				buttons:
+					cancel:
+						fn: -> modal.close()
+					action:
+						title: 'Save PayPal Email'
 						fn: validate
 
 	render:
