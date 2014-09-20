@@ -83,6 +83,7 @@ m.add m.settings =
 		dom('#settings_background').on 'click', m.settings.set.background
 
 		dom('#settings_mail').on 'click', m.settings.set.mail
+		dom('#settings_priceperalbum').on 'click', m.settings.set.priceperalbum
 
 	set:
 
@@ -247,6 +248,57 @@ m.add m.settings =
 					action:
 						title: 'Save PayPal Email'
 						fn: validate
+
+		priceperalbum: ->
+
+			validate = (data) ->
+
+				if	not data.amount? or
+					data.amount.length < 1
+
+						modal.error 'amount'
+						return false
+
+				# Validate amount
+				reg = /^[0-9]{1,}[\.,]{1}[0-9]{2}$/
+				if not reg.test data.amount
+
+					notification.show {
+						icon: 'alert-circled'
+						text: 'Price has the wrong format'
+					}
+					modal.error 'amount'
+					return false
+
+				url = 'api/m/settings/priceperalbum?amount=' + encodeURI(data.amount)
+				kanban.api url, (data) ->
+
+					if data is true
+
+						notification.show {
+							icon: 'android-checkmark'
+							text: 'Changed Price'
+						}
+						modal.close()
+						return true
+
+					modal.error 'amount'
+					return false
+
+			modal.show
+				body:	"""
+						<h1>Price Per Session</h1>
+						<p>Enter the price per session below. Each customer needs to pay this amount to download/unlock his session.</p>
+						<input class="text" type="text" placeholder="9.99" data-name="amount">
+						"""
+				class: 'login'
+				buttons:
+					cancel:
+						fn: -> modal.close()
+					action:
+						title: 'Save price of session'
+						fn: validate
+
 
 	render:
 

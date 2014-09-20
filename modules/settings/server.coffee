@@ -72,6 +72,34 @@ setMail = (user, mail, callback) ->
 	db.source.query "UPDATE lychee_users SET primarymail = ? WHERE id = ?", [mail, user], callback
 	return true
 
+setPricePerAlbum = (user, amount, callback) ->
+
+	if not validator.isInt(user)
+
+		callback 'Wrong type for parameter user'
+		return false
+
+	if	not amount? or
+		amount.length < 1
+
+			callback 'Wrong type for parameter mail'
+			return false
+
+	if amount.indexOf(',') isnt -1
+
+		# Replace comma with dot
+		amount = amount.replace ',', '.'
+
+	# Validate amount
+	reg = /^[0-9]{1,}[\.,]{1}[0-9]{2}$/
+	if not reg.test amount
+
+		callback 'Wrong type for parameter mail. Pattern does not match.'
+		return false
+
+	db.source.query "UPDATE lychee_users SET priceperalbum = ? WHERE id = ?", [amount, user], callback
+	return true
+
 module.exports = (app, _db) ->
 
 	db = _db
@@ -119,6 +147,18 @@ module.exports = (app, _db) ->
 			if err?
 				log.error 'settings', 'Could not save PyaPal mail', err
 				res.json { error: 'Could not save PyaPal mail', details: err }
+				return false
+			else
+				res.json true
+				return true
+
+	app.get '/api/m/settings/priceperalbum', middleware.auth, (req, res) ->
+
+		setPricePerAlbum req.session.user, req.query.amount, (err) ->
+
+			if err?
+				log.error 'settings', 'Could not save price per session', err
+				res.json { error: 'Could not save price per session', details: err }
 				return false
 			else
 				res.json true
