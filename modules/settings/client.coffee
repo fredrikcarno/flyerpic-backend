@@ -127,7 +127,7 @@ m.add m.settings =
 				body:	"""
 						<h1>Avatar</h1>
 						<p>Your avatar will be visible on the flyers and in the store. Enter a direct URL to your avatar below:</p>
-						<input class="text" type="text" placeholder="http://example.com/avatar.png" data-name="avatar">
+						<input class="text" type="text" placeholder="http://example.com/avatar.png" data-name="avatar" value="#{ kanban.settings.init.user.avatar }">
 						"""
 				class: 'login'
 				buttons:
@@ -212,7 +212,7 @@ m.add m.settings =
 				body:	"""
 						<h1>Background</h1>
 						<p>Your background will be visible on the top of each flyer. Enter a direct URL to your background below:</p>
-						<input class="text" type="text" placeholder="http://example.com/background.png" data-name="background">
+						<input class="text" type="text" placeholder="http://example.com/background.png" data-name="background" value="#{ kanban.settings.init.user.background }">
 						"""
 				class: 'login'
 				buttons:
@@ -252,7 +252,7 @@ m.add m.settings =
 				body:	"""
 						<h1>PayPal Email</h1>
 						<p>The money of each purchase will be transfered to the PayPal Email below:</p>
-						<input class="text" type="text" placeholder="mail@example.com" data-name="mail">
+						<input class="text" type="text" placeholder="mail@example.com" data-name="mail" value="#{ kanban.settings.init.user.primarymail }">
 						"""
 				class: 'login'
 				buttons:
@@ -308,7 +308,7 @@ m.add m.settings =
 				body:	"""
 						<h1>Price Per Session</h1>
 						<p>Enter the price per session below. Each customer needs to pay this amount to download/unlock his session.</p>
-						<input class="text" type="text" placeholder="9.99" data-name="amount">
+						<input class="text" type="text" placeholder="9.99" data-name="amount" value="#{ kanban.settings.init.user.priceperalbum }">
 						"""
 				class: 'login'
 				buttons:
@@ -359,7 +359,7 @@ m.add m.settings =
 				body:	"""
 						<h1>Price Per Photo</h1>
 						<p>Enter the price per photo below. Each customer needs to pay this amount to download/unlock a single photo from his session.</p>
-						<input class="text" type="text" placeholder="5.99" data-name="amount">
+						<input class="text" type="text" placeholder="5.99" data-name="amount" value="#{ kanban.settings.init.user.priceperphoto }">
 						"""
 				class: 'login'
 				buttons:
