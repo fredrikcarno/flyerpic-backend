@@ -42,6 +42,12 @@
 		background-color: #fff;
 		border-radius: 3px;
 		box-shadow: 0px 1px 2px rgba(0,0,0,.2);
+
+		@include breakpoint('xsmall') {
+			top: 20px;
+			left: 5%;
+			width: 90%;
+		}
 	}
 
 	/* Verify Header ------------------------------------------------*/
@@ -51,11 +57,19 @@
 		width: 100%;
 		background: black(0.05);
 
+		@include breakpoint('xsmall') {
+			padding-top: 25px;
+		}
+
 		h1 {
-			margin: 0 0 0 40px;
+			margin: 0 20px 0 40px;
 			color: rgba(0,0,0,.8);
 			font-size: 28px;
 			font-weight: 400;
+
+			@include breakpoint('xsmall') {
+				margin: 0 20px;
+			}
 		}
 
 		p {
@@ -64,6 +78,11 @@
 			max-width: 550px;
 			color: #444;
 			line-height: 22px;
+
+			@include breakpoint('xsmall') {
+				margin-left: 20px;
+				padding: 0 20px 0 0;
+			}
 
 			a {
 				color: $cMain;
@@ -74,6 +93,10 @@
 
 		.buttons {
 			margin: 0 0 0 35px;
+
+			@include breakpoint('xsmall') {
+				margin-left: 15px;
+			}
 		}
 
 		.button {
@@ -124,8 +147,13 @@
 	/* Verify Session ------------------------------------------------*/
 	.verify .structure .session {
 		display: inline-block;
-		width: calc(100% - 80px);
 		margin: 20px 40px;
+		width: calc(100% - 80px);
+
+		@include breakpoint('xsmall') {
+			margin: 20px;
+			width: calc(100% - 40px);
+		}
 
 		.code {
 			padding: 0 0 2px 0;
