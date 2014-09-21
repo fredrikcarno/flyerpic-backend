@@ -5,44 +5,44 @@ m.add m.settings =
 	data: [
 		{
 			headline: true
-			title: 'Account'
+			title: '{{ settings.list.account }}'
 		}
 		{
 			id: 'avatar'
-			title: 'Set Avatar Photo'
+			title: '{{ settings.list.avatar }}'
 			value: kanban.settings.init.user.avatar
 		}
 		{
 			id: 'password'
-			title: 'Change Password'
+			title: '{{ settings.list.password }}'
 			value: '&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;'
 		}
 		{
 			headline: true
-			title: 'Flyers'
+			title: '{{ settings.list.flyers }}'
 		}
 		{
 			id: 'background'
-			title: 'Set Background Photo'
+			title: '{{ settings.list.background }}'
 			value: kanban.settings.init.user.background
 		}
 		{
 			headline: true
-			title: 'Payment'
+			title: '{{ settings.list.payment }}'
 		}
 		{
 			id: 'mail'
-			title: 'Set PayPal Email'
+			title: '{{ settings.list.mail }}'
 			value: kanban.settings.init.user.primarymail
 		}
 		{
 			id: 'priceperalbum'
-			title: 'Set Price Per Session'
+			title: '{{ settings.list.priceperalbum }}'
 			value: kanban.settings.init.user.priceperalbum
 		}
 		{
 			id: 'priceperphoto'
-			title: 'Set Price Per Photo'
+			title: '{{ settings.list.priceperphoto }}'
 			value: kanban.settings.init.user.priceperphoto
 		}
 	]
@@ -106,7 +106,7 @@ m.add m.settings =
 
 						notification.show {
 							icon: 'android-checkmark'
-							text: 'Changed avatar'
+							text: '{{ settings.avatar.success }}'
 						}
 						m.settings.dom('#settings_avatar p.value').html data.avatar
 						modal.close()
@@ -117,8 +117,8 @@ m.add m.settings =
 
 			modal.show
 				body:	"""
-						<h1>Avatar</h1>
-						<p>Your avatar will be visible on the flyers and in the store. Enter a direct URL to your avatar below:</p>
+						<h1>{{ settings.avatar.title }}</h1>
+						<p>{{ settings.avatar.text }}</p>
 						<input class="text" type="text" placeholder="http://example.com/avatar.png" data-name="avatar" value="#{ kanban.settings.init.user.avatar }">
 						"""
 				class: 'login'
@@ -126,7 +126,7 @@ m.add m.settings =
 					cancel:
 						fn: -> modal.close()
 					action:
-						title: 'Save Avatar'
+						title: '{{ settings.avatar.button }}'
 						fn: validate
 
 		password: ->
@@ -151,7 +151,7 @@ m.add m.settings =
 
 						notification.show {
 							icon: 'android-checkmark'
-							text: 'Changed password'
+							text: '{{ settings.password.success }}'
 						}
 						modal.close()
 						return true
@@ -161,8 +161,8 @@ m.add m.settings =
 
 			modal.show
 				body:	"""
-						<h1>Password</h1>
-						<p>Enter a new password for your account below:</p>
+						<h1>{{ settings.password.title }}</h1>
+						<p>{{ settings.password.text }}</p>
 						<input class="text" type="password" placeholder="password" data-name="password">
 						<input class="text" type="password" placeholder="repeat password" data-name="repassword">
 						"""
@@ -171,7 +171,7 @@ m.add m.settings =
 					cancel:
 						fn: -> modal.close()
 					action:
-						title: 'Save Password'
+						title: '{{ settings.password.button }}'
 						fn: validate
 
 		background: ->
@@ -191,7 +191,7 @@ m.add m.settings =
 
 						notification.show {
 							icon: 'android-checkmark'
-							text: 'Changed background'
+							text: '{{ settings.background.success }}'
 						}
 						m.settings.dom('#settings_background p.value').html data.background
 						modal.close()
@@ -202,8 +202,8 @@ m.add m.settings =
 
 			modal.show
 				body:	"""
-						<h1>Background</h1>
-						<p>Your background will be visible on the top of each flyer. Enter a direct URL to your background below:</p>
+						<h1>{{ settings.background.title }}</h1>
+						<p>{{ settings.background.text }}</p>
 						<input class="text" type="text" placeholder="http://example.com/background.png" data-name="background" value="#{ kanban.settings.init.user.background }">
 						"""
 				class: 'login'
@@ -211,7 +211,7 @@ m.add m.settings =
 					cancel:
 						fn: -> modal.close()
 					action:
-						title: 'Save Background'
+						title: '{{ settings.background.button }}'
 						fn: validate
 
 		mail: ->
@@ -231,7 +231,7 @@ m.add m.settings =
 
 						notification.show {
 							icon: 'android-checkmark'
-							text: 'Changed PayPal Email'
+							text: '{{ settings.mail.success }}'
 						}
 						m.settings.dom('#settings_mail p.value').html data.mail
 						modal.close()
@@ -242,8 +242,8 @@ m.add m.settings =
 
 			modal.show
 				body:	"""
-						<h1>PayPal Email</h1>
-						<p>The money of each purchase will be transfered to the PayPal Email below:</p>
+						<h1>{{ settings.mail.title }}</h1>
+						<p>{{ settings.mail.text }}</p>
 						<input class="text" type="text" placeholder="mail@example.com" data-name="mail" value="#{ kanban.settings.init.user.primarymail }">
 						"""
 				class: 'login'
@@ -251,7 +251,7 @@ m.add m.settings =
 					cancel:
 						fn: -> modal.close()
 					action:
-						title: 'Save PayPal Email'
+						title: '{{ settings.mail.button }}'
 						fn: validate
 
 		priceperalbum: ->
@@ -270,7 +270,7 @@ m.add m.settings =
 
 					notification.show {
 						icon: 'alert-circled'
-						text: 'Price has the wrong format'
+						text: '{{ settings.priceperalbum.error }}'
 					}
 					modal.error 'amount'
 					return false
@@ -287,7 +287,7 @@ m.add m.settings =
 
 						notification.show {
 							icon: 'android-checkmark'
-							text: 'Changed price of session'
+							text: '{{ settings.priceperalbum.success }}'
 						}
 						m.settings.dom('#settings_priceperalbum p.value').html data.amount
 						modal.close()
@@ -298,8 +298,8 @@ m.add m.settings =
 
 			modal.show
 				body:	"""
-						<h1>Price Per Session</h1>
-						<p>Enter the price per session below. Each customer needs to pay this amount to download/unlock his session.</p>
+						<h1>{{ settings.priceperalbum.title }}</h1>
+						<p>{{ settings.priceperalbum.text }}</p>
 						<input class="text" type="text" placeholder="9.99" data-name="amount" value="#{ kanban.settings.init.user.priceperalbum }">
 						"""
 				class: 'login'
@@ -307,7 +307,7 @@ m.add m.settings =
 					cancel:
 						fn: -> modal.close()
 					action:
-						title: 'Save price of session'
+						title: '{{ settings.priceperalbum.button }}'
 						fn: validate
 
 		priceperphoto: ->
@@ -326,7 +326,7 @@ m.add m.settings =
 
 					notification.show {
 						icon: 'alert-circled'
-						text: 'Price has the wrong format'
+						text: '{{ settings.priceperphoto.error }}'
 					}
 					modal.error 'amount'
 					return false
@@ -338,7 +338,7 @@ m.add m.settings =
 
 						notification.show {
 							icon: 'android-checkmark'
-							text: 'Changed price of photo'
+							text: '{{ settings.priceperphoto.success }}'
 						}
 						m.settings.dom('#settings_priceperphoto p.value').html data.amount
 						modal.close()
@@ -349,8 +349,8 @@ m.add m.settings =
 
 			modal.show
 				body:	"""
-						<h1>Price Per Photo</h1>
-						<p>Enter the price per photo below. Each customer needs to pay this amount to download/unlock a single photo from his session.</p>
+						<h1>{{ settings.priceperphoto.title }}</h1>
+						<p>{{ settings.priceperphoto.text }}</p>
 						<input class="text" type="text" placeholder="5.99" data-name="amount" value="#{ kanban.settings.init.user.priceperphoto }">
 						"""
 				class: 'login'
@@ -358,7 +358,7 @@ m.add m.settings =
 					cancel:
 						fn: -> modal.close()
 					action:
-						title: 'Save price of photo'
+						title: '{{ settings.priceperphoto.button }}'
 						fn: validate
 
 	render:

@@ -77,5 +77,56 @@
 			"taken": "The chosen name is already taken by another session. Duplicates are not allowed. Please chose a different name for this session."
 		},
 		"success": "Sessions successful sorted"
+	},
+	"settings": {
+		"list": {
+			"account": "Account",
+			"avatar": "Set Avatar Photo",
+			"password": "Change Password",
+			"flyers": "Flyers",
+			"background": "Set Background Photo",
+			"payment": "Payment",
+			"mail": "Set PayPal Email",
+			"priceperalbum": "Set Price Per Session",
+			"priceperphoto": "Set Price Per Photo"
+		},
+		"avatar": {
+			"title": "Avatar",
+			"text": "Your avatar will be visible on the flyers and in the store. Enter a direct URL to your avatar below:",
+			"button": "Save Avatar",
+			"success": "Changed avatar"
+		},
+		"password": {
+			"title": "Password",
+			"text": "Enter a new password for your account below:",
+			"button": "Save Password",
+			"success": "Changed password"
+		},
+		"background": {
+			"title": "Background",
+			"text": "Your background will be visible on the top of each flyer. Enter a direct URL to your background below:",
+			"button": "Save Background",
+			"success": "Changed background"
+		},
+		"mail": {
+			"title": "PayPal Email",
+			"text": "The money of each purchase will be transfered to the PayPal Email below:",
+			"button": "Save PayPal Email",
+			"success": "Changed PayPal Email"
+		},
+		"priceperalbum": {
+			"title": "Price Per Session",
+			"text": "Enter the price per session below. Each customer needs to pay this amount to download/unlock his session.",
+			"button": "Save price of session",
+			"success": "Changed price of session",
+			"error": "Price has the wrong format"
+		},
+		"priceperphoto": {
+			"title": "Price Per Photo",
+			"text": "Enter the price per photo below. Each customer needs to pay this amount to download/unlock a single photo from his session.",
+			"button": "Save price of photo",
+			"success": "Changed price of photo",
+			"error": "Price has the wrong format"
+		}
 	}
 }
