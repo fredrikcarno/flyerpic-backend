@@ -45,14 +45,6 @@ m.add m.settings =
 			title: 'Set Price Per Photo'
 			value: kanban.settings.init.user.priceperphoto
 		}
-		{
-			headline: true
-			title: 'Watermark'
-		}
-		{
-			id: 'watermark_text'
-			title: 'Change Text'
-		}
 	]
 
 	init: ->

@@ -7,44 +7,55 @@ $sDuration: .2s;
 $timing: cubic-bezier(0.51,.92,.24,1.15);
 
 /* Mixins ------------------------------------------------*/
-@mixin vendorize($property, $value...) {
-	-webkit-#{$property}: $value;
-	-moz-#{$property}: $value;
-	-ms-#{$property}: $value;
-	#{$property}: $value;
-}
+@mixin breakpoint($from, $to: '', $direction: 'max') {
 
-@mixin vendorize2x($property, $value...) {
-	-webkit-#{$property}: -webkit-#{$value};
-	-moz-#{$property}: -moz-#{$value};
-	-ms-#{$property}: -ms-#{$value};
-	#{$property}: $value;
-}
+	// Define vars
+	$fromSize: $from;
+	$toSize: 0;
+	$directionInverted: 0;
 
-@mixin keyframes($animation-name) {
-	@-webkit-keyframes $animation-name {
-		@content;
-	}
-	@-moz-keyframes $animation-name {
-		@content;
-	}
-	@-ms-keyframes $animation-name {
-		@content;
-	}
-	@-o-keyframes $animation-name {
-		@content;
-	}
-	@keyframes $animation-name {
-		@content;
-	}
-}
+	@if $from == xxsmall	{ $fromSize: 30em; } //480px
+	@if $from == xsmall		{ $fromSize: 40em; } //640px
+	@if $from == medium		{ $fromSize: 48em; } //768px
+	@if $from == xmedium	{ $fromSize: 55em; } //?
+	@if $from == large		{ $fromSize: 60em; } //960px
+	@if $from == xlarge		{ $fromSize: 64em; } //1024px
+	@if $from == xxlarge	{ $fromSize: 75em; } //1200px
+	@if $from == xxxlarge	{ $fromSize: 90em; } //?
 
-@mixin flexbox() {
-	display: -webkit-box;
-	display: -moz-box;
-	display: -ms-flexbox;
-	display: -webkit-flex;
-	display: flex;
+	@if $to == xxsmall		{ $toSize: 30em; } //480px
+	@if $to == xsmall		{ $toSize: 40em; } //640px
+	@if $to == medium		{ $toSize: 48em; } //768px
+	@if $to == xmedium		{ $toSize: 55em; } //?
+	@if $to == large		{ $toSize: 60em; } //960px
+	@if $to == xlarge		{ $toSize: 64em; } //1024px
+	@if $to == xxlarge		{ $toSize: 75em; } //1200px
+	@if $to == xxxlarge		{ $toSize: 90em; } //?
+
+	@if $direction == min {
+		// Increase fromSize
+		$fromSize: $fromSize + .07em;
+	}
+
+	@if $to == '' {
+
+		// Set breakpoint
+		@media (#{ $direction }-width: $fromSize) { @content; }
+
+	}
+
+	@if $to != '' {
+
+		// Invert direction
+		@if $direction == max { $directionInverted: 'min'; }
+		@else if $direction == min { $directionInverted: 'max'; }
+
+
+		// Set breakpoint
+		@media (#{ $direction }-width: $fromSize) and (#{ $directionInverted }-width: $toSize) { @content; }
+
+	}
+
 }
 
 /* Functions ------------------------------------------------*/

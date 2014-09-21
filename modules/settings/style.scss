@@ -5,7 +5,7 @@
 #settings {
 
 	display: none;
-	position: absolute;
+	position: fixed;
 	top: 0;
 	right: 0;
 	bottom: 0;
@@ -24,6 +24,7 @@
 		line-height: 0;
 		text-decoration: none;
 		transition: color $sDuration;
+		z-index: 1;
 
 		&:hover { color: $cMain; }
 		&:active { color: darken($cMain, 10%); }
@@ -36,6 +37,12 @@
 		height: 100%;
 		margin: 0 auto;
 		overflow-y: scroll;
+		-webkit-overflow-scrolling: touch;
+
+		@include breakpoint('medium') {
+			padding: 0 5%;
+			width: 90%;
+		}
 	}
 
 	/* Row ------------------------------------------------*/
@@ -48,7 +55,12 @@
 		overflow: hidden;
 		transition: background-color $sDuration;
 
-		&:last-child { margin: 0 0 200px 0; }
+		&:last-child {
+			margin: 0 0 200px 0;
+			@include breakpoint('medium') {
+				margin: 0 0 0px 0;
+			}
+		}
 
 		&:hover { background-color: rgba($cMain, .04); }
 		&:active { background-color: rgba($cMain, .06); }
@@ -71,7 +83,12 @@
 		font-size: 14px;
 		text-transform: uppercase;
 
-		&:first-child { margin: 200px 0 0 0; }
+		&:first-child {
+			margin: 200px 0 0 0;
+			@include breakpoint('medium') {
+				margin: 50px 0 0 0;
+			}
+		}
 	}
 
 	p.title,

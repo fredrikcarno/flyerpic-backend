@@ -90,7 +90,6 @@ m.add m.create =
 					fn: -> modal.close()
 				action:
 					title: '{{ create.dialog.confirm }}'
-					color: 'normal'
 					fn: m.create.get
 
 	loading: ->

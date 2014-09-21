@@ -69,7 +69,6 @@ m.add m.import =
 						fn: -> modal.close()
 					action:
 						title: '{{ import.dialog.confirm }}'
-						color: 'normal'
 						fn: -> m.import.dom('#upload_files').click()
 
 		# Step 02
