@@ -119,7 +119,7 @@ m.add m.settings =
 				body:	"""
 						<h1>{{ settings.avatar.title }}</h1>
 						<p>{{ settings.avatar.text }}</p>
-						<input class="text" type="text" placeholder="http://example.com/avatar.png" data-name="avatar" value="#{ kanban.settings.init.user.avatar }">
+						<input class="text" type="text" placeholder="http://example.com/avatar.png" data-name="avatar" autofocus value="#{ kanban.settings.init.user.avatar }">
 						"""
 				class: 'login'
 				buttons:
@@ -163,7 +163,7 @@ m.add m.settings =
 				body:	"""
 						<h1>{{ settings.password.title }}</h1>
 						<p>{{ settings.password.text }}</p>
-						<input class="text" type="password" placeholder="password" data-name="password">
+						<input class="text" type="password" placeholder="password" data-name="password" autofocus>
 						<input class="text" type="password" placeholder="repeat password" data-name="repassword">
 						"""
 				class: 'login'
@@ -204,7 +204,7 @@ m.add m.settings =
 				body:	"""
 						<h1>{{ settings.background.title }}</h1>
 						<p>{{ settings.background.text }}</p>
-						<input class="text" type="text" placeholder="http://example.com/background.png" data-name="background" value="#{ kanban.settings.init.user.background }">
+						<input class="text" type="text" placeholder="http://example.com/background.png" data-name="background" autofocus value="#{ kanban.settings.init.user.background }">
 						"""
 				class: 'login'
 				buttons:
@@ -244,7 +244,7 @@ m.add m.settings =
 				body:	"""
 						<h1>{{ settings.mail.title }}</h1>
 						<p>{{ settings.mail.text }}</p>
-						<input class="text" type="text" placeholder="mail@example.com" data-name="mail" value="#{ kanban.settings.init.user.primarymail }">
+						<input class="text" type="text" placeholder="mail@example.com" data-name="mail" autofocus value="#{ kanban.settings.init.user.primarymail }">
 						"""
 				class: 'login'
 				buttons:
@@ -300,7 +300,7 @@ m.add m.settings =
 				body:	"""
 						<h1>{{ settings.priceperalbum.title }}</h1>
 						<p>{{ settings.priceperalbum.text }}</p>
-						<input class="text" type="text" placeholder="9.99" data-name="amount" value="#{ kanban.settings.init.user.priceperalbum }">
+						<input class="text" type="text" placeholder="9.99" data-name="amount" autofocus value="#{ kanban.settings.init.user.priceperalbum }">
 						"""
 				class: 'login'
 				buttons:
@@ -351,7 +351,7 @@ m.add m.settings =
 				body:	"""
 						<h1>{{ settings.priceperphoto.title }}</h1>
 						<p>{{ settings.priceperphoto.text }}</p>
-						<input class="text" type="text" placeholder="5.99" data-name="amount" value="#{ kanban.settings.init.user.priceperphoto }">
+						<input class="text" type="text" placeholder="5.99" data-name="amount" autofocus value="#{ kanban.settings.init.user.priceperphoto }">
 						"""
 				class: 'login'
 				buttons:
