@@ -45,6 +45,7 @@
 		width: 100%;
 		border-bottom: 1px solid black(.1);
 		cursor: pointer;
+		overflow: hidden;
 		transition: background-color $sDuration;
 
 		&:last-child { margin: 0 0 200px 0; }
@@ -79,6 +80,7 @@
 	}
 
 	p.title {
+		margin-bottom: 5px;
 		font-size: 21px;
 	}
 
@@ -88,6 +90,11 @@
 		margin-top: .95em;
 		color: black(.4);
 		font-size: 23px;
+	}
+
+	p.value {
+		margin: 0 0 20px;
+		color: black(.5);
 	}
 
 }

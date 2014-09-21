@@ -11,12 +11,17 @@ session = module.exports =
 		if	req.session?.login? and
 			req.session.login is true
 
-				# Logged in
-				res.json {
-					login: true
-					version: process.env.npm_package_version
-					configured: true
-				}
+				db.users.me req.session.user, (rows) ->
+
+					rows.password = null
+
+					# Logged in
+					res.json {
+						login: true
+						version: process.env.npm_package_version
+						configured: true
+						user: rows
+					}
 
 		else
 

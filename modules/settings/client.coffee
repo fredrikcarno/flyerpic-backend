@@ -10,14 +10,12 @@ m.add m.settings =
 		{
 			id: 'avatar'
 			title: 'Set Avatar Photo'
-		}
-		{
-			id: 'username'
-			title: 'Change Username and Name'
+			value: kanban.settings.init.user.avatar
 		}
 		{
 			id: 'password'
 			title: 'Change Password'
+			value: '&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;'
 		}
 		{
 			headline: true
@@ -26,6 +24,7 @@ m.add m.settings =
 		{
 			id: 'background'
 			title: 'Set Background Photo'
+			value: kanban.settings.init.user.background
 		}
 		{
 			headline: true
@@ -34,14 +33,25 @@ m.add m.settings =
 		{
 			id: 'mail'
 			title: 'Set PayPal Email'
+			value: kanban.settings.init.user.primarymail
 		}
 		{
 			id: 'priceperalbum'
 			title: 'Set Price Per Session'
+			value: kanban.settings.init.user.priceperalbum
 		}
 		{
 			id: 'priceperphoto'
 			title: 'Set Price Per Photo'
+			value: kanban.settings.init.user.priceperphoto
+		}
+		{
+			headline: true
+			title: 'Watermark'
+		}
+		{
+			id: 'watermark_text'
+			title: 'Change Text'
 		}
 	]
 
@@ -58,7 +68,7 @@ m.add m.settings =
 		# Blur menu
 		m.menu.dom().addClass 'blur'
 
-		# Show menus
+		# Show settings
 		m.settings.dom().show()
 
 	hide: ->
@@ -77,7 +87,6 @@ m.add m.settings =
 		dom('a.close').on 'click', m.settings.hide
 
 		dom('#settings_avatar').on 'click', m.settings.set.avatar
-
 		dom('#settings_password').on 'click', m.settings.set.password
 
 		dom('#settings_background').on 'click', m.settings.set.background
@@ -99,15 +108,16 @@ m.add m.settings =
 						return false
 
 				url = 'api/m/settings/avatar?url=' + encodeURIComponent(data.avatar)
-				kanban.api url, (data) ->
+				kanban.api url, (res) ->
 
-					if data is true
+					if res is true
 
 						notification.show {
 							icon: 'android-checkmark'
 							text: 'Changed avatar'
 						}
-						modal.close
+						m.settings.dom('#settings_avatar p.value').html data.avatar
+						modal.close()
 						return true
 
 					modal.error 'avatar'
@@ -143,9 +153,9 @@ m.add m.settings =
 						return false
 
 				url = 'api/m/settings/password?password=' + encodeURI(data.password)
-				kanban.api url, (data) ->
+				kanban.api url, (res) ->
 
-					if data is true
+					if res is true
 
 						notification.show {
 							icon: 'android-checkmark'
@@ -183,14 +193,15 @@ m.add m.settings =
 						return false
 
 				url = 'api/m/settings/background?url=' + encodeURIComponent(data.background)
-				kanban.api url, (data) ->
+				kanban.api url, (res) ->
 
-					if data is true
+					if res is true
 
 						notification.show {
 							icon: 'android-checkmark'
 							text: 'Changed background'
 						}
+						m.settings.dom('#settings_background p.value').html data.background
 						modal.close()
 						return true
 
@@ -222,14 +233,15 @@ m.add m.settings =
 						return false
 
 				url = 'api/m/settings/mail?mail=' + encodeURI(data.mail)
-				kanban.api url, (data) ->
+				kanban.api url, (res) ->
 
-					if data is true
+					if res is true
 
 						notification.show {
 							icon: 'android-checkmark'
 							text: 'Changed PayPal Email'
 						}
+						m.settings.dom('#settings_mail p.value').html data.mail
 						modal.close()
 						return true
 
@@ -271,15 +283,21 @@ m.add m.settings =
 					modal.error 'amount'
 					return false
 
-				url = 'api/m/settings/priceperalbum?amount=' + encodeURI(data.amount)
-				kanban.api url, (data) ->
+				if data.amount.indexOf(',') isnt -1
 
-					if data is true
+					# Replace comma with dot
+					data.amount = data.amount.replace ',', '.'
+
+				url = 'api/m/settings/priceperalbum?amount=' + encodeURI(data.amount)
+				kanban.api url, (res) ->
+
+					if res is true
 
 						notification.show {
 							icon: 'android-checkmark'
 							text: 'Changed price of session'
 						}
+						m.settings.dom('#settings_priceperalbum p.value').html data.amount
 						modal.close()
 						return true
 
@@ -322,14 +340,15 @@ m.add m.settings =
 					return false
 
 				url = 'api/m/settings/priceperphoto?amount=' + encodeURI(data.amount)
-				kanban.api url, (data) ->
+				kanban.api url, (res) ->
 
-					if data is true
+					if res is true
 
 						notification.show {
 							icon: 'android-checkmark'
 							text: 'Changed price of photo'
 						}
+						m.settings.dom('#settings_priceperphoto p.value').html data.amount
 						modal.close()
 						return true
 
@@ -371,9 +390,12 @@ m.add m.settings =
 
 			else
 
-				"""
-				<div class="row" id="settings_#{ data.id }">
-					<p class="arrow ion-ios7-arrow-right"></p>
-					<p class="title">#{ data.title }</p>
-				</div>
-				"""
+				html =	"""
+						<div class="row" id="settings_#{ data.id }">
+							<p class="arrow ion-ios7-arrow-right"></p>
+							<p class="title">#{ data.title }</p>
+						"""
+
+				if data.value? then html += """<p class="value">#{ data.value }</p>"""
+
+				html += "</div>"
