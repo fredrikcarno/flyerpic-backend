@@ -16,6 +16,8 @@ this.kanban =
 				modal.close()
 			else if $('.context').length isnt 0
 				context.close()
+			else if $('#menu.blur').length isnt 0
+				m.settings.hide()
 
 		kanban.api 'api/session/init', (data) ->
 
