@@ -130,7 +130,7 @@ m.add m.create =
 		# Show loading dialog
 		m.create.loading()
 
-		kanban.api params, (data) ->
+		backend.api params, (data) ->
 
 			# Stop when data is invalid
 			if data is false
@@ -139,7 +139,7 @@ m.add m.create =
 
 			params = "api/m/create/output/pdf?url=#{ url }&data=#{ data }"
 
-			kanban.api params, (file) ->
+			backend.api params, (file) ->
 
 				# Stop when data is invalid
 				if file is false

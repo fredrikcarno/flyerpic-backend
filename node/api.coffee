@@ -1,7 +1,7 @@
 # Dependencies
 async		= require 'async'
 
-# Kanban modules
+# Backend modules
 log			= require './log'
 login		= require './login'
 middleware	= require './middleware'

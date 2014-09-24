@@ -2,7 +2,7 @@
 fs		= require 'fs'
 async	= require 'async'
 
-# Kanban modules
+# Backend modules
 log		= require './log'
 
 # Variables

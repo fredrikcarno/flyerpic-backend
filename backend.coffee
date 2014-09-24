@@ -1,6 +1,6 @@
 ###
-@name			Kanban
-@description	This script is a wrapper to easily run Kanban
+@name			Backend
+@description	This script is a wrapper to easily start the Backend
 @author			Tobias Reich
 @copyright		2014 by Tobias Reich
 ###

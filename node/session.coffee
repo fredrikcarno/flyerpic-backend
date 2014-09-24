@@ -1,7 +1,7 @@
 # Dependencies
 async = require 'async'
 
-# Kanban modules
+# Backend modules
 db = require './db'
 
 session = module.exports =

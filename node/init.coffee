@@ -15,7 +15,7 @@ fs			= require 'fs'
 async		= require 'async'
 crypto		= require 'crypto'
 
-# Kanban modules
+# Backend modules
 api			= require './api'
 data		= require './data'
 db			= require './db'
@@ -114,11 +114,11 @@ init = ->
 
 			# Output notice
 			text =	"""
-					Kanban running at
-							   => http://localhost:#{ process.env.npm_package_config_port }
+					Backend running at
+							     => http://localhost:#{ process.env.npm_package_config_port }
 
 					"""
-			text +=	"		   => https://localhost:#{ process.env.npm_package_config_portSSL }" if ssl?.key? and ssl.cert?
+			text +=	"		     => https://localhost:#{ process.env.npm_package_config_portSSL }" if ssl?.key? and ssl.cert?
 			log.status 'init', text
 
 	]

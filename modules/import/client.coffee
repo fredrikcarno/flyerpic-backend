@@ -33,7 +33,7 @@ m.add m.import =
 	getLychee: ->
 
 		# Request Lychee credentials
-		kanban.api "api/m/import/getLychee", (data) ->
+		backend.api "api/m/import/getLychee", (data) ->
 
 			# Validate response
 			if	not data? or
@@ -80,7 +80,7 @@ m.add m.import =
 			# Add temp-album to Lychee
 			addAlbum = (callback) ->
 
-				kanban.api 'api/m/import/addAlbum', (id) ->
+				backend.api 'api/m/import/addAlbum', (id) ->
 
 					if id >= 0 then callback id
 
@@ -242,7 +242,7 @@ m.add m.import =
 				class: 'login'
 
 			# Start scanning
-			kanban.api "api/m/import/scanAlbum?id=#{ id }", (sessions) ->
+			backend.api "api/m/import/scanAlbum?id=#{ id }", (sessions) ->
 
 				# Validate response
 				if	not sessions? or
@@ -283,7 +283,7 @@ m.add m.import =
 			structure = JSON.stringify m.import.sessions
 
 			# Send structure
-			kanban.api "api/m/import/setStructure?structure=#{ structure }", (data) ->
+			backend.api "api/m/import/setStructure?structure=#{ structure }", (data) ->
 
 				if	not data? or
 					data isnt true

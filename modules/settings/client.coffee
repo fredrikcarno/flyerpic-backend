@@ -10,7 +10,7 @@ m.add m.settings =
 		{
 			id: 'avatar'
 			title: '{{ settings.list.avatar }}'
-			value: kanban.settings.init.user.avatar
+			value: backend.settings.init.user.avatar
 		}
 		{
 			id: 'password'
@@ -24,7 +24,7 @@ m.add m.settings =
 		{
 			id: 'background'
 			title: '{{ settings.list.background }}'
-			value: kanban.settings.init.user.background
+			value: backend.settings.init.user.background
 		}
 		{
 			headline: true
@@ -33,17 +33,17 @@ m.add m.settings =
 		{
 			id: 'mail'
 			title: '{{ settings.list.mail }}'
-			value: kanban.settings.init.user.primarymail
+			value: backend.settings.init.user.primarymail
 		}
 		{
 			id: 'priceperalbum'
 			title: '{{ settings.list.priceperalbum }}'
-			value: kanban.settings.init.user.priceperalbum
+			value: backend.settings.init.user.priceperalbum
 		}
 		{
 			id: 'priceperphoto'
 			title: '{{ settings.list.priceperphoto }}'
-			value: kanban.settings.init.user.priceperphoto
+			value: backend.settings.init.user.priceperphoto
 		}
 	]
 
@@ -100,7 +100,7 @@ m.add m.settings =
 						return false
 
 				url = 'api/m/settings/avatar?url=' + encodeURIComponent(data.avatar)
-				kanban.api url, (res) ->
+				backend.api url, (res) ->
 
 					if res is true
 
@@ -119,7 +119,7 @@ m.add m.settings =
 				body:	"""
 						<h1>{{ settings.avatar.title }}</h1>
 						<p>{{ settings.avatar.text }}</p>
-						<input class="text" type="text" placeholder="http://example.com/avatar.png" data-name="avatar" autofocus value="#{ kanban.settings.init.user.avatar }">
+						<input class="text" type="text" placeholder="http://example.com/avatar.png" data-name="avatar" autofocus value="#{ backend.settings.init.user.avatar }">
 						"""
 				class: 'login'
 				buttons:
@@ -145,7 +145,7 @@ m.add m.settings =
 						return false
 
 				url = 'api/m/settings/password?password=' + encodeURI(data.password)
-				kanban.api url, (res) ->
+				backend.api url, (res) ->
 
 					if res is true
 
@@ -185,7 +185,7 @@ m.add m.settings =
 						return false
 
 				url = 'api/m/settings/background?url=' + encodeURIComponent(data.background)
-				kanban.api url, (res) ->
+				backend.api url, (res) ->
 
 					if res is true
 
@@ -204,7 +204,7 @@ m.add m.settings =
 				body:	"""
 						<h1>{{ settings.background.title }}</h1>
 						<p>{{ settings.background.text }}</p>
-						<input class="text" type="text" placeholder="http://example.com/background.png" data-name="background" autofocus value="#{ kanban.settings.init.user.background }">
+						<input class="text" type="text" placeholder="http://example.com/background.png" data-name="background" autofocus value="#{ backend.settings.init.user.background }">
 						"""
 				class: 'login'
 				buttons:
@@ -225,7 +225,7 @@ m.add m.settings =
 						return false
 
 				url = 'api/m/settings/mail?mail=' + encodeURI(data.mail)
-				kanban.api url, (res) ->
+				backend.api url, (res) ->
 
 					if res is true
 
@@ -244,7 +244,7 @@ m.add m.settings =
 				body:	"""
 						<h1>{{ settings.mail.title }}</h1>
 						<p>{{ settings.mail.text }}</p>
-						<input class="text" type="text" placeholder="mail@example.com" data-name="mail" autofocus value="#{ kanban.settings.init.user.primarymail }">
+						<input class="text" type="text" placeholder="mail@example.com" data-name="mail" autofocus value="#{ backend.settings.init.user.primarymail }">
 						"""
 				class: 'login'
 				buttons:
@@ -281,7 +281,7 @@ m.add m.settings =
 					data.amount = data.amount.replace ',', '.'
 
 				url = 'api/m/settings/priceperalbum?amount=' + encodeURI(data.amount)
-				kanban.api url, (res) ->
+				backend.api url, (res) ->
 
 					if res is true
 
@@ -300,7 +300,7 @@ m.add m.settings =
 				body:	"""
 						<h1>{{ settings.priceperalbum.title }}</h1>
 						<p>{{ settings.priceperalbum.text }}</p>
-						<input class="text" type="text" placeholder="9.99" data-name="amount" autofocus value="#{ kanban.settings.init.user.priceperalbum }">
+						<input class="text" type="text" placeholder="9.99" data-name="amount" autofocus value="#{ backend.settings.init.user.priceperalbum }">
 						"""
 				class: 'login'
 				buttons:
@@ -332,7 +332,7 @@ m.add m.settings =
 					return false
 
 				url = 'api/m/settings/priceperphoto?amount=' + encodeURI(data.amount)
-				kanban.api url, (res) ->
+				backend.api url, (res) ->
 
 					if res is true
 
@@ -351,7 +351,7 @@ m.add m.settings =
 				body:	"""
 						<h1>{{ settings.priceperphoto.title }}</h1>
 						<p>{{ settings.priceperphoto.text }}</p>
-						<input class="text" type="text" placeholder="5.99" data-name="amount" autofocus value="#{ kanban.settings.init.user.priceperphoto }">
+						<input class="text" type="text" placeholder="5.99" data-name="amount" autofocus value="#{ backend.settings.init.user.priceperphoto }">
 						"""
 				class: 'login'
 				buttons:

@@ -4,7 +4,7 @@ async		= require 'async'
 validator	= require 'validator'
 querystring	= require 'querystring'
 
-# Kanban modules
+# Backend modules
 log			= require './../../node/log'
 middleware	= require './../../node/middleware'
 

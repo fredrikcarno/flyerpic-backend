@@ -8,7 +8,7 @@ pdfconcat	= require 'pdfconcat'
 Encoder 	= require('qr').Encoder
 encoder 	= new Encoder
 
-# Kanban modules
+# Backend modules
 log			= require './../../node/log'
 middleware	= require './../../node/middleware'
 

@@ -2,7 +2,7 @@
 mysql	= require 'mysql'
 async	= require 'async'
 
-# Kanban modules
+# Backend modules
 log		= require './log'
 
 # Variables

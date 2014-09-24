@@ -1,7 +1,7 @@
 # Dependencies
 fs = require 'fs'
 
-# Kanban modules
+# Backend modules
 log = require './log'
 
 data = module.exports =

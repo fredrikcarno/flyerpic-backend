@@ -20,7 +20,7 @@
   "scripts": {
     "preinstall": "bower install",
     "postinstall": "npm run build",
-    "start": "coffee kanban.coffee",
+    "start": "coffee backend.coffee",
     "build": "grunt"
   },
   "dependencies": {

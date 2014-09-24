@@ -3,7 +3,7 @@ async		= require 'async'
 validator	= require 'validator'
 crypto		= require 'crypto'
 
-# Kanban modules
+# Backend modules
 log			= require './../../node/log'
 middleware	= require './../../node/middleware'
 
@@ -19,7 +19,7 @@ setAvatar = (user, url, callback) ->
 
 	if not validator.isURL(url)
 
-		callback 'Avatar needs to be URL'
+		callback 'Avatar needs to be a URL'
 		return false
 
 	db.source.query "UPDATE lychee_users SET avatar = ? WHERE id = ?", [url, user], callback

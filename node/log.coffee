@@ -2,11 +2,11 @@
 colors = require 'colors'
 
 # Variables
-name = 'kanban    '.white
+name = 'frontend    '.white
 
 norm = (text) ->
 
-	filler = '         ' #9
+	filler = '         ' #11
 	length = filler.length - text.length
 
 	if length > 0

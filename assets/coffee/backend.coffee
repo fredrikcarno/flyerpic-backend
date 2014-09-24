@@ -1,4 +1,4 @@
-this.kanban =
+this.backend =
 
 	settings:
 
@@ -19,7 +19,7 @@ this.kanban =
 			else if $('#menu.blur').length isnt 0
 				m.settings.hide()
 
-		kanban.api 'api/session/init', (data) ->
+		backend.api 'api/session/init', (data) ->
 
 			if	data?.configured? and
 				data.configured is false
@@ -32,7 +32,7 @@ this.kanban =
 				data.login is true
 
 					# Save data
-					kanban.settings.init = data
+					backend.settings.init = data
 
 					# Logged in
 					modules.init()
@@ -116,12 +116,12 @@ this.kanban =
 
 		module: (name, elem) ->
 
-			if not elem? then return kanban.dom.content.find("##{ name }")
-			else return kanban.dom.content.find("##{ name }").find(elem)
+			if not elem? then return backend.dom.content.find("##{ name }")
+			else return backend.dom.content.find("##{ name }").find(elem)
 
 	logout: ->
 
-		kanban.api 'api/session/logout', (data) ->
+		backend.api 'api/session/logout', (data) ->
 			window.location.reload()
 
-$(document).ready kanban.init
+$(document).ready backend.init

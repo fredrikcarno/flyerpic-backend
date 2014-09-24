@@ -1,7 +1,7 @@
 # Dependencies
 jsesc		= require 'jsesc'
 
-# Kanban modules
+# Backend modules
 db			= require './db'
 log			= require './log'
 session		= require './session'

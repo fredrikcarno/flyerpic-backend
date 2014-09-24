@@ -8,14 +8,14 @@ this.login =
 		# md5
 		data.password = md5 data.password
 
-		url = 'api/session/login?' + kanban.serialize(data)
-		kanban.api url, (data) ->
+		url = 'api/session/login?' + backend.serialize(data)
+		backend.api url, (data) ->
 
 			if data is true
 
 				# Login valid
 				modal.close true
-				kanban.init()
+				backend.init()
 				return true
 
 			# Login failed
@@ -109,12 +109,12 @@ this.login =
 				# Removed unused var
 				delete data.repassword
 
-				url = 'api/login/set?' + kanban.serialize(data)
-				kanban.api url, (_data) ->
+				url = 'api/login/set?' + backend.serialize(data)
+				backend.api url, (_data) ->
 
 					if _data is true
 						modal.close true
-						kanban.init()
+						backend.init()
 
 		]
 
@@ -172,13 +172,13 @@ this.login =
 						return false
 
 				# Add username
-				data.username = kanban.settings.init.username || ''
+				data.username = backend.settings.init.username || ''
 
 				# md5
 				data.password = md5 data.password
 
-				url = 'api/login/reset?' + kanban.serialize(data)
-				kanban.api url, (_data) ->
+				url = 'api/login/reset?' + backend.serialize(data)
+				backend.api url, (_data) ->
 
 					# Reload
 					if _data is true
