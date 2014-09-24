@@ -62,7 +62,7 @@
 		},
 		"scan": {
 			"title": "Scanning sessions",
-			"description": "Please wait till your photos are scanned and sorted. This process can take a while."
+			"description": "Wait till your photos are scanned and sorted. This process can take a while."
 		},
 		"verify": {
 			"title": "Confirm structure",

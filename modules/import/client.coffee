@@ -60,7 +60,7 @@ m.add m.import =
 			modal.show
 				body:	"""
 						<h1>{{ import.dialog.title }}</h1>
-						<p>{{ import.dialog.description }} <a href="#">{{ import.dialog.help }}</a></p>
+						<p>{{ import.dialog.description }} <a href="mailto:#{ backend.settings.init.user.helpmail }">{{ import.dialog.help }}</a></p>
 						"""
 				class: 'login'
 				buttons:
@@ -199,7 +199,7 @@ m.add m.import =
 			modal.show
 				body:	"""
 						<h1>{{ import.upload.title }}</h1>
-						<p>{{ import.upload.description }}</p>
+						<p>{{ import.upload.description }} <a href="mailto:#{ backend.settings.init.user.helpmail }">{{ import.dialog.help }}</a></p>
 						<div class="progress">
 							<div class="bar"><span>0%</span></div>
 						</div>
@@ -233,7 +233,7 @@ m.add m.import =
 			modal.show
 				body:	"""
 						<h1>{{ import.scan.title }}</h1>
-						<p>{{ import.scan.description }}</p>
+						<p>{{ import.scan.description }} <a href="mailto:#{ backend.settings.init.user.helpmail }">{{ import.dialog.help }}</a></p>
 						<div class="spinner qr">
 							<img src="assets/img/qrcode.svg">
 							<div class="scan"></div>

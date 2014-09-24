@@ -17,7 +17,7 @@ m.add m.create =
 		modal.show
 			body:	"""
 					<h1>{{ create.dialog.title }}</h1>
-					<p>{{ create.dialog.description }} <a href="#">{{ create.dialog.help }}</a></p>
+					<p>{{ create.dialog.description }} <a href="mailto:#{ backend.settings.init.user.helpmail }">{{ create.dialog.help }}</a></p>
 					<div class="dropdown" data-name="action" data-value="pdf">
 						<div class="front text"><span>{{ create.dialog.type.pdf.title }}</span></div>
 						<div class="back">
