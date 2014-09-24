@@ -272,7 +272,8 @@ url = (type, cutlines, user, number, callback) ->
 			# Set type specific settings
 			switch type
 				when 'pdf'
-					data.guide		= 'guides/en.pdf'
+					data.guide		= false
+					#data.guide		= 'guides/en.pdf'
 				when 'template'
 					data.template	= true
 				when 'codes'
