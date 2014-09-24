@@ -88,7 +88,10 @@
 			"payment": "Payment",
 			"mail": "Set PayPal Email",
 			"priceperalbum": "Set Price Per Session",
-			"priceperphoto": "Set Price Per Photo"
+			"priceperphoto": "Set Price Per Photo",
+			"misc": "Misc",
+			"help": "Support",
+			"logout": "Logout"
 		},
 		"avatar": {
 			"title": "Avatar",

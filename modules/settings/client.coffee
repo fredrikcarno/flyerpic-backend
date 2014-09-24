@@ -45,6 +45,20 @@ m.add m.settings =
 			title: '{{ settings.list.priceperphoto }}'
 			value: backend.settings.init.user.priceperphoto
 		}
+		{
+			headline: true
+			title: '{{ settings.list.misc }}'
+		}
+		{
+			id: 'help'
+			title: '{{ settings.list.help }}'
+			value: ''
+		}
+		{
+			id: 'logout'
+			title: '{{ settings.list.logout }}'
+			value: ''
+		}
 	]
 
 	init: ->
@@ -86,6 +100,9 @@ m.add m.settings =
 		dom('#settings_mail').on 'click', m.settings.set.mail
 		dom('#settings_priceperalbum').on 'click', m.settings.set.priceperalbum
 		dom('#settings_priceperphoto').on 'click', m.settings.set.priceperphoto
+
+		dom('#settings_help').on 'click', m.settings.set.help
+		dom('#settings_logout').on 'click', m.settings.set.logout
 
 	set:
 
@@ -360,6 +377,19 @@ m.add m.settings =
 					action:
 						title: '{{ settings.priceperphoto.button }}'
 						fn: validate
+
+		help: ->
+
+			window.location.href = "mailto:#{ backend.settings.init.user.helpmail }"
+
+		logout: ->
+
+			backend.api '/api/session/logout', (res) ->
+
+				if	res? and
+					res is true
+
+						window.location.reload()
 
 	render:
 
