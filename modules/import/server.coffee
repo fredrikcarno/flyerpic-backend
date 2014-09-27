@@ -20,11 +20,12 @@ addAlbum = (title, shared, visible, downloadable, callback) ->
 					Integer is the ID of the album
 	###
 
-	title			= title || 'Unnamed'
-	shared			= shared || 0
-	visible			= visible || 1
-	downloadable	= downloadable || 0
-	sysstamp		= Math.round(new Date().getTime() / 1000)
+	if not title?			then title = 'Unnamed'
+	if not shared?			then shared = 0
+	if not visible?			then visible = 1
+	if not downloadable?	then downloadable = 1
+
+	sysstamp = Math.round(new Date().getTime() / 1000)
 
 	db.source.query 'INSERT INTO lychee_albums (title, sysstamp, public, visible, downloadable) VALUES (?, ?, ?, ?, ?)', [title, sysstamp, shared, visible, downloadable], (err, row) ->
 
