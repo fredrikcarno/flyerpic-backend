@@ -51,7 +51,7 @@ body {
 .flyer {
 
 	float: left;
-	width: 48.5%;
+	width: 48.6%; // 0.1% to remove the padding to the right
 	margin: 0 3% 20px 0;
 
 	&:nth-child(2n) {
