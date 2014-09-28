@@ -49,8 +49,8 @@ The Backend creates a table called `lychee_users` with the following fields:
 | `password` | Password of the user hashed with MD5 |
 | `name` | Name of the user |
 | `description` | Optional description |
-| `primarymail` | This paypal-mail will get 100% - `percentperprice` of the `priceperalbum` or `priceperphoto` |
-| `secondarymail` | This paypal-mail will get the `percentperprice` of the `priceperalbum` or `priceperphoto` |
+| `primarymail` | This PayPal-Mail will get 100% - `percentperprice` of the `priceperalbum` or `priceperphoto`. Needs to be a valid PayPal businesses account.  |
+| `secondarymail` | This paypal-mail will get the `percentperprice` of the `priceperalbum` or `priceperphoto`. Needs to be a valid PayPal businesses account. |
 | `helpmail` | This mail will be shown in the footer of each flyer |
 | `avatar` | URL (starting with `http://`) to the avatar-image of the photographer |
 | `background` | URL (starting with `http://`) to the background-image of the photographer for the flyer |

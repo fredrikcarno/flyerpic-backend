@@ -113,7 +113,7 @@
 		},
 		"mail": {
 			"title": "PayPal Email",
-			"text": "The money of each purchase will be transfered to the PayPal Email below:",
+			"text": "The money of each purchase will be transfered to the email below. Needs to be the email address of a valid PayPal businesses account.",
 			"button": "Save PayPal Email",
 			"success": "Changed PayPal Email"
 		},
