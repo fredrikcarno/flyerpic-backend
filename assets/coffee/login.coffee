@@ -28,7 +28,7 @@ this.login =
 			body:	"""
 					<h1>Flyerpic</h1>
 					<h2>Version #{ data.version }</h2>
-					<input class="text" type="text" placeholder="username" data-name="username">
+					<input class="text" type="text" placeholder="username" data-name="username" autocapitalize="off" autocorrect="off">
 					<input class="text" type="password" placeholder="password" data-name="password">
 					"""
 			closable: false
@@ -56,7 +56,7 @@ this.login =
 					body:	"""
 							<h1>Welcome</h1>
 							<p>Hi there, lets create your first user!</p>
-							<input class="text" type="text" placeholder="username" data-name="username" autofocus>
+							<input class="text" type="text" placeholder="username" data-name="username" autofocus autocapitalize="off" autocorrect="off">
 							<input class="text" type="password" placeholder="password" data-name="password">
 							<input class="text" type="password" placeholder="repeat password" data-name="repassword">
 							"""
