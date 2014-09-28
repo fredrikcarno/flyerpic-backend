@@ -350,6 +350,12 @@ m.add m.import =
 			# Save element
 			that = this
 
+			# No context for QR Placeholder Images
+			if	$(that).hasClass('scanned') is true and
+				$(that).parent().attr('data-id').indexOf('placeholder') isnt -1
+
+					return false
+
 			# Set active status
 			$(that).addClass 'active'
 
