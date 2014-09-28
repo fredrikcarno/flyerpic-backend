@@ -15,7 +15,7 @@ build =
 	flyer: (photographer, data) ->
 
 		if	not photographer.avatar? or
-			photographer.avatar	is ''
+			photographer.avatar is ''
 
 				photographer.avatar = 'assets/img/avatar.png'
 
