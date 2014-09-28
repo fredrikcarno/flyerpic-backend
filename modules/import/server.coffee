@@ -217,7 +217,7 @@ scanAlbum = (id, callback) ->
 						title: ''
 						url: 'assets/img/qrcode.svg'
 						takestamp: 0
-						code: 'Unknwon Session'
+						code: 'Unknown Session'
 						tags: ''
 					}
 
