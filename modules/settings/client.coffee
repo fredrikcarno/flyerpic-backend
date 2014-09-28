@@ -136,7 +136,7 @@ m.add m.settings =
 				body:	"""
 						<h1>{{ settings.avatar.title }}</h1>
 						<p>{{ settings.avatar.text }}</p>
-						<input class="text" type="text" placeholder="http://example.com/avatar.png" data-name="avatar" autofocus value="#{ backend.settings.init.user.avatar }" autocapitalize="off" autocorrect="off">
+						<input class="text" type="url" placeholder="http://example.com/avatar.png" data-name="avatar" autofocus value="#{ backend.settings.init.user.avatar }">
 						"""
 				class: 'login'
 				buttons:
@@ -221,7 +221,7 @@ m.add m.settings =
 				body:	"""
 						<h1>{{ settings.background.title }}</h1>
 						<p>{{ settings.background.text }}</p>
-						<input class="text" type="text" placeholder="http://example.com/background.png" data-name="background" autofocus value="#{ backend.settings.init.user.background }" autocapitalize="off" autocorrect="off">
+						<input class="text" type="url" placeholder="http://example.com/background.png" data-name="background" autofocus value="#{ backend.settings.init.user.background }">
 						"""
 				class: 'login'
 				buttons:
@@ -261,7 +261,7 @@ m.add m.settings =
 				body:	"""
 						<h1>{{ settings.mail.title }}</h1>
 						<p>{{ settings.mail.text }}</p>
-						<input class="text" type="text" placeholder="mail@example.com" data-name="mail" autofocus value="#{ backend.settings.init.user.primarymail }" autocapitalize="off" autocorrect="off">
+						<input class="text" type="email" placeholder="mail@example.com" data-name="mail" autofocus value="#{ backend.settings.init.user.primarymail }">
 						"""
 				class: 'login'
 				buttons:
