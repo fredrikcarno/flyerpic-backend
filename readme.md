@@ -13,6 +13,7 @@ After [installing Node.js](http://nodejs.org) you can use the following commands
 
 	npm install -g bower coffee-script grunt-cli;
 	npm install;
+	sudo chmod -R 777 cache/;
 	
 ## Configuration
 
