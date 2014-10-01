@@ -147,4 +147,22 @@ m.add m.create =
 					return false
 
 				modal.close()
-				window.open file
+				m.create.open file
+
+	open: (file) ->
+
+		modal.show
+			body:	"""
+					<h1>{{ create.open.title }}</h1>
+					<p>{{ create.open.description }} <a href="mailto:#{ backend.settings.init.user.helpmail }">{{ create.dialog.help }}</a></p>
+					"""
+			class: 'login'
+			buttons:
+				cancel:
+					title: ''
+					fn: -> modal.close()
+				action:
+					title: '{{ create.open.confirm }}'
+					fn: ->
+						window.open file
+						return true

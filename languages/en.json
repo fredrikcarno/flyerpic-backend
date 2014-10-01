@@ -46,6 +46,11 @@
 		"loading": {
 			"title": "Creating Flyers",
 			"description": "Please wait till your flyers are generated. This process can take a while."
+		},
+		"open": {
+			"title": "Flyers generated",
+			"description": "Your flyers have been generated and can now be downloaded by clicking the button below.",
+			"confirm": "Open my Flyers"
 		}
 	},
 	"import": {
