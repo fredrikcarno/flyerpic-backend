@@ -165,4 +165,5 @@ m.add m.create =
 					title: '{{ create.open.confirm }}'
 					fn: ->
 						window.open file
+						modal.close()
 						return true
