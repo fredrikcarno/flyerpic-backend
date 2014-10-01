@@ -4,10 +4,10 @@
   "authors": "Tobias Reich <tobias.reich.ich@gmail.com>",
   "main": "server.coffee",
   "dependencies": {
-    "qr": "^0.2.3",
-    "underscore": "^1.6.0",
     "node-phantom": "^0.2.5",
     "pdfconcat": "^1.0.2",
-    "socket.io": "^0.9.16"
+    "qrcode": "^0.2.12",
+    "socket.io": "^0.9.16",
+    "underscore": "^1.6.0"
   }
 }

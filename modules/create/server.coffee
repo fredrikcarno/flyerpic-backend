@@ -5,8 +5,7 @@ _			= require 'underscore'
 phantom		= require 'node-phantom'
 validator	= require 'validator'
 pdfconcat	= require 'pdfconcat'
-Encoder 	= require('qr').Encoder
-encoder 	= new Encoder
+QRCode		= require 'qrcode'
 
 # Backend modules
 log			= require './../../node/log'
@@ -148,7 +147,7 @@ code = (user, callback) ->
 
 	looper()
 
-qr = (code) ->
+qr = (code, callback) ->
 
 	###
 	Description:	Generates the QR-File based on the code
@@ -156,16 +155,28 @@ qr = (code) ->
 	###
 
 	# Validate code
-	if not code? or not validator.isAlphanumeric code
-		return false
+	if	not code? or
+		not validator.isAlphanumeric code
+
+			callback null
+			return false
 
 	file	= "#{ code }.png"
 	path	= './cache/' + file
 
 	# Generate QR-File
-	encoder.encode code, path
+	QRCode.save path, code, (err, written) ->
 
-	return file
+		if err?
+
+			log.error 'create', 'Could not generate QR code', err
+			callback null
+			return false
+
+		else
+
+			callback file
+			return true
 
 flyer = (user, callback) ->
 
@@ -193,13 +204,19 @@ flyer = (user, callback) ->
 		data.code = _code
 
 		# Make qr image
-		if qr(data.code) is false
-			callback { error: 'Could not generate QR-File', details: null }
-			return false
+		qr data.code, (file) ->
 
-		# Return data
-		callback null, data
-		return true
+			if	not file? or
+				file is ''
+
+					callback { error: 'Could not generate QR-File', details: null }
+					return false
+
+			else
+
+				# Return data
+				callback null, data
+				return true
 
 url = (type, cutlines, user, number, callback) ->
 
