@@ -37,6 +37,10 @@ Build the flyers with the following commands:
 	npm install;
 	bower install;
 	gulp;
+	
+## Remove generated flyers
+
+Remove all `*.pdf` and `*.png` files in `cache/` to get rid of temporary stored flyers.
 
 ## Database
 
