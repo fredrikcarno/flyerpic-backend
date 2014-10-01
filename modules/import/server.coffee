@@ -197,7 +197,7 @@ scanAlbum = (id, callback) ->
 			return false
 
 		# Scan all photos
-		async.map rows, scan, (err, rows) ->
+		async.mapLimit rows, 3, scan, (err, rows) ->
 
 			if err?
 
