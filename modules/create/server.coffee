@@ -12,7 +12,8 @@ log			= require './../../node/log'
 middleware	= require './../../node/middleware'
 
 # Variables
-db = null
+db		= null
+config	= require './../../data/config.json'
 
 hash = ->
 
@@ -163,6 +164,9 @@ qr = (code, callback) ->
 
 	file	= "#{ code }.png"
 	path	= './cache/' + file
+
+	# Wrap URL around code
+	code	= "#{ config.url }redirect.html#redirect/#{ code }"
 
 	# Generate QR-File
 	QRCode.save path, code, (err, written) ->

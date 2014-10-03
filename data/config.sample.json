@@ -1,6 +1,9 @@
 // Copy this file and name it config.json
 // Make sure you remove all comments when finished
 {
+	// Main URL of the installation
+	// The URL must end with a slash
+	"url": "http://flyerpic.com/",
 	// Host of the Database
 	"host": "localhost",
 	// Port of the database
