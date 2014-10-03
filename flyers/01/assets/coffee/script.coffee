@@ -36,7 +36,7 @@ build =
 						<a href="#" class="number">1</a>
 					</div>
 					<div class="right">
-						<p>Visit www.flyerpic.com and enter your private code or scan the QR-Code with your phone</p>
+						<p>Visit <a href="#">www.flyerpic.com</a> and enter your private code or scan the QR-Code with your phone</p>
 						<div class="codes">
 							<div class="qr">
 								<img src="../../cache/#{ data.code }.png" alt="" width="100" height="100">

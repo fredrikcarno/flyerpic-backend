@@ -136,6 +136,12 @@ body {
 				font-family: 'source_sans_prolight';
 				font-size: 12px;
 				line-height: 18px;
+
+				a {
+					color: black(.7);
+					text-decoration: none;
+					border-bottom: 1px solid black(.3);
+				}
 			}
 
 		}
