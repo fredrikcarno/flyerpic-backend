@@ -142,6 +142,11 @@ scanAlbum = (id, callback) ->
 		# Scan photo
 		zbarimg filename, (err, code) ->
 
+			if	err? and
+				err.message isnt 'No QR-Code found or barcode not supported'
+
+					log.error 'import', 'Spawn new process failed. Could not scan code on photo.', err
+
 			# Save code
 			if code? then row.code = code
 			else row.code = ''
