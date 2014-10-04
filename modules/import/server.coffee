@@ -148,7 +148,9 @@ scanAlbum = (id, callback) ->
 					log.error 'import', 'Spawn new process failed. Could not scan code on photo.', err
 
 			# Save code
-			if code? then row.code = code
+			if code?
+				row.code = code
+				row.code = row.code.replace "#{ config.url }redirect.html#redirect/", ''
 			else row.code = ''
 
 			# Reduce photo json
