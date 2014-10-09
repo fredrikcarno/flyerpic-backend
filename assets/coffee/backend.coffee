@@ -9,7 +9,7 @@ this.backend =
 		# Bind hotkeys
 		Mousetrap.bindGlobal 'enter', () ->
 			if $('.modalContainer').length isnt 0
-				$('.modalContainer #action').addClass('active').click()
+				$('.modalContainer #action').click()
 
 		Mousetrap.bindGlobal 'esc', () ->
 			if $('.modalContainer[data-closable=true]').length isnt 0
