@@ -55,6 +55,16 @@ structure	=
 		) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 		"""
 
+connectDatabase = ->
+
+	return mysql.createConnection {
+		host: config.host,
+		port: config.port,
+		user: config.user,
+		password: config.password,
+		database: config.database
+	}
+
 db = module.exports =
 
 	source: null
@@ -63,13 +73,7 @@ db = module.exports =
 
 		log.status 'db', 'Connecting to database'
 
-		db.source = mysql.createConnection {
-			host: config.host,
-			port: config.port,
-			user: config.user,
-			password: config.password,
-			database: config.database
-		}
+		db.source = connectDatabase()
 
 		db.source.connect (err) ->
 
@@ -124,6 +128,26 @@ db = module.exports =
 						# Table exists
 						callback null
 						return true
+
+		db.source.on 'error', (err) ->
+
+			###
+			# Connection to the MySQL server is usually
+			# lost due to either server restart, or a
+			# connnection idle timeout (the wait_timeout
+			# server variable configures this)
+			###
+			if err.code is 'PROTOCOL_CONNECTION_LOST'
+
+				# Lost connection
+				log.warning 'db', 'Lost connection to database', err
+				db.source = connectDatabase()
+
+			else
+
+				# Error
+				log.error 'db', 'Database error', err
+				throw err
 
 	settings: (callback) ->
 
