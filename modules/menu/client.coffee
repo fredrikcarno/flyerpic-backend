@@ -39,7 +39,7 @@ m.add m.menu =
 				# Show menus
 				setTimeout ->
 					m.menu.dom().show()
-				, 100
+				, 200
 
 	bind: ->
 
