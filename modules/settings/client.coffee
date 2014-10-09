@@ -1,6 +1,7 @@
 m.add m.settings =
 
 	title: 'Settings'
+	terms: 'http://23.253.61.40/sites/backend_terms_of_use.html'
 
 	data: [
 		{
@@ -55,6 +56,11 @@ m.add m.settings =
 			value: ''
 		}
 		{
+			id: 'terms'
+			title: '{{ settings.list.terms }}'
+			value: ''
+		}
+		{
 			id: 'logout'
 			title: '{{ settings.list.logout }}'
 			value: ''
@@ -102,6 +108,7 @@ m.add m.settings =
 		dom('#settings_priceperphoto').on 'click', m.settings.set.priceperphoto
 
 		dom('#settings_help').on 'click', m.settings.set.help
+		dom('#settings_terms').on 'click', -> window.open(m.settings.terms)
 		dom('#settings_logout').on 'click', m.settings.set.logout
 
 	set:
